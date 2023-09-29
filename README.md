@@ -2,24 +2,28 @@
 
 ## Project Description
 #### 1. What will the application do?
-- The application is a game called **high school student simulator**. 
-Gamers are expected to add courses and activities for a high school
-student. Every course and activity has 3 basic index: time, pressure index
-and knowledge index. Once the total time exceed an exact value as the user
-keeps adding courses and activities, the student will go to different university
-based on the total knowledge and pressure he/she accumulated, or the game will 
-fail if the pressure index in total exceed an assigned value. 
+- The application is a game called **student simulator**. 
+Gamers are expected to add activities(can be either courses or games) for a high school
+student. Every course and game has 3 basic index: **time, pressure index
+and knowledge index**. Once the total time in the schedule exceeds a specific value 
+as the user keeps adding courses and games, the student will go to different universities
+based on the total knowledge and pressure he/she accumulated. Or the student will drop
+the school if the pressure index in total exceed an assigned value.
 
 
 #### 2. Who will use it?
 - Targeted users are anyone who would like to try this **simple multi-ending game**.
 
 #### 3.Why is this project of interest to me?
-- A multi-ending game is of interest to me.
+- A multi-ending game is of interest to me and it will be fun to play with it.
 
-A *bulleted* list:
-- item 1
-- item 2
-- item 3
-
-An example of text with **bold** and *italic* fonts.  
+## User Story
+- As a user, I want to be able to add a course or game to the schedule.
+- As a user, I want to be able to view the courses and games I added 
+  to the schedule.
+- As a user, I want to be able to view the total time I already spent on 
+  the courses and games in a time bar.
+- As a user, I want to be able to view the total pressure accumulated in a pressure bar.
+- As a user, I want to be able to view the total knowledge accumulated in a knowledge bar.
+- As a user, I want to be able to view the time, pressure index and knowledge 
+  index of a course or activity.

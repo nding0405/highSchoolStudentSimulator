@@ -8,7 +8,7 @@ student. Every course and game has 3 basic index: **time, pressure index
 and knowledge index**. Once the total time in the schedule exceeds a specific value 
 as the user keeps adding courses and games, the student will go to different universities
 based on the total knowledge and pressure he/she accumulated. Or the student will drop
-the school if the pressure index in total exceed an assigned value.
+the school if the pressure index in total exceed an assigned value. 
 
 
 #### 2. Who will use it?
@@ -27,3 +27,5 @@ the school if the pressure index in total exceed an assigned value.
 - As a user, I want to be able to view the total knowledge accumulated in a knowledge bar.
 - As a user, I want to be able to view the time, pressure index and knowledge 
   index of a course or activity.
+- As a user, I want to be able to observe that the image of student are changed as I add 
+  courses or games to the schedule, or as the game comes to the end.

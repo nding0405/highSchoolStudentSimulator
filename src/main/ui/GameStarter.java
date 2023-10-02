@@ -22,21 +22,18 @@ public class GameStarter {
         introduction();//请输入姓名
         initialize();
         String operation;
-        Boolean goOn = true;
+        Boolean goOn = !(student.detectEnding());
 
         while (goOn) {
-            if (student.detectEnding()) {
-                goOn = false;
-            } else {
-                showInstructions();//选课请输入add，看已有课程请输入view
+            showInstructions();//选课请输入add，看已有课程请输入view
+            operation = input.next();
+            while (!(operation.equals("add") || operation.equals("view"))) {
+                System.out.println("invalid operation, please try again!");
+                showInstructions();
                 operation = input.next();
-                while (!(operation.equals("add") || operation.equals("view"))) {
-                    System.out.println("invalid operation, please try again!");
-                    showInstructions();
-                    operation = input.next();
-                }
-                processOperation(operation);
             }
+            processOperation(operation);
+            goOn = !(student.detectEnding());
         }
 
         student.endChoice();

@@ -6,14 +6,19 @@ import model.Student;
 import java.util.List;
 import java.util.Scanner;
 
-public class GameStarter {
+public class GameStarter extends Thread {
     private Scanner input;//用户输入
     private Student student;
     private String studentName;
 
     // EFFECTS: create a new GameStarter object.
-    public GameStarter() throws InterruptedException {
+    @Override
+    public void run() {
         runTheGame();
+    }
+
+    public GameStarter() throws InterruptedException {
+
     }
 
     // MODIFIES: this
@@ -47,17 +52,15 @@ public class GameStarter {
             showSelection();
             addingInstruction();
             String activitySelection = input.next();
+            while (!a.detectValidActivity(activitySelection)) { //检测输入是否合理
+                System.out.println("***Invalid activity! Please try again!***");
+                activitySelection = input.next();
+            }
             addingTimeInstruction(activitySelection);
             int timeSelection = Integer.parseInt(input.next());
-            while (!a.detectValidActivity(activitySelection)) { //检测输入是否合理
-                addingInstruction();
-                activitySelection = input.next();
-                addingTimeInstruction(activitySelection);
-                timeSelection = Integer.parseInt(input.next());
-            }
             a.findActivity(activitySelection,timeSelection); //根据string找到对应的activity,并将其assign到a上面
             student.addActivity(a); //加课->更新bars
-            System.out.println(activitySelection + "is successfully added"); //示意加课成功
+            System.out.println(activitySelection + " is successfully added"); //示意加课成功
             student.studentAnime(a); //播放学习或者游戏动画
         } else {
             student.showSchedule();

@@ -3,7 +3,7 @@ package model;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Background {
+public class Background  extends Thread {
     private static String earlyMorning = "earlyMorning";
     private static String lateMorning = "lateMorning";
     private static String noon = "noon";
@@ -20,6 +20,15 @@ public class Background {
 
     private String backGroundImage;
 
+    @Override
+    public void run() {
+        try {
+            timeGoesBy(true);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
     public Background() {
         backGroundImage = earlyMorning;
     }
@@ -34,6 +43,7 @@ public class Background {
     //EFFECT: 一次整天循环，因为上面太长了所以封包一下TT。。。
     public void oneDayCycle() throws InterruptedException {
         for (String timePeriod : encapsulateAday) {
+            backGroundImage = timePeriod;
             System.out.println(timePeriod);
             Thread.sleep(secondsToChange * 1000);
         }

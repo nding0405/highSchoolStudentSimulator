@@ -45,7 +45,7 @@ public class GameStarter {
     // MODIFIES: student/null
     // EFFECTS: let the user add course or view schedule depending on the input.
     public void processOperation(String operation) {
-        Activities a = new Activities(0,0,0);
+        Activities a = new Activities("a",0,true,true);
         if (operation.equals("add")) {
             showSelection();
             addingInstruction();
@@ -85,7 +85,7 @@ public class GameStarter {
 
     //EFFECTS: Show the user the course menu
     public void showSelection() {
-        Activities a = new Activities(0,0,0);
+        Activities a = new Activities("a",0,true,true);
         a.printOutActivities();
     }
 
@@ -101,6 +101,19 @@ public class GameStarter {
         input = new Scanner(System.in);
         studentName = input.next();//让用户输入学生姓名，并根据姓名创建新的student object
         student = new Student(studentName);
+        Boolean studentCharacter = student.getChr();
+        Boolean studentSubjectPreference = student.getPreference();
+        if (studentCharacter) {
+            System.out.println(studentName + " likes outdoor sports for relaxing.");
+        } else {
+            System.out.println(studentName + " likes indoor activities for relaxing.");
+        }
+
+        if (studentSubjectPreference) {
+            System.out.println(studentName + " likes science more than arts.");
+        } else {
+            System.out.println(studentName + " likes arts more than science.");
+        }
     }
 
 

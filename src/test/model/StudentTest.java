@@ -18,6 +18,13 @@ class StudentTest {
     private Activities a3;
     private Activities a4;
     private Activities a5;
+    private static double courseFitpressureIndex = 0.9;
+    private static double courseUnFitpressureIndex = 1.3;
+    private static double courseFitKnowledgeIndex = 1.08;
+    private static double courseUnFitKnowledgeIndex = 0.8;
+    private static double playFitPressureIndex = 1.0;
+    private static double playUnFitPressureIndex = 0.4;
+    private static double loseKnowledgeWhenPlayIndex = 0.25;
 
     @BeforeEach
     void setupStudent() {
@@ -33,11 +40,11 @@ class StudentTest {
         testStudent4 = new Student("E+S");
         testStudent4.setChr(true);
         testStudent4.setPreference(true);
-        a1 = new Activities("a1",100, true,true);
-        a2 = new Activities("a2",10,true,false);
-        a3 = new Activities("a3",1000,false,true);
-        a4 = new Activities("a4",100,false,false);
-        a5 = new Activities("a5",1000,true,false);
+        a1 = new Activities("a1",100, true,true);//理科课
+        a2 = new Activities("a2",10,true,false);//文科课
+        a3 = new Activities("a3",1000,false,true);//户外活动
+        a4 = new Activities("a4",100,false,false);//室内活动
+        a5 = new Activities("a5",1000,true,false);//文科课
     }
 
     @Test
@@ -53,48 +60,80 @@ class StudentTest {
 
     @Test
     void testAddActivitiesA1() {
-        wrapUp(testStudent1, a1, 100, (int)(100*1.2), (int)(100*0.8));
-        wrapUp(testStudent2, a1, 100, (int)(100*0.9), (int)(1.1*100));
-        wrapUp(testStudent3, a1, 100, (int)(100*1.2), (int)(100*0.8));
-        wrapUp(testStudent4, a1, 100, (int)(0.9*100), (int)(1.1*100));
+        List<Activities> exptList = new ArrayList<>();
+        exptList.add(a1);
+        wrapUp(testStudent1, a1, 100, (int)(100*courseUnFitpressureIndex), (int)(100*courseUnFitKnowledgeIndex));
+        assertEquals(exptList, testStudent1.getSchedule());
+        wrapUp(testStudent2, a1, 100, (int)(100*courseFitpressureIndex), (int)(100*courseFitKnowledgeIndex));
+        assertEquals(exptList, testStudent2.getSchedule());
+        wrapUp(testStudent3, a1, 100, (int)(100*courseUnFitpressureIndex), (int)(100*courseUnFitKnowledgeIndex));
+        assertEquals(exptList, testStudent3.getSchedule());
+        wrapUp(testStudent4, a1, 100, (int)(100*courseFitpressureIndex), (int)(100*courseFitKnowledgeIndex));
+        assertEquals(exptList, testStudent4.getSchedule());
     }
 
     @Test
     void testAddActivitiesA2() {
-        wrapUp(testStudent1, a2, 10, (int)(10*0.9), (int)(10*1.1));
-        wrapUp(testStudent2, a2, 10, (int)(10*1.2), (int)(10*0.8));
-        wrapUp(testStudent3, a2, 10, (int)(10*0.9), (int)(10*1.1));
-        wrapUp(testStudent4, a2, 10, (int)(10*1.2), (int)(10*0.8));
+        List<Activities> exptList = new ArrayList<>();
+        exptList.add(a2);
+        wrapUp(testStudent1, a2, 10, (int)(10*courseFitpressureIndex), (int)(10*courseFitKnowledgeIndex));
+        assertEquals(exptList, testStudent1.getSchedule());
+        wrapUp(testStudent2, a2, 10, (int)(10*courseUnFitpressureIndex), (int)(10*courseUnFitKnowledgeIndex));
+        assertEquals(exptList, testStudent2.getSchedule());
+        wrapUp(testStudent3, a2, 10, (int)(10*courseFitpressureIndex), (int)(10*courseFitKnowledgeIndex));
+        assertEquals(exptList, testStudent3.getSchedule());
+        wrapUp(testStudent4, a2, 10, (int)(10*courseUnFitpressureIndex), (int)(10*courseUnFitKnowledgeIndex));
+        assertEquals(exptList, testStudent4.getSchedule());
     }
 
     @Test
     void testAddActivitiesA3() {
-        wrapUp(testStudent1, a3, 1000, -(int)(0.5*1000), -(int)(0.2*1000));
-        wrapUp(testStudent2, a3, 1000, -(int)(0.5*1000), -(int)(0.2*1000));
-        wrapUp(testStudent3, a3, 1000, -(int)(1.1*1000), -(int)(0.2*1000));
-        wrapUp(testStudent4, a3, 1000, -(int)(1.1*1000), -(int)(0.2*1000));
+        List<Activities> exptList = new ArrayList<>();
+        exptList.add(a3);
+        wrapUp(testStudent1, a3, 1000, -(int)(playUnFitPressureIndex*1000), -(int)(loseKnowledgeWhenPlayIndex*1000));
+        assertEquals(exptList, testStudent1.getSchedule());
+        wrapUp(testStudent2, a3, 1000, -(int)(playUnFitPressureIndex*1000), -(int)(loseKnowledgeWhenPlayIndex*1000));
+        assertEquals(exptList, testStudent2.getSchedule());
+        wrapUp(testStudent3, a3, 1000, -(int)(playFitPressureIndex*1000), -(int)(loseKnowledgeWhenPlayIndex*1000));
+        assertEquals(exptList, testStudent3.getSchedule());
+        wrapUp(testStudent4, a3, 1000, -(int)(playFitPressureIndex*1000), -(int)(loseKnowledgeWhenPlayIndex*1000));
+        assertEquals(exptList, testStudent4.getSchedule());
     }
 
     @Test
     void testAddActivitiesA4() {
-        wrapUp(testStudent1, a4, 100, -(int)(1.1*100), -(int)(0.2*100));
-        wrapUp(testStudent2, a4, 100, -(int)(1.1*100), -(int)(0.2*100));
-        wrapUp(testStudent3, a4, 100, -(int)(0.5*100), -(int)(0.2*100));
-        wrapUp(testStudent4, a4, 100, -(int)(0.5*100), -(int)(0.2*100));
+        List<Activities> exptList = new ArrayList<>();
+        exptList.add(a4);
+        wrapUp(testStudent1, a4, 100, -(int)(playFitPressureIndex*100), -(int)(loseKnowledgeWhenPlayIndex*100));
+        assertEquals(exptList, testStudent1.getSchedule());
+        wrapUp(testStudent2, a4, 100, -(int)(playFitPressureIndex*100), -(int)(loseKnowledgeWhenPlayIndex*100));
+        assertEquals(exptList, testStudent2.getSchedule());
+        wrapUp(testStudent3, a4, 100, -(int)(playUnFitPressureIndex*100), -(int)(loseKnowledgeWhenPlayIndex*100));
+        assertEquals(exptList, testStudent3.getSchedule());
+        wrapUp(testStudent4, a4, 100, -(int)(playUnFitPressureIndex*100), -(int)(loseKnowledgeWhenPlayIndex*100));
+        assertEquals(exptList, testStudent4.getSchedule());
     }
 
     @Test
-    void testShowSchedule() {
+    void testShowScheduleOneActivity() {
         testStudent1.addActivity(a1);
         List<String> testList1 = new ArrayList<>();
         testList1.add("a1 100");
         assertEquals(testStudent1.showSchedule(),testList1);
-
-        testStudent1.addActivity(a2);
+        testStudent2.addActivity(a2);
         List<String> testList2 = new ArrayList<>();
-        testList2.add("a1 100");
         testList2.add("a2 10");
-        assertEquals(testStudent1.showSchedule(),testList2);
+        assertEquals(testStudent2.showSchedule(),testList2);
+    }
+
+    @Test
+    void testShowScheduleMultiActivities() {
+        testStudent1.addActivity(a1);
+        testStudent1.addActivity(a2);
+        List<String> testList1 = new ArrayList<>();
+        testList1.add("a1 100");
+        testList1.add("a2 10");
+        assertEquals(testStudent1.showSchedule(),testList1);
     }
 
 

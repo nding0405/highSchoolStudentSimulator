@@ -8,21 +8,26 @@ public class Student {
     private static String studying2 = "the student is studying";
     private static String relaxing1 = "the student is relaxing";
     private static String relaxing2 = "the student is relaxing";
-    private static String end1 = "student gets into the 1st ranked university";
-    private static String end2 = "student gets into the 2nd ranked university";
-    private static String end3 = "student gets into the 3nd ranked university";
-    private static String end4 = "student gets into an university";
-    private static String end5 = "student does not get into an university";
-    private static String end6 = "dropped the school";
+    private static String end1 = " hates school and dropped the school!";
+    private static String end2 = " is an idoit and fail to enter an university";
+    private static String end3 = " got into an non-well-known university";
+    private static String end4 = " got into a nice university!";
+    private static String end5 = " got into 1st ranked university!";
+    private static String end6 = " keeps studying and playing, so he/she missed the university entrance exam...";
     private static double courseFitpressureIndex = 0.9;
-    private static double courseUnFitpressureIndex = 1.2;
-    private static double courseFitKnowledgeIndex = 1.1;
+    private static double courseUnFitpressureIndex = 1.3;
+    private static double courseFitKnowledgeIndex = 1.08;
     private static double courseUnFitKnowledgeIndex = 0.8;
-    private static double playFitPressureIndex = 1.1;
-    private static double playUnFitPressureIndex = 0.5;
-    private static double loseKnowledgeWhenPlayIndex = 0.2;
+    private static double playFitPressureIndex = 1.0;
+    private static double playUnFitPressureIndex = 0.4;
+    private static double loseKnowledgeWhenPlayIndex = 0.25;
     private static int totalTimeTograduate = 1000;
     private static int maxPressure = 500;
+    private static int knowLedgeRangeIdoit = 0;
+    private static int knowLedgeRangeFine = 200;
+    private static int knowLedgeRangeKeep = 300;
+    private static int knowLedgeRangeTalented = 400;
+    private static int knowLedgeRangeGenius = 500;
 
 
 
@@ -33,6 +38,10 @@ public class Student {
     private int knowledge;
     private Boolean chrType;
     private Boolean preference;
+    private Boolean loveFineArt;
+    private String subjectSelectionOne;
+    private String subjectSelectionTwo;
+    private String subjectSelectionThree;
 
     //EFFECT: create a new student object with name, accumulated time, pressure and knowledge and an empty schedule.
     // chrType is the type of character of the student, true: love sport, extroverted. false: love arts, introverted.
@@ -45,6 +54,10 @@ public class Student {
         this.knowledge = 0;
         this.chrType = Math.random() < 0.5;
         this.preference = Math.random() < 0.5;
+        this.loveFineArt = Math.random() < 0.1;
+        this.subjectSelectionOne = "A";
+        this.subjectSelectionTwo = "B";
+        this.subjectSelectionThree = "C";
     }
 
     //REQUIRES: Activities must be one of the name in the menu
@@ -59,6 +72,7 @@ public class Student {
     }
 
 
+    //EFFECT: printing out all names and times of the activities in the schedule.
     public List<String> showSchedule() {
         List<String> showSchedule = new ArrayList<>();
         String actName;
@@ -83,15 +97,33 @@ public class Student {
                 System.out.println("exceed time limit");
                 return true;
             } else {
-                System.out.println("Game goes on");
+//                System.out.println("Game goes on");
                 return false;
             }
         }
     }
 
     //EFFECT: 根据数值选择不同结局
-    public void endChoice() {
-        System.out.println("game ends");
+    public String endChoice() {
+        if (time >= (totalTimeTograduate + 50)) {
+            System.out.println(name + end6);
+            return end6;
+        } else if (maxPressure <= pressure) {
+            System.out.println(name + end1);
+            return end1;
+        } else if (knowledge <= knowLedgeRangeIdoit) {
+            System.out.println(name + end2);
+            return end2;
+        } else if (knowledge <= knowLedgeRangeFine) {
+            System.out.println(name + end3);
+            return end3;
+        } else if (knowledge <= knowLedgeRangeTalented) {
+            System.out.println(name + end4);
+            return end4;
+        } else {
+            System.out.println(name + end5);
+            return end5;
+        }
     }
 
     //EFFECT: 加时间
@@ -147,31 +179,42 @@ public class Student {
         int timeNow = time;
         System.out.println("Time Bar: " + timeNow + "/" + totalTimeTograduate);
         System.out.println("Pressure Bar: " + pressureNow + "/" + maxPressure);
-        if (knowledge <= 0) {
+        if (knowledge <= knowLedgeRangeIdoit) {
             System.out.println("Knowledge Bar: " + "idoit");
         }
-        if ((0 < knowledge) && (100 >= knowledge)) {
+        if ((knowLedgeRangeIdoit < knowledge) && (knowLedgeRangeFine >= knowledge)) {
             System.out.println("Knowledge Bar: " + "fine");
         }
-        if ((100 < knowledge) && (200 >= knowledge)) {
+        if ((knowLedgeRangeFine < knowledge) && (knowLedgeRangeKeep >= knowledge)) {
             System.out.println("Knowledge Bar: " + "Keep going");
         }
-        if ((200 < knowledge) && (300 >= knowledge)) {
+        if ((knowLedgeRangeKeep < knowledge) && (knowLedgeRangeTalented >= knowledge)) {
             System.out.println("Knowledge Bar: " + "Good job");
         }
-        if ((300 < knowledge) && (400 >= knowledge)) {
+        if ((knowLedgeRangeTalented < knowledge) && (knowLedgeRangeGenius >= knowledge)) {
             System.out.println("Knowledge Bar: " + "Talented learner");
         }
-        if ((400 < knowledge)) {
+        if ((knowLedgeRangeGenius < knowledge)) {
             System.out.println("Knowledge Bar: " + "Genius");
         }
-
-
     }
 
     //EFFECT: 根据activity类型播放不同的学生动画.
-    public void studentAnime(Activities a) {
-
+    public void studentAnime(Activities a) throws InterruptedException {
+        Boolean courseOrPlay = a.getcourseOrPlay();
+        if (courseOrPlay) {
+            for (int i = 0; i <= 2; i++) {
+                System.out.println(studying1);
+                Thread.sleep(500);
+                System.out.println(studying2);
+            }
+        } else {
+            for (int i = 0; i <= 2; i++) {
+                System.out.println(relaxing1);
+                Thread.sleep(500);
+                System.out.println(relaxing2);
+            }
+        }
     }
 
 
@@ -197,10 +240,6 @@ public class Student {
         return this.pressure;
     }
 
-    public void setChr(Boolean chr) {
-        this.chrType = chr;
-    }
-
     public Boolean getChr() {
         return this.chrType;
     }
@@ -211,5 +250,32 @@ public class Student {
 
     public Boolean getPreference() {
         return this.preference;
+    }
+
+    public Boolean getLoveFineArt() {
+        return this.loveFineArt;
+    }
+
+    //setters
+    public void setChr(Boolean chr) {
+        this.chrType = chr;
+    }
+
+    //EFFECT: 父母同意时的选科
+    public void setSelectionAgree(String prefer) {
+        if (prefer.equals("a")) {
+            subjectSelectionOne = "history";
+            subjectSelectionTwo = "geology";
+            subjectSelectionThree = "politics";
+        }
+    }
+
+    public void setSelectionDisAgree(String prefer) {
+        if (prefer.equals("a")) {
+            subjectSelectionOne = "physics";
+            subjectSelectionTwo = "";
+            subjectSelectionThree = "";
+
+        }
     }
 }

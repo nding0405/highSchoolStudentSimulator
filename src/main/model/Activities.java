@@ -9,12 +9,15 @@ public class Activities {
     private Boolean courseOrPlay;// 课程还是游乐
     private Boolean activityType;// true: 运动/science false: 静态/art
 
+    private static Activities Mandarin = new Activities("Mandarin", 0, true, false);
     private static Activities English = new Activities("English", 0, true, false);
-    private static Activities Physics = new Activities("Physics", 0 , true, true);
+    private static Activities Math = new Activities("Math", 0, true, true);
+    private static Activities Physics = new Activities("Physics", 0, true, true);
     private static Activities Chemistry = new Activities("Chemistry", 0, true, true);
     private static Activities Biology = new Activities("Biology", 0, true, true);
     private static Activities History = new Activities("History", 0, true, false);
     private static Activities Geology = new Activities("Geology", 0, true, false);
+    private static Activities Politics = new Activities("Politics", 0, true, false);
 
     private static Activities Jogging = new Activities("Jogging", 0, false, true);
     private static Activities Hangout = new Activities("Hangout with friends", 0, false, true);
@@ -23,8 +26,8 @@ public class Activities {
     private static Activities Piano =  new Activities("playing the piano", 0, false, false);
     private static Activities VideoGame = new Activities("VideoGame", 0, false, false);
 
-    private static List<String> activityNameList = setupNameList(new ArrayList<>());
-    private static List<Activities> activityList = setupActList(new ArrayList<>());
+    private static final List<Activities> activityList = setupActList(new ArrayList<>());
+    private static final List<String> activityNameList = setupNameList(new ArrayList<>());
 
     public Activities(String name, int time, Boolean courseOrPlay, Boolean activityType) {
         this.name = name;
@@ -84,28 +87,24 @@ public class Activities {
 
 
     private static List<String> setupNameList(List<String> list) {
-        list.add("English");
-        list.add("Physics");
-        list.add("Chemistry");
-        list.add("Biology");
-        list.add("History");
-        list.add("Geology");
-        list.add("Jogging");
-        list.add("Hangout with friends");
-        list.add("Hiking");
-        list.add("Drawing");
-        list.add("Piano");
-        list.add("Video Game");
+        String name;
+        for (Activities a : activityList) {
+            name = a.getName();
+            list.add(name);
+        }
         return list;
     }
 
     private static List<Activities> setupActList(List<Activities> list) {
+        list.add(Mandarin);
         list.add(English);
+        list.add(Math);
         list.add(Physics);
         list.add(Chemistry);
         list.add(Biology);
         list.add(History);
         list.add(Geology);
+        list.add(Politics);
         list.add(Jogging);
         list.add(Hangout);
         list.add(Hiking);

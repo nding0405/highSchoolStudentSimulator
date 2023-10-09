@@ -6,8 +6,8 @@ import java.util.List;
 public class Activities {
     private String name;
     private int time;
-    private Boolean courseOrPlay;// 课程还是游乐
-    private Boolean activityType;// true: 运动/science false: 静态/art
+    private Boolean courseOrPlay;
+    private Boolean activityType;
 
     private static final Activities Mandarin = new Activities("Mandarin", 0, true, false);
     private static final Activities English = new Activities("English", 0, true, false);
@@ -29,7 +29,7 @@ public class Activities {
     private static final List<Activities> activityList = setupActList(new ArrayList<>());
     private static final List<String> activityNameList = setupNameList(new ArrayList<>());
 
-    //过了
+
     public Activities(String name, int time, Boolean courseOrPlay, Boolean activityType) {
         this.name = name;
         this.time = time;
@@ -44,14 +44,14 @@ public class Activities {
         }
     }
 
-    //过了
+
     //EFFECT: return true if the input is one of the Activities name in the static list "activityNameList", false
     //otherwise;
     public Boolean detectValidActivity(String name) {
         return activityNameList.contains(name);
     }
 
-    //过了
+
     //REQUIRES: the input name must be one of the name in the static name list "activityNameList".
     // EFFECT: find the corresponding activities object
     // and assign the input time to the corresponding activities. Assign the fully prepared activities object
@@ -71,7 +71,7 @@ public class Activities {
         this.courseOrPlay = targetActivity.getcourseOrPlay();
     }
 
-    //过了
+
     //REQUIRES:at MOST one of the string is the same as the current activities' name.
     //EFFECTS: check if the current Activities name is one of the three input Strings or one of "mandarin" "math"
     // "english"(case does not matter). If yes, return true, return false otherwise.
@@ -83,7 +83,7 @@ public class Activities {
                 || actName.equalsIgnoreCase("english"));
     }
 
-    //过了
+    
     //REQUIRES:There is EXACTLY ONE string in the parameters and "mandarin" "math" "english" equals to the current
     // activities' name.
     //EFFECTS: return the index of the parameter which is equals to the activities' name or the index of "mandarin"

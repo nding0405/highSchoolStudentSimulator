@@ -174,7 +174,7 @@ public class GameStarter extends Thread {
         }
     }
 
-    //EFFECT: 孩子喜欢文科父母问题
+    //EFFECT:
     private void artQuestions() {
         String choice;
         System.out.println(studentName + ":" + gender
@@ -199,13 +199,13 @@ public class GameStarter extends Thread {
         }
     }
 
-    //EFFECT: 父母同意
+    //EFFECT:
     private void artAgree() {
         System.out.println(studentName + ": " + "I love you " + gender + "! (deeply hugged you)");
         student.setSelectionAgree("a", 1);
     }
 
-    //EFFECT: 父母不同意
+    //EFFECT:
     private void artDisagree() {
         System.out.println(studentName + ": " + "But I love it " + gender
                 + "! I promise I will do it well in the college entrance exam!");
@@ -232,7 +232,7 @@ public class GameStarter extends Thread {
         }
     }
 
-    //EFFECT: 孩子喜欢理科父母问题
+    //EFFECT:
     private void scienceQuestions() {
         String choice;
         System.out.println(studentName + ":" + gender + " I prefer science and I'm more inclined to choose subjects "
@@ -257,7 +257,7 @@ public class GameStarter extends Thread {
         }
     }
 
-    //EFFECT: 孩子喜欢美术父母问题
+    //EFFECT:
     private void fineArtQuestions() {
         String choice;
         input.nextLine();
@@ -387,7 +387,7 @@ public class GameStarter extends Thread {
     // Tell the user the student is created when the object is created.
     public void initializeStudent() {
         input = new Scanner(System.in);
-        studentName = input.next();//让用户输入学生姓名，并根据姓名创建新的student object
+        studentName = input.next();
         student = new Student(studentName);
         Boolean studentCharacter = student.getChr();
         Boolean studentSubjectPreference = student.getPreference();
@@ -408,7 +408,7 @@ public class GameStarter extends Thread {
         }
     }
 
-    //EFFECT: 根据用户性别创建一个parent object
+    //EFFECT:
     public void initializeParent() {
         System.out.println("Would you like to be the mom or dad of the student?");
         System.out.println("\nSelect from:");

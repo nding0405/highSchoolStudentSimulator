@@ -4,21 +4,19 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Background  extends Thread {
-    private static String earlyMorning = "earlyMorning";
-    private static String lateMorning = "lateMorning";
-    private static String noon = "noon";
-    private static String earlyAfternoon = "earlyAfternoon";
-    private static String lateAfternoon = "lateAfternoon";
-    private static String dusk = "dusk";
-    private static String earlyEvening = "earlyEvening";
-    private static String lateEvening = "lateEvening";
-    private static String midNight1 = "midNight1";
-    private static String midNight2 = "midNight2";
-    private static List<String> encapsulateAday = encapAlltime(new ArrayList<>());
-    private static int secondsToChange = 5;
+    private static final String earlyMorning = "earlyMorning";
+    private static final String lateMorning = "lateMorning";
+    private static final String noon = "noon";
+    private static final String earlyAfternoon = "earlyAfternoon";
+    private static final String lateAfternoon = "lateAfternoon";
+    private static final String dusk = "dusk";
+    private static final String earlyEvening = "earlyEvening";
+    private static final String lateEvening = "lateEvening";
+    private static final String midNight1 = "midNight1";
+    private static final String midNight2 = "midNight2";
+    private static final List<String> encapsulateAday = encapAlltime(new ArrayList<>());
+    private static final int secondsToChange = 5;
 
-
-    private String backGroundImage;
 
     @Override
     public void run() {
@@ -30,20 +28,18 @@ public class Background  extends Thread {
     }
 
     public Background() {
-        backGroundImage = earlyMorning;
     }
 
-    //EFFECTS: consume一个布林值，如果true就是继续，如果false就是停止rendering并call resultRendering;
+    //EFFECTS:
     public void timeGoesBy(Boolean goOn) throws InterruptedException {
         while (goOn) {
             oneDayCycle();
         }
     }
 
-    //EFFECT: 一次整天循环，因为上面太长了所以封包一下TT。。。
+    //EFFECT:
     public void oneDayCycle() throws InterruptedException {
         for (String timePeriod : encapsulateAday) {
-            backGroundImage = timePeriod;
             System.out.println(timePeriod);
             Thread.sleep(secondsToChange * 1000);
         }

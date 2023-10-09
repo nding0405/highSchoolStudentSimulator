@@ -122,19 +122,19 @@ public class Student {
     // print out the ends.
     //EFFECT:print out the end according to the score of the student.
     public void endChoice(int score) {
-        if (score <= 300) { //没大学
+        if (score <= 300) { //fail
             System.out.println(name + " got a really bad mark on the final and no college provides offer!");
-        } else if (score <= 400) { //三本
+        } else if (score <= 400) { //3ben
             System.out.println(name + " goes for a college.");
-        } else if (score <= 530) { //二本
+        } else if (score <= 530) { //2ben
             System.out.println(name + " goes for an university.");
-        } else if (score <= 600) { //一本
+        } else if (score <= 600) { //1ben
             System.out.println(name + " goes for an key university.");
         } else if (score <= 625) { //211
             System.out.println(name + " goes for a world-class universities.");
         } else if (score <= 680) { //985
             System.out.println(name + " goes for a 'Double First-Class' university.");
-        } else if (score <= 700) { //清北
+        } else if (score <= 700) { //1st
             System.out.println(name + " goes for Tsinghua University.");
         } else {
             System.out.println(name + " is the Number one scholar and can go for any university he/she wants!");
@@ -142,20 +142,20 @@ public class Student {
     }
 
     public void endFineArt() {
-        System.out.println("隐藏结局：成为美术生度过快乐的一生。>v<也是作者的愿望哦。。。");
+        System.out.println("art student end");
     }
 
-    //EFFECT: 加时间
+    //EFFECT:
     public void addTime(Activities a) {
         int actTime = a.getTime();
         time += actTime;
     }
 
 
-    //EFFECT: 加pressure
+    //EFFECT: pressure
     public void addPressure(Activities a) {
-        Boolean courseOrPlay = a.getcourseOrPlay();//T：上课 F:玩
-        Boolean  activityType = a.getActivityType();//T：理科 F：文科  T：运动 F：安静爱好
+        Boolean courseOrPlay = a.getcourseOrPlay();
+        Boolean  activityType = a.getActivityType();
         int actTime = a.getTime();
         if (courseOrPlay) {
             if (preference == activityType) {
@@ -287,14 +287,14 @@ public class Student {
         }
     }
 
-    // 过了
+
     //REQUIRES: time must be greater or equals to 0.
     //EFFECT: detect whether the time is less than or equals to the remaining time. If yes return true, vice versa.
     public boolean validTime(int time) {
         return time <= (totalTimeTograduate - this.time);
     }
 
-    // 过了
+
     //REQUIRES: time of the student must be less than totalTimeTograduate, since this method will only be called as
     // the game does not come to the end. And time must be greater or equals to 0.
     //EFFECT: return the remaining time of the student (totalTimeTograduate - this.time).
@@ -302,7 +302,7 @@ public class Student {
         return (totalTimeTograduate - this.time);
     }
 
-    // 过了
+
     //REQUIRES: this method will only be called when the game comes to the end. So either the pressure exceeds limit
     // or the rime exceed limit will happen.
     //EFFECT: return true if the pressure exceeds limit, false otherwise.

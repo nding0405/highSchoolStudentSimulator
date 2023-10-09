@@ -28,7 +28,7 @@ public class GameStarter extends Thread {
     private static final String openmindedSix = "Please answer the following questions as they will be crucial for "
             + "your child's subject selection.";
     private static final String scienceAnswer2 = "You: Of course you must choose science!"
-            + " It's essential for you to secure a well-paid job in the future! "
+            + " It's essential for you to secure a well-paid job " + "\n" + "in the future! "
             + "You MUST study hard in your third year to get into a good university; "
             + "otherwise, you'll be letting your parents down! Everything I do is for your sake!";
     private static final String scienceAnswer1 = "You: Of course, I give fully respect to every choice you make. "
@@ -38,6 +38,8 @@ public class GameStarter extends Thread {
     private static final String findArtAnswer2 = "You: Absolutely not! Do you even realize how much will it take to "
             + "study arts? Will you be able to find a job afterwards? There's absolutely no room for negotiation on "
             + "this matter! (in a stern tone)";
+    private static final String be1 = "BADENDING: Your child get depression and tried to kill her/himself.";
+    private static final String be2 = "BADENDING: Your child get depression and can't go for school.";
 
     // EFFECTS: create a new GameStarter object.
     public GameStarter() {
@@ -63,8 +65,9 @@ public class GameStarter extends Thread {
         initializeParent();
         Thread.sleep(1000);
         askOpenminded();
-        Thread.sleep(1000);
+        input.nextLine();
         student.studentProfile();
+        input.nextLine();
         String operation;
         Boolean goOn = true;
         while (goOn) {
@@ -74,7 +77,46 @@ public class GameStarter extends Thread {
             processOperation(operation);
             goOn = !(student.detectEnding());
         }
-        student.endChoice();
+        gameEndNotification();
+    }
+
+    //EFFECTS: printing out the notification for the user that tells the game has ended. Call "student.endChoice()"
+    // method to have the end.
+    private void gameEndNotification() {
+        Boolean dropOrExam = student.dropOrExam();
+        if (dropOrExam) {
+            System.out.println("GAME END: The pressure of the student exceeds limit...");
+            dropSchoolEnd();
+        } else {
+            System.out.println("It's time to take the final exam!(BACKSPACE to go on)");
+            input.nextLine();
+            int totScore = student.getKnowledge().takeExam(student.getScienceOrArtForExam());
+            student.endChoice(totScore);
+        }
+    }
+
+    //REQUIRES: the pressure of the student is greater or equals to the maximum.
+    //EFFECT: printing out the end that the student drops the school
+    private void dropSchoolEnd() {
+        System.out.println(studentName + ": Do I have to go for school? Does it make any sense? Anyway... "
+                + "I've done so much and I'm tired, but I still can't make you satisfy. "
+                + "I don't want to go to school anymore");
+        input.nextLine();
+        System.out.println("A- It's not the excuse.");
+        System.out.println("B- I'm sorry I give you so much pressure");
+        String choice = input.next();
+        while (!choice.equalsIgnoreCase("a") && !choice.equalsIgnoreCase("b")) {
+            System.out.println("Invalid input! Please enter 'A' or 'B'!(not case sensitive >v<!)");
+            choice = input.next();
+        }
+        if (choice.equalsIgnoreCase("a")) {
+            System.out.println("You: It's not the excuse, you are just too lazy!");
+            System.out.println(studentName + ": ......" + "\n" + be1);
+        } else {
+            System.out.println("You: I'm sorry I give you so much pressure, I won't do that again...");
+            System.out.println(studentName + ": Thank you " + gender + "but I'm really tired..." + "\n" + be2);
+        }
+
     }
 
 
@@ -139,7 +181,7 @@ public class GameStarter extends Thread {
         System.out.println(studentName + ":" + gender
                 + " I prefer arts and I'm more inclined to choose subjects like politics and history.");
         input.nextLine();
-        System.out.println("A-'Of course!" + " I supports any choice you make!'");
+        System.out.println("A- Of course! I supports any choice you make!'");
         System.out.println("B- Well, we need to talk about it.");
         choice = input.next();
         while (!choice.equalsIgnoreCase("a") && !choice.equalsIgnoreCase("b")) {
@@ -170,7 +212,7 @@ public class GameStarter extends Thread {
                 + "! I promise I will do it well in the college entrance exam!");
         input.nextLine();
         System.out.println("A- (sigh, reluctantly agree.)");
-        System.out.println("B- 'Strongly disagree.'");
+        System.out.println("B- Strongly disagree.");
         String choice = input.next();
         while (!choice.equalsIgnoreCase("a") && !choice.equalsIgnoreCase("b")) {
             System.out.println("Invalid input! Please enter 'A' or 'B'!(not case sensitive >v<!)");
@@ -197,14 +239,14 @@ public class GameStarter extends Thread {
         System.out.println(studentName + ":" + gender + " I prefer science and I'm more inclined to choose subjects "
                 + "like physics chemistry and biology.");
         input.nextLine();
-        System.out.println("A-'Of course!" + " I agree because I love you.");
+        System.out.println("A- Of course! I agree because I love you.");
         System.out.println("B- Yes, I agree because it's gonna be easier to find a job and we need money.");
         choice = input.next();
         while (!choice.equalsIgnoreCase("a") && !choice.equalsIgnoreCase("b")) {
             System.out.println("Invalid input! Please enter 'A' or 'B'!(not case sensitive >v<!)");
             choice = input.next();
         }
-        if (choice.equals("b")) {
+        if (choice.equalsIgnoreCase("b")) {
             System.out.println(scienceAnswer2);
             System.out.println(studentName + ": Why do you always give me so much pressure!"
                     + "(sad and angry, run back to his/her room)");
@@ -219,9 +261,9 @@ public class GameStarter extends Thread {
     //EFFECT: 孩子喜欢美术父母问题
     private void fineArtQuestions() {
         String choice;
+        input.nextLine();
         System.out.println(studentName + ":" + gender + " I really really love drawing and I want to go for "
                 + "an art colleges...");
-        input.nextLine();
         System.out.println("A- Of course!");
         System.out.println("B- No way!");
         choice = input.next();
@@ -229,7 +271,7 @@ public class GameStarter extends Thread {
             System.out.println("Invalid input! Please enter 'A' or 'B'!(not case sensitive >v<!)");
             choice = input.next();
         }
-        if (choice.equals("a") || choice.equals("A")) {
+        if (choice.equalsIgnoreCase("a")) {
             System.out.println(findArtAnswer1);
             System.out.println(studentName + ": Thank you so much and I love you " + gender + "!");
             student.setSelectionAgree("f", 1);
@@ -278,7 +320,7 @@ public class GameStarter extends Thread {
     // EFFECTS: let the user add course or view schedule depending on the input.
     public void processOperation(String operation) throws InterruptedException {
         Activities a = new Activities("a",0,true,true);
-        if (operation.equals("add")) {
+        if (operation.equalsIgnoreCase("add")) {
             showSelection();
             addingInstruction();
             String activitySelection = input.next();
@@ -309,11 +351,14 @@ public class GameStarter extends Thread {
             String next = input.next();
             try {
                 time = Integer.parseInt(next);
-                assertTrue(student.validTime(time));
-                validTime = true;
+                if (student.validTime(time)) {
+                    validTime = true;
+                } else {
+                    System.out.println("This input exceed maximum!" + "Please try again!"
+                            + "(Maximum = " + student.getRemainingTime() + " )");
+                }
             } catch (NumberFormatException e) {
-                System.out.println("This input is not an integer or the time exceed maximum!"
-                        + "- Please try again!" + "(Maximum = " + student.getRemainingTime() + " )");
+                System.out.println("This input is not an integer! Please try again!");
             }
         }
         a.findActivity(activitySelection,time);

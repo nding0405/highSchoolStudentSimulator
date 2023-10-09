@@ -13,33 +13,44 @@ class StudentTest {
     private Student testStudent2;
     private Student testStudent3;
     private Student testStudent4;
+    private Student testStudent5;
     private Activities a1;
     private Activities a2;
     private Activities a3;
     private Activities a4;
     private Activities a5;
-    private static double courseFitpressureIndex = 0.9;
+    private static double courseFitpressureIndex = 0.5;
     private static double courseUnFitpressureIndex = 1.3;
     private static double courseFitKnowledgeIndex = 1.08;
     private static double courseUnFitKnowledgeIndex = 0.8;
     private static double playFitPressureIndex = 1.0;
     private static double playUnFitPressureIndex = 0.4;
     private static double loseKnowledgeWhenPlayIndex = 0.25;
+    private static int totalTimeTograduate = 1000;
+    private static int maxPressure = 600;
 
     @BeforeEach
     void setupStudent() {
         testStudent1 = new Student("I+A");
         testStudent1.setChr(false);
         testStudent1.setPreference(false);
+        testStudent1.setFineart(false);
         testStudent2 = new Student("I+S");
         testStudent2.setChr(false);
         testStudent2.setPreference(true);
+        testStudent2.setFineart(false);
         testStudent3 = new Student("E+A");
         testStudent3.setChr(true);
         testStudent3.setPreference(false);
+        testStudent3.setFineart(false);
         testStudent4 = new Student("E+S");
         testStudent4.setChr(true);
         testStudent4.setPreference(true);
+        testStudent4.setFineart(false);
+        testStudent5 = new Student("FineArt");
+        testStudent5.setChr(false);
+        testStudent5.setPreference(false);
+        testStudent5.setFineart(true);
         a1 = new Activities("a1",100, true,true);//理科课
         a2 = new Activities("a2",10,true,false);//文科课
         a3 = new Activities("a3",1000,false,true);//户外活动
@@ -50,12 +61,19 @@ class StudentTest {
     @Test
     void testConstructor() {
         ArrayList<Activities> testList = new ArrayList<>();
+        assertEquals(0, testStudent1.getKnowledge().getS1Knowledge());
+        assertEquals(0, testStudent1.getKnowledge().getS2Knowledge());
+        assertEquals(0, testStudent1.getKnowledge().getS3Knowledge());
+        assertEquals(0,testStudent1.getTime());
         assertEquals(0,testStudent1.getPressure());
-        assertEquals(0,testStudent1.getKnowledge());
         assertEquals("I+A",testStudent1.getName());
         assertEquals(testList,testStudent1.getSchedule());
         assertFalse(testStudent1.getChr());
         assertFalse(testStudent1.getPreference());
+        assertFalse(testStudent1.getLoveFineArt());
+        assertEquals("A", testStudent1.getSubjectSelectionOne());
+        assertEquals("B", testStudent1.getSubjectSelectionTwo());
+        assertEquals("C", testStudent1.getSubjectSelectionThree());
     }
 
     @Test
@@ -157,6 +175,42 @@ class StudentTest {
         assertEquals(s.getKnowledge(), eptKnowledge);
         List<Activities> exptList = s.getSchedule();
         assertEquals(exptList.get(0) ,a);
+    }
+
+    @Test
+    void testExamOrdrop() { //finished and passed
+        testStudent1.setPressure(maxPressure);
+        assertTrue(testStudent1.dropOrExam());
+
+        testStudent1.setPressure(maxPressure + 10);
+        assertTrue(testStudent1.dropOrExam());
+
+        testStudent2.setTime(totalTimeTograduate);
+        assertFalse(testStudent2.dropOrExam());
+
+        testStudent2.setTime(totalTimeTograduate + 10);
+        assertFalse(testStudent2.dropOrExam());
+    }
+
+    @Test
+    void testGetRemainingTime() { //finished and passed
+        assertEquals(totalTimeTograduate, testStudent1.getRemainingTime());//case that no activities are added
+        testStudent1.setTime(500);
+        assertEquals(500, testStudent1.getRemainingTime());//case that time = remaining time
+        testStudent1.setTime(totalTimeTograduate - 1);
+        assertEquals(1, testStudent1.getRemainingTime());//boundary case
+    }
+
+    @Test
+    void testValidTime() { //finished and passed
+        testStudent1.setTime(0);
+        assertTrue(testStudent1.validTime(1000));//case when no activities are added
+        testStudent1.setTime(300);
+        assertTrue( testStudent1.validTime(700));//case when the time is exactly the same as remaining time.
+        testStudent1.setTime(300);
+        assertTrue( testStudent1.validTime(500));//case when the time is less than the remaining time.
+        testStudent1.setTime(300);
+        assertFalse( testStudent1.validTime(800));//case when the time greater than the remaining time.
     }
 }
 

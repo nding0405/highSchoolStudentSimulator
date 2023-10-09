@@ -20,10 +20,10 @@ public class Activities {
     private static Activities Politics = new Activities("Politics", 0, true, false);
 
     private static Activities Jogging = new Activities("Jogging", 0, false, true);
-    private static Activities Hangout = new Activities("Hangout with friends", 0, false, true);
+    private static Activities Hangout = new Activities("Hangout_with_friends", 0, false, true);
     private static Activities Hiking = new Activities("Hiking", 0, false, true);
     private static Activities Drawing = new Activities("Drawing", 0, false, false);
-    private static Activities Piano =  new Activities("playing the piano", 0, false, false);
+    private static Activities Piano =  new Activities("playing_the_piano", 0, false, false);
     private static Activities VideoGame = new Activities("VideoGame", 0, false, false);
 
     private static final List<Activities> activityList = setupActList(new ArrayList<>());
@@ -58,7 +58,7 @@ public class Activities {
     public void findActivity(String name, int time) {
         int index = 0;
         String actName = activityNameList.get(index);
-        while (!(actName.equals(name))) {
+        while (!(actName.equalsIgnoreCase(name))) {
             index++;
             actName = activityNameList.get(index);
         }
@@ -118,28 +118,44 @@ public class Activities {
     }
 
     //REQUIRES:at MOST one of the string is the same as the current activities' name.
-    //EFFECTS: check if the current Activities name is one of the three input Strings. If yes, return true,
-    // return false otherwise.
+    //EFFECTS: check if the current Activities name is one of the three input Strings or one of "mandarin" "math"
+    // "english"(case does not matter). If yes, return true, return false otherwise.
     public boolean actInSelection(String s1, String s2, String s3) {
         String actName = getName();
-        if (actName.equals(s1) || actName.equals(s2) || actName.equals(s3)) {
+        if (actName.equalsIgnoreCase(s1) || actName.equalsIgnoreCase(s2) || actName.equalsIgnoreCase(s3)
+                || actName.equalsIgnoreCase("mandarin")
+                || actName.equalsIgnoreCase("math")
+                || actName.equalsIgnoreCase("english")) {
             return true;
         } else {
             return false;
         }
     }
 
-    //REQUIRES:There is EXACTLY ONE string in the parameters equals to the current activities' name.
-    //EFFECTS: return the index of the parameter who is equals to the activities' name.
+    //REQUIRES:There is EXACTLY ONE string in the parameters and "mandarin" "math" "english" equals to the current
+    // activities' name.
+    //EFFECTS: return the index of the parameter which is equals to the activities' name or the index of "mandarin"
+    // "math" "english" which is equals to the activities' name
     // (ex. the activities name is "a" and the parameter s1 is "a", return 1)
+    // (ex. the activities name is "a" and the parameter s2 is "a", return 2)
+    // (ex. the activities name is "a" and the parameter s3 is "a", return 3)
+    // (ex. the activities name is "mandarin" , return 4)
+    // (ex. the activities name is "math" , return 5)
+    // (ex. the activities name is "english" , return 6)
     public int getCorrespondingIndex(String s1, String s2, String s3) {
         String actName = getName();
-        if (actName.equals(s1)) {
+        if (actName.equalsIgnoreCase(s1)) {
             return 1;
-        } else if (actName.equals(s2)) {
+        } else if (actName.equalsIgnoreCase(s2)) {
             return 2;
-        } else {
+        } else if (actName.equalsIgnoreCase(s3)) {
             return 3;
+        } else if (actName.equalsIgnoreCase("mandarin")) {
+            return 4;
+        } else if (actName.equalsIgnoreCase("math")) {
+            return 5;
+        } else {
+            return 6;
         }
     }
 }

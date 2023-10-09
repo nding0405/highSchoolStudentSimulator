@@ -8,18 +8,12 @@ public class Student {
     private static final String studying2 = "the student is studying";
     private static final String relaxing1 = "the student is relaxing";
     private static final String relaxing2 = "the student is relaxing";
-    private static final String end1 = " hates school and dropped the school!";
-    private static final String end2 = " is an idoit and fail to enter an university";
-    private static final String end3 = " got into an non-well-known university";
-    private static final String end4 = " got into a nice university!";
-    private static final String end5 = " got into 1st ranked university!";
-    private static final String end6 = " keeps studying and playing, so he/she missed the university entrance exam...";
-    private static double courseFitpressureIndex = 0.9;
+    private static double courseFitpressureIndex = 0.5;
     private static double courseUnFitpressureIndex = 1.3;
     private static double playFitPressureIndex = 1.0;
     private static double playUnFitPressureIndex = 0.4;
     private static int totalTimeTograduate = 1000;
-    private static int maxPressure = 500;
+    private static int maxPressure = 600;
     private static int parentAgreepressureReduce = 50;
     private static int parentAgreepressurePlus = 30;
     private static int parentDisagreepressurePlus = 80;
@@ -37,6 +31,7 @@ public class Student {
     private String subjectSelectionOne;
     private String subjectSelectionTwo;
     private String subjectSelectionThree;
+    private Boolean scienceOrArtForExam;
 
     //EFFECT: create a new student object with name, accumulated time, pressure and knowledge and an empty schedule.
     // chrType is the type of character of the student, true: love sport, extroverted. false: love arts, introverted.
@@ -49,13 +44,15 @@ public class Student {
         this.knowledge = new Knowledge();
         this.chrType = Math.random() < 0.5;
         this.preference = Math.random() < 0.5;
-        this.loveFineArt = Math.random() < 0.1;
+        this.loveFineArt = Math.random() < 0.05;
         this.subjectSelectionOne = "A";
         this.subjectSelectionTwo = "B";
         this.subjectSelectionThree = "C";
+        this.scienceOrArtForExam = true;
     }
 
 
+    //EFFECT: printing out the profile of the student (includes chrType prefer name and Subjects for final exam)
     public void studentProfile() {
         String name = this.name;
         String subjectSelection1 = subjectSelectionOne;
@@ -68,16 +65,18 @@ public class Student {
         } else {
             character = "introverted";
         }
-        if (preference) {
+        if (loveFineArt) {
+            prefer = "fine art";
+        } else if (preference) {
             prefer = "science";
         } else {
             prefer = "art";
         }
-        System.out.println("-Student Name: " + name + "\n"
-                         + "-Subjects for final exam: " + "Mandarin Math English "
-                         + subjectSelection1 + subjectSelection2 + subjectSelection3 + "\n"
-                         + "Preference: " + prefer + "\n"
-                         + "Character: " + character);
+        System.out.println("Student Profile:" + "\n" + "-Student Name: " + name + "\n"
+                         + "-Subjects for final exam: " + "Mandarin, Math, English, "
+                         + subjectSelection1 + ", " + subjectSelection2 + ", " + subjectSelection3 + "\n"
+                         + "-Subject Preference: " + prefer + "\n"
+                         + "-Character: " + character);
     }
 
 
@@ -87,7 +86,7 @@ public class Student {
     public void addActivity(Activities a) {
         schedule.add(a);
         addTime(a);
-        knowledge.addKnowledge(a, subjectSelectionOne, subjectSelectionTwo, subjectSelectionThree, preference, chrType);
+        knowledge.addKnowledge(a, subjectSelectionOne, subjectSelectionTwo, subjectSelectionThree, preference);
         addPressure(a);
         updateBars();
     }
@@ -112,26 +111,44 @@ public class Student {
     // exceeds or equals to the maximum. Or the total time equals to the maximum.
     public Boolean detectEnding() {
         if (maxPressure <= pressure) {
-            System.out.println("exceed pressure limit");
+//            System.out.println("exceed pressure limit");
             return true;
         } else {
             if (totalTimeTograduate <= time) {
-                System.out.println("exceed time limit");
+//                System.out.println("exceed time limit");
                 return true;
             } else {
-                System.out.println("Game goes on");
+//                System.out.println("Game goes on");
                 return false;
             }
         }
     }
 
-    //EFFECT: 根据数值选择不同结局
-    public void endChoice() {
-
+    //REQUIRES: the time of the student must equals to the maximum, so that this method will be called to
+    // print out the ends.
+    //EFFECT:print out the end according to the score of the student.
+    public void endChoice(int score) {
+        if (score <= 300) { //没大学
+            System.out.println(name + " got a really bad mark on the final and no college provides offer!");
+        } else if (score <= 400) { //三本
+            System.out.println(name + " goes for a college.");
+        } else if (score <= 530) { //二本
+            System.out.println(name + " goes for an university.");
+        } else if (score <= 600) { //一本
+            System.out.println(name + " goes for an key university.");
+        } else if (score <= 625) { //211
+            System.out.println(name + " goes for a world-class universities.");
+        } else if (score <= 680) { //985
+            System.out.println(name + " goes for a 'Double First-Class' university.");
+        } else if (score <= 700) { //清北
+            System.out.println(name + " goes for Tsinghua University.");
+        } else {
+            System.out.println(name + " is the Number one scholar and can go for any university he/she wants!");
+        }
     }
 
     public void endFineArt() {
-        System.out.println("成为美术生度过快乐的一生。");
+        System.out.println("隐藏结局：成为美术生度过快乐的一生。>v<也是作者的愿望哦。。。");
     }
 
     //EFFECT: 加时间
@@ -169,11 +186,17 @@ public class Student {
         int s1Knowledge = knowledge.getS1Knowledge();
         int s2Knowledge = knowledge.getS2Knowledge();
         int s3Knowledge = knowledge.getS3Knowledge();
+        int mandarin = knowledge.getMandarinKnowledge();
+        int math = knowledge.getMathKnowledge();
+        int english = knowledge.getEnglishKnowledge();
         System.out.println("Time Bar: " + timeNow + "/" + totalTimeTograduate);
         System.out.println("Pressure Bar: " + pressureNow + "/" + maxPressure);
         System.out.println("Knowledge Bar: " + "- " + subjectSelectionOne + ":" +  s1Knowledge);
         System.out.println("               " + "- " + subjectSelectionTwo + ":" +  s2Knowledge);
         System.out.println("               " + "- " + subjectSelectionThree + ":" +  s3Knowledge);
+        System.out.println("               " + "- " + "Mandarin" + ":" +  mandarin);
+        System.out.println("               " + "- " + "Math" + ":" +  math);
+        System.out.println("               " + "- " + "English" + ":" +  english);
     }
 
     //EFFECT: rendering different student images depend on the activity type.
@@ -212,6 +235,7 @@ public class Student {
             subjectSelectionOne = "history";
             subjectSelectionTwo = "geology";
             subjectSelectionThree = "politics";
+            setScienceOrArtForExam(false);
             if (fstOrScnd == 1) {
                 pressure -= parentAgreepressureReduce;
             } else {
@@ -221,6 +245,7 @@ public class Student {
             subjectSelectionOne = "physics";
             subjectSelectionTwo = "biology";
             subjectSelectionThree = "chemistry";
+            setScienceOrArtForExam(true);
             if (fstOrScnd == 1) {
                 pressure -= parentAgreepressureReduce;
             } else {
@@ -232,9 +257,8 @@ public class Student {
     }
 
 
-
     //REQUIRES: prefer must be one of "a"(stand for art) "fa"(stand for student prefer fineart but user want the student
-    // to choose art) or "fs"(stand for student prefer fineart but user want the student to choose science).
+    // to choose art) or "fs"(stand for student prefer fine art but user want the student to choose science).
     // Noted that the parameter "prefer" cannot be "s" (stand for science), because if the student prefer science,
     // user must agree with the student's choice.
     //MODIFIED: this
@@ -244,33 +268,56 @@ public class Student {
     // set the selection to "history" "geology" and "politics" respectively. if the student prefer fine art but user
     // want the student to choose science (prefer = "fs"), set the selection to "physics" "biology"
     // and "chemistry" respectively.
-    // Pressure increment: in this method, increase the student pressure by "parentDisagreepressurePlus" regardless to
-    // the value of input parameter.
+    // Pressure increment: in this method, increase the student pressure by "parentDisagreepressurePlus" if prefer = "a"
+    // Increase the student pressure by "parentDisagreepressurePlus * 3" if prefer = "fa"
+    // Increase the student pressure by "parentDisagreepressurePlus * 5" if prefer = "fs",
     public void setSelectionDisAgree(String prefer) {
-        pressure += parentDisagreepressurePlus;
         if (prefer.equals("a")) {
             subjectSelectionOne = "physics";
             subjectSelectionTwo = "biology";
             subjectSelectionThree = "chemistry";
+            setScienceOrArtForExam(true);
+            pressure += parentDisagreepressurePlus;
         } else if (prefer.equals("fa")) {
             subjectSelectionOne = "history";
             subjectSelectionTwo = "geology";
             subjectSelectionThree = "politics";
+            setScienceOrArtForExam(false);
+            pressure += parentDisagreepressurePlus * 3;
         } else {
             subjectSelectionOne = "physics";
             subjectSelectionTwo = "biology";
             subjectSelectionThree = "chemistry";
+            setScienceOrArtForExam(false);
+            pressure += parentDisagreepressurePlus * 5;
         }
     }
 
+    // 过了
+    //REQUIRES: time must be greater or equals to 0.
     //EFFECT: detect whether the time is less than or equals to the remaining time. If yes return true, vice versa.
     public boolean validTime(int time) {
         return time <= (totalTimeTograduate - this.time);
     }
 
+    // 过了
+    //REQUIRES: time of the student must be less than totalTimeTograduate, since this method will only be called as
+    // the game does not come to the end. And time must be greater or equals to 0.
     //EFFECT: return the remaining time of the student (totalTimeTograduate - this.time).
     public int getRemainingTime() {
         return (totalTimeTograduate - this.time);
+    }
+
+    // 过了
+    //REQUIRES: this method will only be called when the game comes to the end. So either the pressure exceeds limit
+    // or the rime exceed limit will happen.
+    //EFFECT: return true if the pressure exceeds limit, false otherwise.
+    public Boolean dropOrExam() {
+        if (pressure >= maxPressure) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
 
@@ -311,9 +358,29 @@ public class Student {
         return this.preference;
     }
 
+    //EFFECT: get SubjectSelectionOne
+    public String getSubjectSelectionOne() {
+        return this.subjectSelectionOne;
+    }
+
+    //EFFECT: get SubjectSelectionTwo
+    public String getSubjectSelectionTwo() {
+        return this.subjectSelectionTwo;
+    }
+
+    //EFFECT: get SubjectSelectionThree
+    public String getSubjectSelectionThree() {
+        return this.subjectSelectionThree;
+    }
+
     //EFFECT: get whether the student love fine art
     public Boolean getLoveFineArt() {
         return this.loveFineArt;
+    }
+
+    //EFFECT: get whether the student choose to take science or art exam
+    public Boolean getScienceOrArtForExam() {
+        return this.scienceOrArtForExam;
     }
 
     //setters
@@ -322,8 +389,32 @@ public class Student {
         this.chrType = chr;
     }
 
+    //MODIFIED:this
     //EFFECT: set subject preference of the student
     public void setPreference(Boolean prefer) {
         this.preference = prefer;
+    }
+
+    //MODIFIED:this
+    //EFFECT: set loveFineArt of the student
+    public void setFineart(boolean b) {
+        this.loveFineArt = b;
+    }
+
+    //MODIFIED:this
+    //EFFECT: set pressure of the student
+    public void setPressure(int p) {
+        this.pressure = p;
+    }
+
+    //MODIFIED:this
+    //EFFECT: set time of the student
+    public void setTime(int i) {
+        this.time = i;
+    }
+
+    //EFFECT: set whether the student choose to take science or art exam, true for science false for art.
+    public void setScienceOrArtForExam(Boolean b) {
+        this.scienceOrArtForExam = b;
     }
 }

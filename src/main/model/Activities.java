@@ -9,22 +9,22 @@ public class Activities {
     private Boolean courseOrPlay;// 课程还是游乐
     private Boolean activityType;// true: 运动/science false: 静态/art
 
-    private static Activities Mandarin = new Activities("Mandarin", 0, true, false);
-    private static Activities English = new Activities("English", 0, true, false);
-    private static Activities Math = new Activities("Math", 0, true, true);
-    private static Activities Physics = new Activities("Physics", 0, true, true);
-    private static Activities Chemistry = new Activities("Chemistry", 0, true, true);
-    private static Activities Biology = new Activities("Biology", 0, true, true);
-    private static Activities History = new Activities("History", 0, true, false);
-    private static Activities Geology = new Activities("Geology", 0, true, false);
-    private static Activities Politics = new Activities("Politics", 0, true, false);
+    private static final Activities Mandarin = new Activities("Mandarin", 0, true, false);
+    private static final Activities English = new Activities("English", 0, true, false);
+    private static final Activities Math = new Activities("Math", 0, true, true);
+    private static final Activities Physics = new Activities("Physics", 0, true, true);
+    private static final Activities Chemistry = new Activities("Chemistry", 0, true, true);
+    private static final Activities Biology = new Activities("Biology", 0, true, true);
+    private static final Activities History = new Activities("History", 0, true, false);
+    private static final Activities Geology = new Activities("Geology", 0, true, false);
+    private static final Activities Politics = new Activities("Politics", 0, true, false);
 
-    private static Activities Jogging = new Activities("Jogging", 0, false, true);
-    private static Activities Hangout = new Activities("Hangout_with_friends", 0, false, true);
-    private static Activities Hiking = new Activities("Hiking", 0, false, true);
-    private static Activities Drawing = new Activities("Drawing", 0, false, false);
-    private static Activities Piano =  new Activities("playing_the_piano", 0, false, false);
-    private static Activities VideoGame = new Activities("VideoGame", 0, false, false);
+    private static final Activities Jogging = new Activities("Jogging", 0, false, true);
+    private static final Activities Hangout = new Activities("Hangout_with_friends", 0, false, true);
+    private static final Activities Hiking = new Activities("Hiking", 0, false, true);
+    private static final Activities Drawing = new Activities("Drawing", 0, false, false);
+    private static final Activities Piano =  new Activities("playing_the_piano", 0, false, false);
+    private static final Activities VideoGame = new Activities("VideoGame", 0, false, false);
 
     private static final List<Activities> activityList = setupActList(new ArrayList<>());
     private static final List<String> activityNameList = setupNameList(new ArrayList<>());
@@ -48,11 +48,7 @@ public class Activities {
     //EFFECT: return true if the input is one of the Activities name in the static list "activityNameList", false
     //otherwise;
     public Boolean detectValidActivity(String name) {
-        if (activityNameList.contains(name)) {
-            return true;
-        } else {
-            return false;
-        }
+        return activityNameList.contains(name);
     }
 
     //过了
@@ -81,14 +77,10 @@ public class Activities {
     // "english"(case does not matter). If yes, return true, return false otherwise.
     public boolean actInSelection(String s1, String s2, String s3) {
         String actName = getName();
-        if (actName.equalsIgnoreCase(s1) || actName.equalsIgnoreCase(s2) || actName.equalsIgnoreCase(s3)
+        return (actName.equalsIgnoreCase(s1) || actName.equalsIgnoreCase(s2) || actName.equalsIgnoreCase(s3)
                 || actName.equalsIgnoreCase("mandarin")
                 || actName.equalsIgnoreCase("math")
-                || actName.equalsIgnoreCase("english")) {
-            return true;
-        } else {
-            return false;
-        }
+                || actName.equalsIgnoreCase("english"));
     }
 
     //过了

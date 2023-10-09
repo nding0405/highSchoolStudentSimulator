@@ -5,7 +5,6 @@ import model.Student;
 
 import java.util.Scanner;
 
-import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class GameStarter extends Thread {
     private Scanner input;
@@ -69,7 +68,7 @@ public class GameStarter extends Thread {
         student.studentProfile();
         input.nextLine();
         String operation;
-        Boolean goOn = true;
+        boolean goOn = true;
         while (goOn) {
             showInstructions();
             operation = input.next();
@@ -307,10 +306,9 @@ public class GameStarter extends Thread {
 
     // EFFECT: detect whether the input of the user is "add" or "view".
     // If it is none of them, ask the user to try again until the input is one of "add" and "view".
-    public void detectValidOperation(String operation) throws InterruptedException {
+    public void detectValidOperation(String operation) {
         while (!(operation.equals("add") || operation.equals("view"))) {
             System.out.println("invalid input, please try again!");
-            Thread.sleep(1000);
             showInstructions();
             operation = input.next();
         }
@@ -382,11 +380,6 @@ public class GameStarter extends Thread {
     public void showSelection() {
         Activities a = new Activities("a",0,true,true);
         a.printOutActivities();
-    }
-
-    //EFFECTS: Show the user all activities that already added to the schedule.
-    public void showSchedule() {
-        student.showSchedule();
     }
 
     //MODIFIES: this

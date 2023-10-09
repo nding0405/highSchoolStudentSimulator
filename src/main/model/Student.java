@@ -8,23 +8,23 @@ public class Student {
     private static final String studying2 = "the student is studying";
     private static final String relaxing1 = "the student is relaxing";
     private static final String relaxing2 = "the student is relaxing";
-    private static double courseFitpressureIndex = 0.5;
-    private static double courseUnFitpressureIndex = 1.3;
-    private static double playFitPressureIndex = 1.0;
-    private static double playUnFitPressureIndex = 0.4;
-    private static int totalTimeTograduate = 1000;
-    private static int maxPressure = 600;
-    private static int parentAgreepressureReduce = 50;
-    private static int parentAgreepressurePlus = 30;
-    private static int parentDisagreepressurePlus = 80;
+    private static final double courseFitpressureIndex = 0.5;
+    private static final double courseUnFitpressureIndex = 1.3;
+    private static final double playFitPressureIndex = 1.0;
+    private static final double playUnFitPressureIndex = 0.4;
+    private static final int totalTimeTograduate = 1000;
+    private static final int maxPressure = 600;
+    private static final int parentAgreepressureReduce = 50;
+    private static final int parentAgreepressurePlus = 30;
+    private static final int parentDisagreepressurePlus = 80;
 
 
 
-    private String name;
-    private List<Activities> schedule;
+    private final String name;
+    private final List<Activities> schedule;
     private int time;
     private int pressure;
-    private Knowledge knowledge;
+    private final Knowledge knowledge;
     private Boolean chrType;
     private Boolean preference;
     private Boolean loveFineArt;
@@ -107,20 +107,14 @@ public class Student {
     }
 
 
-    //EFFECT: check if the game end. Return false if does not end, true if end. The game will end if the pressure
+    //EFFECT: check if the game end. Return false, if does not end, true if end. The game will end if the pressure
     // exceeds or equals to the maximum. Or the total time equals to the maximum.
     public Boolean detectEnding() {
         if (maxPressure <= pressure) {
 //            System.out.println("exceed pressure limit");
             return true;
         } else {
-            if (totalTimeTograduate <= time) {
-//                System.out.println("exceed time limit");
-                return true;
-            } else {
-//                System.out.println("Game goes on");
-                return false;
-            }
+            return (totalTimeTograduate <= time);
         }
     }
 
@@ -313,11 +307,7 @@ public class Student {
     // or the rime exceed limit will happen.
     //EFFECT: return true if the pressure exceeds limit, false otherwise.
     public Boolean dropOrExam() {
-        if (pressure >= maxPressure) {
-            return true;
-        } else {
-            return false;
-        }
+        return (pressure >= maxPressure);
     }
 
 

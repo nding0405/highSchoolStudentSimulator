@@ -13,7 +13,7 @@ public class Knowledge {
     private int selectionTwoKnowledge;
     private int selectionThreeKnowledge;
 
-    //过了
+
     //EFFECTS: create a new knowledge object with initialization that all fields are 0.
     public Knowledge() {
         mandarinKnowledge = 0;
@@ -25,7 +25,6 @@ public class Knowledge {
     }
 
 
-    //过了
     //MODIFIED: this
     //EFFECT: Adding knowledge according to the activity. If the activity is of type of "playing", then reduce knowledge
     // for all three sub-knowledge. If the activity type is of type of "course", and the course is one of the three
@@ -33,8 +32,8 @@ public class Knowledge {
     // fits the student preference. If the course type is none of the three selection, do nothing.)
     public void addKnowledge(Activities a, String s1, String s2, String s3, Boolean prefer) {
         int actTime = a.getTime();
-        Boolean courseOrPlay = a.getcourseOrPlay();//true课程false娱乐
-        Boolean courseType = a.getActivityType();//true理科false文科
+        Boolean courseOrPlay = a.getcourseOrPlay();
+        Boolean courseType = a.getActivityType();
         if (!courseOrPlay) {
             mandarinKnowledge -= (int)(loseKnowledgeWhenPlayIndex * actTime);
             mathKnowledge -= (int)(loseKnowledgeWhenPlayIndex * actTime);
@@ -49,7 +48,6 @@ public class Knowledge {
         }
     }
 
-    //过了
     //REQUIRES: index has to be one of 1 2 3 4 5 6.
     //MODIFIED: this
     //EFFECT: Adding knowledge to the corresponding selection bases on fitOrNot. (ex. if fitOrNot is true then use
@@ -64,7 +62,6 @@ public class Knowledge {
         }
     }
 
-    //过了
     //REQUIRES: index has to be one of 1 2 3 4 5 6.
     //MODIFIED: this
     //EFFECT: increase knowledge of the corresponding selection by actTime * courseFitKnowledgeIndex.
@@ -86,7 +83,6 @@ public class Knowledge {
         }
     }
 
-    //过了
     //REQUIRES: index has to be one of 1 2 3 4 5 6.
     //MODIFIED: this
     //EFFECT: increase knowledge of the corresponding selection by actTime * courseUnFitKnowledgeIndex.
@@ -108,7 +104,7 @@ public class Knowledge {
         }
     }
 
-    //过了
+
     //EFFECT: generate and print out the score for each subject according to the corresponding knowledge
     // of the student.
     // The basic score for Mandarin Math and English is (corresponding knowledge / fullKnowledge) * 150
@@ -126,7 +122,7 @@ public class Knowledge {
         return (mandarinScore + mathScore + englishScore + combinedScore);
     }
 
-    //过了
+
     //EFFECTS: print out the basic score for Mandarin, which is (corresponding knowledge / fullKnowledge) * 150
     // when the Mandarinknowledge is less than fullKnowledge. It will be 150 if the knowledge is greater than or equals
     // to fullKnowledge. Return the calculated score.
@@ -141,7 +137,7 @@ public class Knowledge {
         }
     }
 
-    //过了
+
     //EFFECTS: print out the basic score for math, which is (corresponding knowledge / fullKnowledge) * 150
     // when the Mathknowledge is less than fullKnowledge. It will be 150 if the knowledge is greater than or equals
     // to fullKnowledge. Return the calculated score.
@@ -156,7 +152,7 @@ public class Knowledge {
         }
     }
 
-    //过了
+
     //EFFECTS: print out the basic score for english, which is (corresponding knowledge / fullKnowledge) * 150
     // when the englishknowledge is less than fullKnowledge. It will be 150 if the knowledge is greater than or equals
     // to fullKnowledge. Return the calculated score.
@@ -171,7 +167,7 @@ public class Knowledge {
         }
     }
 
-    //过了
+
     //EFFECTS: Calculate and print out the basic score for selection 1 selection 2 selection 3,
     // which is (corresponding knowledge / (fullKnowledge * 3)) * 300 when the selectionOneKnowledge is less than
     // fullKnowledge * 3. It will be 300 if the knowledge is greater than or equals to fullKnowledge.

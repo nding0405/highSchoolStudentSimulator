@@ -21,7 +21,7 @@ public class GameStarter extends Thread {
             + "AND either 'Combined Science(includes Physics Biology and Chemistry)'"
             + "\n" + "or 'Combined Arts(includes Geology History and Politics)'";
     private static final String openmindedFour = "The choice for art and science will influence the major they can "
-            + "apply for their university" + "\n" + "————Art student cannot choose science major and vice versa.";
+            + "apply for their university." + "\n" + "Art student cannot choose science major and vice versa.";
     private static final String openmindedFive = "However, in China, there are relatively less job opportunities for "
             + "students in art than student in science.";
     private static final String openmindedSix = "Please answer the following questions as they will be crucial for "
@@ -153,7 +153,7 @@ public class GameStarter extends Thread {
     }
 
 
-    //EFFECT: 问用户几个问题根据问题答案产生开明度。
+    //EFFECT:
     public void openMindQuestions(String prefer) {
         System.out.println(studentName + ":" + gender
                 + ", I'm about to enter the third year of high school. "
@@ -322,13 +322,13 @@ public class GameStarter extends Thread {
             showSelection();
             addingInstruction();
             String activitySelection = input.next();
-            while (!(a.detectValidActivity(activitySelection))) { //检测输入是否合理
+            while (!(a.detectValidActivity(activitySelection))) {
                 System.out.println("***Invalid activity! Please try again!***");
                 activitySelection = input.next();
             }
             findActivity(activitySelection, a);
             student.addActivity(a);
-            System.out.println(activitySelection + " is successfully added"); //示意加课成功
+            System.out.println(activitySelection + " is successfully added");
             student.studentAnime(a);
         } else {
             student.showSchedule();

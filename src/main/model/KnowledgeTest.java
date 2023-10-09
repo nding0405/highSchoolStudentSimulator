@@ -30,11 +30,11 @@ public class KnowledgeTest {
         k2 = new Knowledge();
         k3 = new Knowledge();
         k4 = new Knowledge();
-        a1 = new Activities("a1",100, true,true);//理科课
-        a2 = new Activities("a2",10,true,false);//文科课
-        a3 = new Activities("a3",1000,false,true);//户外活动
-        a4 = new Activities("a4",100,false,false);//室内活动
-        a5 = new Activities("Mandarin",100,true,false);//文科课
+        a1 = new Activities("a1",100, true,true);
+        a2 = new Activities("a2",10,true,false);
+        a3 = new Activities("a3",1000,false,true);
+        a4 = new Activities("a4",100,false,false);
+        a5 = new Activities("Mandarin",100,true,false);
         a6 = new Activities("Math",100,true,true);
         a7 = new Activities("English",100, true,false);
     }
@@ -54,25 +54,25 @@ public class KnowledgeTest {
         encapsulateAddKnowledgeTest(k1, a4, "a1", "a2", "a3", true,
                 (int)(-loseKnowledgeWhenPlayIndex * 100), (int)(-loseKnowledgeWhenPlayIndex * 100),
                 (int)(-loseKnowledgeWhenPlayIndex * 100), (int)(-loseKnowledgeWhenPlayIndex * 100),
-                (int)(-loseKnowledgeWhenPlayIndex * 100), (int)(-loseKnowledgeWhenPlayIndex * 100));//活动
+                (int)(-loseKnowledgeWhenPlayIndex * 100), (int)(-loseKnowledgeWhenPlayIndex * 100));
 
         encapsulateAddKnowledgeTest(k2, a2, "a", "b", "c", true,
-                0, 0, 0, 0, 0, 0);//课程不在选科内
+                0, 0, 0, 0, 0, 0);
 
         encapsulateAddKnowledgeTest(k3, a1, "a1", "b", "c", true,
-                (int)(courseFitKnowledgeIndex * 100), 0, 0, 0, 0, 0);//课程在选科内且符合偏好
+                (int)(courseFitKnowledgeIndex * 100), 0, 0, 0, 0, 0);
 
         encapsulateAddKnowledgeTest(k4, a1, "a1", "b", "c", false,
-                (int)(courseUnFitKnowledgeIndex * 100), 0, 0,0,0,0);//课程在选科内且不符合偏好
+                (int)(courseUnFitKnowledgeIndex * 100), 0, 0,0,0,0);
         setup();
         encapsulateAddKnowledgeTest(k1, a5, "a", "b", "c", true,
-                0, 0, 0, (int)(courseUnFitKnowledgeIndex * 100), 0,0);//课程在选科内且不符合
+                0, 0, 0, (int)(courseUnFitKnowledgeIndex * 100), 0,0);
 
         encapsulateAddKnowledgeTest(k2, a6, "a1", "b", "c", true,
-                0, 0, 0, 0, (int)(courseFitKnowledgeIndex * 100), 0);//课程在选科内且符合偏好
+                0, 0, 0, 0, (int)(courseFitKnowledgeIndex * 100), 0);
 
         encapsulateAddKnowledgeTest(k3, a7, "a1", "b", "c", false,
-                0, 0, 0, 0, 0, (int)(courseFitKnowledgeIndex * 100));//课程在选科内且符合偏好
+                0, 0, 0, 0, 0, (int)(courseFitKnowledgeIndex * 100));
     }
 
     @Test
@@ -81,7 +81,7 @@ public class KnowledgeTest {
         encapsulateAddKnowledgeTest(k1, a4, "a1", "a2", "a3", true,
                 (int)(-loseKnowledgeWhenPlayIndex * 200), (int)(-loseKnowledgeWhenPlayIndex * 200),
                 (int)(-loseKnowledgeWhenPlayIndex * 200), (int)(-loseKnowledgeWhenPlayIndex * 200),
-                (int)(-loseKnowledgeWhenPlayIndex * 200), (int)(-loseKnowledgeWhenPlayIndex * 200));//活动
+                (int)(-loseKnowledgeWhenPlayIndex * 200), (int)(-loseKnowledgeWhenPlayIndex * 200));
     }
 
     void encapsulateAddKnowledgeTest(Knowledge k, Activities a, String s1, String s2, String s3, Boolean prefer,

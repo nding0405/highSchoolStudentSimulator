@@ -51,7 +51,10 @@ public class Activities {
         }
     }
 
-    // EFFECT: 根据name找到不同的模型，然后根据时间和模型求出types。
+    // EFFECT: find the corresponding activities object
+    // and assign the input time to the corresponding activities. Assign the fully prepared activities object
+    // (which means all fields in activities class are correctly assigned to the object regards to the user input)
+    // to the object referenced by the parameter "a".
     public void findActivity(String name, int time) {
         int index = 0;
         String actName = activityNameList.get(index);
@@ -112,5 +115,31 @@ public class Activities {
         list.add(Piano);
         list.add(VideoGame);
         return list;
+    }
+
+    //REQUIRES:at MOST one of the string is the same as the current activities' name.
+    //EFFECTS: check if the current Activities name is one of the three input Strings. If yes, return true,
+    // return false otherwise.
+    public boolean actInSelection(String s1, String s2, String s3) {
+        String actName = getName();
+        if (actName.equals(s1) || actName.equals(s2) || actName.equals(s3)) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    //REQUIRES:There is EXACTLY ONE string in the parameters equals to the current activities' name.
+    //EFFECTS: return the index of the parameter who is equals to the activities' name.
+    // (ex. the activities name is "a" and the parameter s1 is "a", return 1)
+    public int getCorrespondingIndex(String s1, String s2, String s3) {
+        String actName = getName();
+        if (actName.equals(s1)) {
+            return 1;
+        } else if (actName.equals(s2)) {
+            return 2;
+        } else {
+            return 3;
+        }
     }
 }

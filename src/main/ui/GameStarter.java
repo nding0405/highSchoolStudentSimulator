@@ -1,18 +1,15 @@
 package ui;
 
 import model.Activities;
-import model.Parent;
 import model.Student;
 
-import java.awt.event.KeyEvent;
 import java.util.Scanner;
 
-import static java.awt.event.KeyEvent.*;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class GameStarter extends Thread {
     private Scanner input;
     private Student student;
-    private Parent parent;
     private String gender;
     private String studentName;
 
@@ -22,14 +19,25 @@ public class GameStarter extends Thread {
             "Every students need to take a final exam at the end of their third year of high school."
                     + "\n" + "The university they can enter is purely depend on the score of that one-chance exam.";
     private static final String openmindedThree = "The subjects of the final exam are: 'Mandarin' 'Math' 'English' "
-            + "\n" + "AND either 'Combined Science(includes Physics Biology and Chemistry)'"
+            + "AND either 'Combined Science(includes Physics Biology and Chemistry)'"
             + "\n" + "or 'Combined Arts(includes Geology History and Politics)'";
     private static final String openmindedFour = "The choice for art and science will influence the major they can "
-            + "apply for" + "\n" + "their university————Art student cannot choose science major and vice versa.";
+            + "apply for their university" + "\n" + "————Art student cannot choose science major and vice versa.";
     private static final String openmindedFive = "However, in China, there are relatively less job opportunities for "
-            + "\n" + "students in art than student in science.";
+            + "students in art than student in science.";
     private static final String openmindedSix = "Please answer the following questions as they will be crucial for "
             + "your child's subject selection.";
+    private static final String scienceAnswer2 = "You: Of course you must choose science!"
+            + " It's essential for you to secure a well-paid job in the future! "
+            + "You MUST study hard in your third year to get into a good university; "
+            + "otherwise, you'll be letting your parents down! Everything I do is for your sake!";
+    private static final String scienceAnswer1 = "You: Of course, I give fully respect to every choice you make. "
+            + "As your parent, we are your strongest support.";
+    private static final String findArtAnswer1 = "You: Definitely yes my sweetheart. I will be so happy "
+            + "if you can persue your dream!";
+    private static final String findArtAnswer2 = "You: Absolutely not! Do you even realize how much will it take to "
+            + "study arts? Will you be able to find a job afterwards? There's absolutely no room for negotiation on "
+            + "this matter! (in a stern tone)";
 
     // EFFECTS: create a new GameStarter object.
     public GameStarter() {
@@ -56,6 +64,7 @@ public class GameStarter extends Thread {
         Thread.sleep(1000);
         askOpenminded();
         Thread.sleep(1000);
+        student.studentProfile();
         String operation;
         Boolean goOn = true;
         while (goOn) {
@@ -87,6 +96,10 @@ public class GameStarter extends Thread {
         input.nextLine();
         System.out.println(openmindedSix + "(press BACKSPACE to go on.)");
         input.nextLine();
+        preferenceSetup();
+    }
+
+    public void preferenceSetup() {
         String prefer;
         if (student.getLoveFineArt()) {
             prefer = "fine art";
@@ -98,6 +111,7 @@ public class GameStarter extends Thread {
         openMindQuestions(prefer);
     }
 
+
     //EFFECT: 问用户几个问题根据问题答案产生开明度。
     public void openMindQuestions(String prefer) {
         System.out.println(studentName + ":" + gender
@@ -105,7 +119,7 @@ public class GameStarter extends Thread {
                 + "Can I talk to you about the subject selection...?");
         input.nextLine();
         System.out.println("Enter: yes");
-        while (!input.next().equals("yes")) {
+        while (!input.next().equalsIgnoreCase("yes")) {
             System.out.println("Invalid input! Please enter 'yes'!");
             input.next();
         }
@@ -124,15 +138,16 @@ public class GameStarter extends Thread {
         String choice;
         System.out.println(studentName + ":" + gender
                 + " I prefer arts and I'm more inclined to choose subjects like politics and history.");
+        input.nextLine();
         System.out.println("A-'Of course!" + " I supports any choice you make!'");
         System.out.println("B- Well, we need to talk about it.");
         choice = input.next();
-        while (!choice.toLowerCase().equals("a") && !choice.toLowerCase().equals("b")) {
+        while (!choice.equalsIgnoreCase("a") && !choice.equalsIgnoreCase("b")) {
             System.out.println("Invalid input! Please enter 'A' or 'B'!(not case sensitive >v<!)");
             choice = input.next();
         }
-        if (choice.equals("b")) {
-            System.out.println("You: But darling, it's challenging to find good job opportunities in arts. " + "\n"
+        if (choice.equals("b") || choice.equals("B")) {
+            System.out.println("You: But dear, it's challenging to find good job opportunities in arts. " + "\n"
                     + "What 's gonna happen if you have trouble finding jobs in the future?");
             artDisagree();
         } else {
@@ -146,30 +161,31 @@ public class GameStarter extends Thread {
     //EFFECT: 父母同意
     private void artAgree() {
         System.out.println(studentName + ": " + "I love you " + gender + "! (deeply hugged you)");
-        student.setSelectionAgree("a");
+        student.setSelectionAgree("a", 1);
     }
 
     //EFFECT: 父母不同意
     private void artDisagree() {
-        System.out.println(studentName + ": " + "But I love it" + gender
-                + "! I promise I will do it well in the university entrance exam!");
+        System.out.println(studentName + ": " + "But I love it " + gender
+                + "! I promise I will do it well in the college entrance exam!");
+        input.nextLine();
         System.out.println("A- (sigh, reluctantly agree.)");
         System.out.println("B- 'Strongly disagree.'");
         String choice = input.next();
-        while (!choice.toLowerCase().equals("a") && !choice.toLowerCase().equals("b")) {
+        while (!choice.equalsIgnoreCase("a") && !choice.equalsIgnoreCase("b")) {
             System.out.println("Invalid input! Please enter 'A' or 'B'!(not case sensitive >v<!)");
             choice = input.next();
         }
         if (choice.equals("a")) {
-            System.out.println("You: But darling, it's challenging to find good job opportunities in arts. " + "\n"
-                    + "What 's gonna happen if you have trouble finding jobs in the future?");
-            student.setSelectionAgree("a");
+            System.out.println("Well ok (sigh)... But you have to promise you will work hard and get a high mark.");
+            input.nextLine();
+            System.out.println(studentName + ": I promise " + gender + "!");
+            student.setSelectionAgree("a", 2);
         } else {
             System.out.println("You: Have you ever thought about me if you choose arts?" + "\n"
-                    + "Do you know how difficult it is to find a job in arts?" + "\n"
-                    + "No one will feed you if you lose your job!" + "\n"
-                    + "No one will feed US in our old age if you can't earn enough money! You must choose science!"
-                    + "You must choose physics at least!");
+                    + "Do you know how difficult it is to find a job in arts?" + "No one will feed you if you lose your"
+                    + "job!" + "\n" + "You must choose science!");
+            input.nextLine();
             System.out.println(studentName + ": (lowering head in silence)");
             student.setSelectionDisAgree("a");
         }
@@ -177,12 +193,73 @@ public class GameStarter extends Thread {
 
     //EFFECT: 孩子喜欢理科父母问题
     private void scienceQuestions() {
-        System.out.println(studentName + ":" + gender);
+        String choice;
+        System.out.println(studentName + ":" + gender + " I prefer science and I'm more inclined to choose subjects "
+                + "like physics chemistry and biology.");
+        input.nextLine();
+        System.out.println("A-'Of course!" + " I agree because I love you.");
+        System.out.println("B- Yes, I agree because it's gonna be easier to find a job and we need money.");
+        choice = input.next();
+        while (!choice.equalsIgnoreCase("a") && !choice.equalsIgnoreCase("b")) {
+            System.out.println("Invalid input! Please enter 'A' or 'B'!(not case sensitive >v<!)");
+            choice = input.next();
+        }
+        if (choice.equals("b")) {
+            System.out.println(scienceAnswer2);
+            System.out.println(studentName + ": Why do you always give me so much pressure!"
+                    + "(sad and angry, run back to his/her room)");
+            student.setSelectionAgree("s", 2);
+        } else {
+            System.out.println(scienceAnswer1);
+            System.out.println(studentName + ": I'm so happy and I love you...(smile and hugged you)");
+            student.setSelectionAgree("s", 1);
+        }
     }
 
     //EFFECT: 孩子喜欢美术父母问题
     private void fineArtQuestions() {
-        System.out.println(studentName + ":" + gender);
+        String choice;
+        System.out.println(studentName + ":" + gender + " I really really love drawing and I want to go for "
+                + "an art colleges...");
+        input.nextLine();
+        System.out.println("A- Of course!");
+        System.out.println("B- No way!");
+        choice = input.next();
+        while (!choice.equalsIgnoreCase("a") && !choice.equalsIgnoreCase("b")) {
+            System.out.println("Invalid input! Please enter 'A' or 'B'!(not case sensitive >v<!)");
+            choice = input.next();
+        }
+        if (choice.equals("a") || choice.equals("A")) {
+            System.out.println(findArtAnswer1);
+            System.out.println(studentName + ": Thank you so much and I love you " + gender + "!");
+            student.setSelectionAgree("f", 1);
+        } else {
+            System.out.println(findArtAnswer2);
+            System.out.println(studentName + ": Sorry " + gender + "...(lowering head)");
+            input.nextLine();
+            fineArtstuParentSelection();
+        }
+    }
+
+    private void fineArtstuParentSelection() {
+        String choice;
+        System.out.println("You forced your child to quit fine art. Now please choose either art or science for "
+                + studentName);
+        input.nextLine();
+        System.out.println("A-science");
+        System.out.println("B-art");
+        choice = input.next();
+        while (!choice.equalsIgnoreCase("a") && !choice.equalsIgnoreCase("b")) {
+            System.out.println("Invalid input! Please enter 'A' or 'B'!(not case sensitive >v<!)");
+            choice = input.next();
+        }
+        if (choice.equals("a") || choice.equals("A")) {
+            System.out.println("You chose science for your child, though him/her does not like it.");
+            student.setSelectionDisAgree("fs");
+        } else {
+            System.out.println("You chose art for your child, though him/her does not like it.");
+            student.setSelectionDisAgree("fa");
+        }
     }
 
 
@@ -218,23 +295,28 @@ public class GameStarter extends Thread {
         }
     }
 
+    //REQUIRES: activitySelection has to be a valid activity name(is one of the name in the static list
+    // in Activities class)
     //MODIFIES: this, Activities, Student
-    //EFFECT: get time for the selected activity from the user, find the corresponding activities object
-    // and assign the input time to the corresponding activities. Assign the prepared activities object
-    // to the parameter "a".
+    //EFFECT: get time for the selected activity from the user, make sure the time is valid (is an integer and the
+    // value of the integer must less or equals to the remaining time of the student). Send the activitySelection and
+    // time to the findActivity() method in Activities class to correctly assign all fields to the Activities object.
     public void findActivity(String activitySelection, Activities a) {
         boolean validTime = false;
+        int time = 0;
         addingTimeInstruction(activitySelection);
         while (!validTime) {
             String next = input.next();
             try {
-                int time = Integer.parseInt(next);
-                a.findActivity(activitySelection,time);
+                time = Integer.parseInt(next);
+                assertTrue(student.validTime(time));
                 validTime = true;
             } catch (NumberFormatException e) {
-                System.out.println("This input is not an integer - Please try again!");
+                System.out.println("This input is not an integer or the time exceed maximum!"
+                        + "- Please try again!" + "(Maximum = " + student.getRemainingTime() + " )");
             }
         }
+        a.findActivity(activitySelection,time);
     }
 
     //EFFECTS: Give the user introduction about the game
@@ -306,7 +388,6 @@ public class GameStarter extends Thread {
         } else {
             gender = "dad";
         }
-        parent = new Parent(gender);
     }
 
 
@@ -315,6 +396,7 @@ public class GameStarter extends Thread {
         System.out.println("please enter the activity name which in the list above");
     }
 
+    //
     public void addingTimeInstruction(String activityName) {
         System.out.println("please enter the time you want for this activity" + activityName);
     }

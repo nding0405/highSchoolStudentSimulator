@@ -52,6 +52,18 @@ public class ActivitiesTest {
         assertEquals(a1.getTime(), 10);
         assertFalse(a1.getActivityType());
         assertTrue(a1.getcourseOrPlay());
+    }
 
+    @Test//passed finished
+    void testActInSelection() {
+        assertTrue(a1.actInSelection("a1", "a2", "a3"));
+        assertFalse(a1.actInSelection("a", "a2", "a3"));
+    }
+
+    @Test//passed finished
+    void testgetCorrespondingIndex() {
+        assertEquals(1,a1.getCorrespondingIndex("a1", "a2", "a3"));
+        assertEquals(2,a2.getCorrespondingIndex("a1", "a2", "a3"));
+        assertEquals(3,a3.getCorrespondingIndex("a1", "a2", "a3"));
     }
 }

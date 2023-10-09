@@ -6,10 +6,10 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class KnowledgeTest {
-    private static double courseFitKnowledgeIndex = 1.08;
-    private static double courseUnFitKnowledgeIndex = 0.8;
-    private static double loseKnowledgeWhenPlayIndex = 0.15;
-    private static float fullKnowledge = 196;
+    private static final double courseFitKnowledgeIndex = 1.05;
+    private static final double courseUnFitKnowledgeIndex = 0.95;
+    private static final double loseKnowledgeWhenPlayIndex = 0.15;
+    private static final float fullKnowledge = 196;
 
     private Knowledge k1;
     private Knowledge k2;
@@ -128,10 +128,40 @@ public class KnowledgeTest {
     }
 
     @Test
+    void testTakeExam() {
+        assertEquals(0, k1.takeExam(true));//base case
+        k1.setS1Knowledge(200);
+        k1.setS2Knowledge(200);
+        k1.setS3Knowledge(200);
+        k1.setMandarinKnowledge(200);
+        k1.setMathKnowledge(200);
+        k1.setEnglishKnowledge(200);
+        assertEquals(750, k1.takeExam(true));
+        k1.setS1Knowledge(100);
+        k1.setS2Knowledge(150);
+        k1.setS3Knowledge(175);
+        k1.setMandarinKnowledge(196);
+        k1.setMathKnowledge(100);
+        k1.setEnglishKnowledge(50);
+        assertEquals(480, k1.takeExam(true));
+    }
+
+    @Test
+    void testTakeExamForCombined() {
+        assertEquals(0, k1.takeExamForCombinedScienceOrArt(true));//base case
+        k1.setS1Knowledge(100);
+        k1.setS2Knowledge(200);
+        k1.setS3Knowledge(50);
+        assertEquals((int)(350 / (3 * fullKnowledge) * 300), k1.takeExamForCombinedScienceOrArt(true));
+
+        k1.setS1Knowledge(200);
+        k1.setS2Knowledge(200);
+        k1.setS3Knowledge(200);
+        assertEquals(300, k1.takeExamForCombinedScienceOrArt(true));
+    }
+
+    @Test
     void testtakeExamForMandarinMathEnglish() {
-//        k1.setS1Knowledge(100);
-//        k1.setS2Knowledge(150);
-//        k1.setS3Knowledge(130);
         k1.setMandarinKnowledge(90);
         k1.setMathKnowledge(80);
         k1.setEnglishKnowledge(70);
@@ -139,14 +169,75 @@ public class KnowledgeTest {
         assertEquals((int)((80 / fullKnowledge) * 150), k1.takeExamForMath());
         assertEquals((int)((70 / fullKnowledge) * 150), k1.takeExamForEnglish());
 
-//        k1.setS1Knowledge(fullKnowledge);
-//        k1.setS2Knowledge(fullKnowledge);
-//        k1.setS3Knowledge(fullKnowledge);
         k1.setMandarinKnowledge((int)fullKnowledge);
         k1.setMathKnowledge((int)fullKnowledge);
         k1.setEnglishKnowledge((int)fullKnowledge);
         assertEquals(150, k1.takeExamForMandarin());
         assertEquals(150, k1.takeExamForMath());
         assertEquals(150, k1.takeExamForEnglish());
+    }
+
+    @Test
+    void testAddKnowledgeHelperFit() {
+        k1.addKnowledgeHelper(1, 100, true);
+        assertEquals((int) (100 * courseFitKnowledgeIndex), k1.getS1Knowledge());
+        k1.addKnowledgeHelper(2, 10, true);
+        assertEquals((int) (10 * courseFitKnowledgeIndex), k1.getS2Knowledge());
+        k1.addKnowledgeHelper(3, 400, true);
+        assertEquals((int) (400 * courseFitKnowledgeIndex), k1.getS3Knowledge());
+        k1.addKnowledgeHelper(4, 40, true);
+        assertEquals((int) (40 * courseFitKnowledgeIndex), k1.getMandarinKnowledge());
+        k1.addKnowledgeHelper(5, 10, true);
+        assertEquals((int) (10 * courseFitKnowledgeIndex), k1.getMathKnowledge());
+        k1.addKnowledgeHelper(6, 150, true);
+        assertEquals((int) (150 * courseFitKnowledgeIndex), k1.getEnglishKnowledge());
+    }
+
+    @Test
+    void testAddKnowledgeHelperUnFit() {
+        k1.addKnowledgeHelper(1, 100, false);
+        assertEquals((int) (100 * courseUnFitKnowledgeIndex), k1.getS1Knowledge());
+        k1.addKnowledgeHelper(2, 10, false);
+        assertEquals((int) (10 * courseUnFitKnowledgeIndex), k1.getS2Knowledge());
+        k1.addKnowledgeHelper(3, 400, false);
+        assertEquals((int) (400 * courseUnFitKnowledgeIndex), k1.getS3Knowledge());
+        k1.addKnowledgeHelper(4, 40, false);
+        assertEquals((int) (40 * courseUnFitKnowledgeIndex), k1.getMandarinKnowledge());
+        k1.addKnowledgeHelper(5, 10, false);
+        assertEquals((int) (10 * courseUnFitKnowledgeIndex), k1.getMathKnowledge());
+        k1.addKnowledgeHelper(6, 150, false);
+        assertEquals((int) (150 * courseUnFitKnowledgeIndex), k1.getEnglishKnowledge());
+    }
+
+    @Test
+    void testfitAddknowledge() {
+        k1.fitAddknowledge(1, 100);
+        assertEquals((int) (100 * courseFitKnowledgeIndex), k1.getS1Knowledge());
+        k1.fitAddknowledge(2, 10);
+        assertEquals((int) (10 * courseFitKnowledgeIndex), k1.getS2Knowledge());
+        k1.fitAddknowledge(3, 400);
+        assertEquals((int) (400 * courseFitKnowledgeIndex), k1.getS3Knowledge());
+        k1.fitAddknowledge(4, 40);
+        assertEquals((int) (40 * courseFitKnowledgeIndex), k1.getMandarinKnowledge());
+        k1.fitAddknowledge(5, 10);
+        assertEquals((int) (10 * courseFitKnowledgeIndex), k1.getMathKnowledge());
+        k1.fitAddknowledge(6, 150);
+        assertEquals((int) (150 * courseFitKnowledgeIndex), k1.getEnglishKnowledge());
+    }
+
+    @Test
+    void testUnfitAddknowledge() {
+        k1.unFitAddknowledge(1, 100);
+        assertEquals((int) (100 * courseUnFitKnowledgeIndex), k1.getS1Knowledge());
+        k1.unFitAddknowledge(2, 10);
+        assertEquals((int) (10 * courseUnFitKnowledgeIndex), k1.getS2Knowledge());
+        k1.unFitAddknowledge(3, 400);
+        assertEquals((int) (400 * courseUnFitKnowledgeIndex), k1.getS3Knowledge());
+        k1.unFitAddknowledge(4, 40);
+        assertEquals((int) (40 * courseUnFitKnowledgeIndex), k1.getMandarinKnowledge());
+        k1.unFitAddknowledge(5, 10);
+        assertEquals((int) (10 * courseUnFitKnowledgeIndex), k1.getMathKnowledge());
+        k1.unFitAddknowledge(6, 150);
+        assertEquals((int) (150 * courseUnFitKnowledgeIndex), k1.getEnglishKnowledge());
     }
 }

@@ -44,11 +44,11 @@ class StudentTest {
         testStudent4.setChr(true);
         testStudent4.setPreference(true);
         testStudent4.setFineart(false);
-        a1 = new Activities("a1",100, true,true);//理科课
-        a2 = new Activities("a2",10,true,false);//文科课
-        a3 = new Activities("a3",1000,false,true);//户外活动
-        a4 = new Activities("a4",100,false,false);//室内活动
-        a5 = new Activities("a5",1000,true,false);//文科课
+        a1 = new Activities("a1",100, true,true);
+        a2 = new Activities("a2",10,true,false);
+        a3 = new Activities("a3",1000,false,true);
+        a4 = new Activities("a4",100,false,false);
+        a5 = new Activities("a5",1000,true,false);
     }
 
     @Test

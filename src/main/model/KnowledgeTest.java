@@ -153,11 +153,21 @@ public class KnowledgeTest {
         k1.setS2Knowledge(200);
         k1.setS3Knowledge(50);
         assertEquals((int)(350 / (3 * fullKnowledge) * 300), k1.takeExamForCombinedScienceOrArt(true));
-
         k1.setS1Knowledge(200);
         k1.setS2Knowledge(200);
         k1.setS3Knowledge(200);
         assertEquals(300, k1.takeExamForCombinedScienceOrArt(true));
+
+        assertEquals(0, k2.takeExamForCombinedScienceOrArt(false));//base case
+        k2.setS1Knowledge(100);
+        k2.setS2Knowledge(200);
+        k2.setS3Knowledge(50);
+        assertEquals((int)(350 / (3 * fullKnowledge) * 300), k2.takeExamForCombinedScienceOrArt(false));
+
+        k2.setS1Knowledge(200);
+        k2.setS2Knowledge(200);
+        k2.setS3Knowledge(200);
+        assertEquals(300, k2.takeExamForCombinedScienceOrArt(false));
     }
 
     @Test

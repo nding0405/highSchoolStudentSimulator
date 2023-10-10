@@ -70,14 +70,40 @@ class StudentTest {
     }
 
     @Test
-    void testStudentProfile() {
-        testStudent1.studentProfile();
-        //make sure the console is printing
+        //make sure the console is printing (testStudent1)
         //Student Profile:
         //-Student Name: I+A
         //        -Subjects for final exam: Mandarin, Math, English, A, B, C
         //        -Subject Preference: art
         //        -Character: introverted
+        //make sure the console is printing (testStudent2)
+        //Student Profile:
+        //-Student Name: I+S
+        //-Subjects for final exam: Mandarin, Math, English, A, B, C
+        //-Subject Preference: fine art
+        //-Character: introverted
+        //make sure the console is printing (testStudent3)
+        //Student Profile:
+        //-Student Name: E+A
+        //-Subjects for final exam: Mandarin, Math, English, A, B, C
+        //-Subject Preference: art
+        //-Character: outgoing
+        //make sure the console is printing (testStudent3)
+        //Student Profile:
+        //-Student Name: E+S
+        //-Subjects for final exam: Mandarin, Math, English, A, B, C
+        //-Subject Preference: fine art
+        //-Character: outgoing
+    void testStudentProfile() { //1 ff //2 ft 3 tf 4 tt
+        testStudent1.studentProfile();
+
+        testStudent2.setFineart(true);
+        testStudent2.studentProfile();
+
+        testStudent3.studentProfile();
+
+        testStudent4.setFineart(true);
+        testStudent4.studentProfile();
     }
 
 
@@ -188,6 +214,14 @@ class StudentTest {
         //"I+A goes for an key university."
         testStudent1.endChoice(600);
         //"I+A goes for an key university."
+        testStudent1.endChoice(630);
+        //"I+A goes for a world-class universities."
+        testStudent1.endChoice(670);
+        //"I+A goes for a 'Double First-Class' university."
+        testStudent1.endChoice(690);
+        //"I+A goes for Tsinghua University."
+        testStudent1.endChoice(750);
+        //"I+A is the Number one scholar and can go for any university he/she wants!"
     }
 
     @Test

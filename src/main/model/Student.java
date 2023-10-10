@@ -141,7 +141,7 @@ public class Student {
     }
 
 
-    //EFFECT: check if the game end. Return false, if does not end, true if end. The game will end if the pressure
+    // EFFECT: check if the game end. Return false, if does not end, true if end. The game will end if the pressure
     // exceeds or equals to the maximum. Or the total time equals to the maximum.
     public Boolean detectEnding() {
         if (maxPressure <= pressure) {
@@ -175,19 +175,23 @@ public class Student {
         }
     }
 
+    // EFFECTS: Printing out the end of the fine art student
     public void endFineArt() {
         System.out.println(name + " is happy that he/she is able to learn fine art. "
                 + "He/She works hard and goes for a nice art college.");
     }
 
-    //EFFECT:
+    // REQUIRES: the time of the activities can not be greater than the remaining time of the student.
+    // MODIFIED: this
+    // EFFECT: add time of the student by the amount of time of the activities
     public void addTime(Activities a) {
         int actTime = a.getTime();
         time += actTime;
     }
 
-
-    //EFFECT: pressure
+    //MODIFIED: this
+    //EFFECT: add or reduce pressure of the student by the (amount of time of the activities * corresponding index)
+    //
     public void addPressure(Activities a) {
         Boolean courseOrPlay = a.getcourseOrPlay();
         Boolean  activityType = a.getActivityType();

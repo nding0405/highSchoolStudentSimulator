@@ -142,7 +142,8 @@ public class Student {
     }
 
     public void endFineArt() {
-        System.out.println("art student end");
+        System.out.println(name + " is happy that he/she is able to learn fine art. "
+                + "He/She works hard and goes for a nice art college.");
     }
 
     //EFFECT:

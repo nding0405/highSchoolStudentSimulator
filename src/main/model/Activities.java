@@ -83,7 +83,7 @@ public class Activities {
                 || actName.equalsIgnoreCase("english"));
     }
 
-    
+
     //REQUIRES:There is EXACTLY ONE string in the parameters and "mandarin" "math" "english" equals to the current
     // activities' name.
     //EFFECTS: return the index of the parameter which is equals to the activities' name or the index of "mandarin"
@@ -116,7 +116,6 @@ public class Activities {
     public int getTime() {
         return this.time;
     }
-
 
     public Boolean getcourseOrPlay() {
         return this.courseOrPlay;

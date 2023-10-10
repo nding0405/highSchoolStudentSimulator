@@ -50,6 +50,28 @@ public class ActivitiesTest {
         assertTrue(a2.getcourseOrPlay());
     }
 
+    @Test
+    void testPrintOutActivities() {
+        a1.printOutActivities();
+        // should print out:
+        //Mandarin
+        //English
+        //Math
+        //Physics
+        //Chemistry
+        //Biology
+        //History
+        //Geology
+        //Politics
+        //Jogging
+        //Hangout_with_friends
+        //Hiking
+        //Drawing
+        //playing_the_piano
+        //VideoGame
+
+
+    }
 
     @Test//passed finished
     void testActInSelection() {
@@ -61,7 +83,7 @@ public class ActivitiesTest {
     }
 
     @Test//passed finished
-    void testgetCorrespondingIndex() {
+    void testGetCorrespondingIndex() {
         assertEquals(1,a1.getCorrespondingIndex("a1", "a2", "a3"));
         assertEquals(2,a2.getCorrespondingIndex("a1", "a2", "a3"));
         assertEquals(3,a3.getCorrespondingIndex("a1", "a2", "a3"));

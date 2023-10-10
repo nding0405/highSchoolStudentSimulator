@@ -21,7 +21,7 @@ public class Background  extends Thread {
     @Override
     public void run() {
         try {
-            timeGoesBy(true);
+            timeGoesBy(false);
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }

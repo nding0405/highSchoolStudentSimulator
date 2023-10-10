@@ -27,7 +27,7 @@ public class BackgroundTest {
     @Test
     void testTimeGoesBy() throws InterruptedException {
         testBk.timeGoesBy(false);//paused
-        testBk.timeGoesBy(true);//keeps printing out the day cycles
+//        testBk.timeGoesBy(true);//keeps printing out the day cycles
     }
 
     @Test

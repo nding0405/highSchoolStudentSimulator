@@ -70,6 +70,18 @@ class StudentTest {
     }
 
     @Test
+    void testStudentProfile() {
+        testStudent1.studentProfile();
+        //make sure the console is printing
+        //Student Profile:
+        //-Student Name: I+A
+        //        -Subjects for final exam: Mandarin, Math, English, A, B, C
+        //        -Subject Preference: art
+        //        -Character: introverted
+    }
+
+
+    @Test
     void testAddActivitiesA1() {
         List<Activities> exptList = new ArrayList<>();
         exptList.add(a1);
@@ -161,12 +173,159 @@ class StudentTest {
         assertFalse(testStudent3.detectEnding());
     }
 
+    @Test
+    void testEndChoice() {
+        testStudent1.endChoice(300);
+        //make sure it's printing out:
+        // "I+A got a really bad mark on the final and no college provides offer!"
+        testStudent1.endChoice(400);
+        //"I+A goes for a college."
+        testStudent1.endChoice(450);
+        //"I+A goes for an university."
+        testStudent1.endChoice(500);
+        //"I+A goes for an university."
+        testStudent1.endChoice(550);
+        //"I+A goes for an key university."
+        testStudent1.endChoice(600);
+        //"I+A goes for an key university."
+    }
+
+    @Test
+    void testEndFineArt() {
+        testStudent1.endFineArt();
+        //make sure it's printing out:
+        // "I+A is happy that he/she is able to learn fine art. He/She works hard and goes for a nice art college."
+    }
+
     void wrapUp(Student s,Activities a, int eptTime, int eptPressure) {
         s.addActivity(a);
         assertEquals(s.getTime(),eptTime);
         assertEquals(s.getPressure(),eptPressure);
         List<Activities> exptList = s.getSchedule();
         assertEquals(exptList.get(0) ,a);
+    }
+
+    @Test
+    void testAddTimeOnce() {
+        testStudent1.addTime(a1);
+        assertEquals(100,testStudent1.getTime());
+        testStudent2.addTime(a2);
+        assertEquals(10,testStudent2.getTime());
+    }
+
+    @Test
+    void testAddTimeMultiple() {
+        testStudent1.addTime(a1);
+        testStudent1.addTime(a2);
+        assertEquals(110,testStudent1.getTime());
+        testStudent2.addTime(a2);
+        testStudent2.addTime(a3);
+        assertEquals(1010,testStudent2.getTime());
+    }
+
+    @Test
+    void testAddPressureCourse() {
+        testStudent1.addPressure(a1);
+        assertEquals((int)(100*courseUnFitpressureIndex), testStudent1.getPressure());
+        testStudent2.addPressure(a1);
+        assertEquals((int)(100*courseFitpressureIndex), testStudent2.getPressure());
+        testStudent3.addPressure(a1);
+        assertEquals((int)(100*courseUnFitpressureIndex), testStudent3.getPressure());
+        testStudent4.addPressure(a1);
+        assertEquals((int)(100*courseFitpressureIndex), testStudent4.getPressure());
+    }
+
+    @Test
+    void testAddPressureGame() {
+        testStudent1.addPressure(a3);
+        assertEquals(-(int)(playUnFitPressureIndex*1000), testStudent1.getPressure());
+        testStudent2.addPressure(a3);
+        assertEquals(-(int)(playUnFitPressureIndex*1000), testStudent2.getPressure());
+        testStudent3.addPressure(a3);
+        assertEquals(-(int)(playFitPressureIndex*1000), testStudent3.getPressure());
+        testStudent4.addPressure(a3);
+        assertEquals(-(int)(playFitPressureIndex*1000), testStudent4.getPressure());
+    }
+
+    @Test
+    void testUpdateBars() {
+        testStudent1.addActivity(a1);
+        testStudent1.updateBars();
+        //make sure it's printing out:
+        // Time Bar: 100/1000
+        // Pressure Bar: 130/600
+        // Knowledge Bar: - A:0
+        //                - B:0
+        //                - C:0
+        //                - Mandarin:0
+        //                - Math:0
+        //                - English:0
+    }
+
+    @Test
+    void testStudentAnime() throws InterruptedException {
+        testStudent1.studentAnime(a1);
+        //make sure it's printing out "the student is studying" six times
+        testStudent1.studentAnime(a3);
+        //make sure it's printing out "the student is relaxing" six times
+    }
+
+    @Test
+    void testSetSelectionAgreeArt() {
+        testStudent1.setSelectionAgree("a", 1);
+        assertEquals("history", testStudent1.getSubjectSelectionOne());
+        assertEquals("geology", testStudent1.getSubjectSelectionTwo());
+        assertEquals("politics", testStudent1.getSubjectSelectionThree());
+        assertEquals(-50, testStudent1.getPressure());
+        assertFalse(testStudent1.getScienceOrArtForExam());
+        testStudent2.setSelectionAgree("a", 2);
+        assertEquals("history", testStudent2.getSubjectSelectionOne());
+        assertEquals("geology", testStudent2.getSubjectSelectionTwo());
+        assertEquals("politics", testStudent2.getSubjectSelectionThree());
+        assertEquals(30, testStudent2.getPressure());
+        assertFalse(testStudent2.getScienceOrArtForExam());
+    }
+
+    @Test
+    void testSetSelectionAgreeScience() {
+        testStudent3.setSelectionAgree("s", 1);
+        assertEquals("physics", testStudent3.getSubjectSelectionOne());
+        assertEquals("biology", testStudent3.getSubjectSelectionTwo());
+        assertEquals("chemistry", testStudent3.getSubjectSelectionThree());
+        assertEquals(-50, testStudent3.getPressure());
+        assertTrue(testStudent3.getScienceOrArtForExam());
+        testStudent4.setSelectionAgree("s", 2);
+        assertEquals("physics", testStudent4.getSubjectSelectionOne());
+        assertEquals("biology", testStudent4.getSubjectSelectionTwo());
+        assertEquals("chemistry", testStudent4.getSubjectSelectionThree());
+        assertEquals(30, testStudent4.getPressure());
+        assertTrue(testStudent4.getScienceOrArtForExam());
+        testStudent4.setSelectionAgree("f", 1);
+        testStudent4.setSelectionAgree("f", 2);
+        //print out:  E+S is happy that he/she is able to learn fine art He/She works hard and goes for a nice
+        // art college.
+    }
+
+    @Test
+    void testSetSelectionDisagreeArt() {
+        testStudent1.setSelectionDisAgree("a");
+        assertEquals("physics", testStudent1.getSubjectSelectionOne());
+        assertEquals("biology", testStudent1.getSubjectSelectionTwo());
+        assertEquals("chemistry", testStudent1.getSubjectSelectionThree());
+        assertEquals(80, testStudent1.getPressure());
+        assertTrue(testStudent1.getScienceOrArtForExam());
+        testStudent2.setSelectionDisAgree("fa");
+        assertEquals("history", testStudent2.getSubjectSelectionOne());
+        assertEquals("geology", testStudent2.getSubjectSelectionTwo());
+        assertEquals("politics", testStudent2.getSubjectSelectionThree());
+        assertEquals(240, testStudent2.getPressure());
+        assertFalse(testStudent2.getScienceOrArtForExam());
+        testStudent3.setSelectionDisAgree("fs");
+        assertEquals("physics", testStudent3.getSubjectSelectionOne());
+        assertEquals("biology", testStudent3.getSubjectSelectionTwo());
+        assertEquals("chemistry", testStudent3.getSubjectSelectionThree());
+        assertEquals(400, testStudent3.getPressure());
+        assertFalse(testStudent3.getScienceOrArtForExam());
     }
 
     @Test

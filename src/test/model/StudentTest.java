@@ -220,7 +220,7 @@ class StudentTest {
         //"I+A goes for a 'Double First-Class' university."
         testStudent1.endChoice(690);
         //"I+A goes for Tsinghua University."
-        testStudent1.endChoice(750);
+        testStudent1.endChoice(740);
         //"I+A is the Number one scholar and can go for any university he/she wants!"
     }
 

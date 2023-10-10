@@ -28,6 +28,7 @@ public class Background  extends Thread {
     }
 
     public Background() {
+
     }
 
     //EFFECTS:

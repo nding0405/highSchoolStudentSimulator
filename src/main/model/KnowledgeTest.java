@@ -17,7 +17,7 @@ public class KnowledgeTest {
     private Knowledge k4;
     private Activities a1;
     private Activities a2;
-    private Activities a3;
+//    private Activities a3;
     private Activities a4;
     private Activities a5;
     private Activities a6;
@@ -32,7 +32,7 @@ public class KnowledgeTest {
         k4 = new Knowledge();
         a1 = new Activities("a1",100, true,true);
         a2 = new Activities("a2",10,true,false);
-        a3 = new Activities("a3",1000,false,true);
+//        a3 = new Activities("a3",1000,false,true);
         a4 = new Activities("a4",100,false,false);
         a5 = new Activities("Mandarin",100,true,false);
         a6 = new Activities("Math",100,true,true);

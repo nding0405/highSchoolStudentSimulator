@@ -2,12 +2,46 @@ package model;
 
 import java.util.ArrayList;
 import java.util.List;
+//Represent a student object.
+// **Field explanation**:
+// 1.name (name of the student),
+// 2.schedule (a list of activities that have been added by the user),
+// 3.time (the amount of time in hrs that already passed),
+// 4.pressure (the pressure of the student, represented by an integer),
+// 5.knowledge (the knowledge of the student, represented by an integer),
+// 6.chrType (type of character represented by a boolean value. True means the student is extroverted and likes outdoor
+// activities for relaxing while false means the student is introverted and loves indoor activities. This value is
+// randomly generated in the constructor.)
+// 7.preference (the subject preference of the student. True means the student likes science while false means the
+//   student prefers arts. This value is randomly generated),
+// 8.loveFineArt (represent whether the student loves fine art or not. True means yes while false means no. Noted that
+//   this value is randomly generated, but the probability of 'true' is significantly smaller than the 'false' value.
+//   This is kind of leaving an easter egg for the player),
+// 9.subjectSelectionOne (represent the first selective subject that the student will take in the final exam)
+// 10.subjectSelectionTwo (represent the second selective subject that the student will take in the final exam),
+// 11.subjectSelectionThree (represent the third selective subject that the student will take in the final exam).
+// 12.knowledge (represent the knowledge value of the student.)
+// **Constant explanation**:
+// courseFitpressureIndex: the pressure of the student will increase by (this index * time) when the course type is the
+// one that the student likes.
+// courseUnFitpressureIndex: the pressure of the student will increase by (this index * time) when the course type is
+// the one that the student does not like.
+// playFitPressureIndex: the pressure of the student will decrease by (this index * time) when the game type is the
+// one that the student likes.
+// playUnFitPressureIndex: the pressure of the student will decrease by (this index * time) when the game type is the
+// one that the student does not like.
+// totalTimeTograduate: the maximum time of the student to graduate.
+// maxPressure: the maximum pressure of the student to endure.
+// parentAgreepressureReduce: the pressure of the student will reduce by this constant if the user agree with
+// their choice.
+// parentDisagreepressurePlus: the pressure of the student will incease by this constant if the user disagree with
+// their choice.
 
 public class Student {
-    private static final String studying1 = "the student is studying";
-    private static final String studying2 = "the student is studying";
-    private static final String relaxing1 = "the student is relaxing";
-    private static final String relaxing2 = "the student is relaxing";
+    private static final String studying1 = "the student is studying";//should be images showing
+    private static final String studying2 = "the student is studying";//a studying student in visualization phase
+    private static final String relaxing1 = "the student is relaxing";//should be images showing
+    private static final String relaxing2 = "the student is relaxing";//a relaxing student in visualization phase
     private static final double courseFitpressureIndex = 0.5;
     private static final double courseUnFitpressureIndex = 1.3;
     private static final double playFitPressureIndex = 1.0;

@@ -2,6 +2,7 @@ package model;
 
 import java.util.ArrayList;
 import java.util.List;
+//Represent the background of this game. The constants will become images in the visualization phase
 
 public class Background  extends Thread {
     private static final String earlyMorning = "earlyMorning";
@@ -18,6 +19,7 @@ public class Background  extends Thread {
     private static final int secondsToChange = 5;
 
 
+    //EFFECTS: used to run the Background thread in the multi thread
     @Override
     public void run() {
         try {
@@ -27,18 +29,19 @@ public class Background  extends Thread {
         }
     }
 
+    //EFFECT: *empty
     public Background() {
 
     }
 
-    //EFFECTS:
+    //EFFECTS: Keep rendering the day cycle. Changed every 5 seconds.
     public void timeGoesBy(Boolean goOn) throws InterruptedException {
         while (goOn) {
             oneDayCycle();
         }
     }
 
-    //EFFECT:
+    //EFFECT: render one day cycle. Changed every 5 seconds.
     public void oneDayCycle() throws InterruptedException {
         for (String timePeriod : encapsulateAday) {
             System.out.println(timePeriod);

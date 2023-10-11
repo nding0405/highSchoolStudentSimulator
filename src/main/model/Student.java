@@ -21,6 +21,7 @@ import java.util.List;
 // 10.subjectSelectionTwo (represent the second selective subject that the student will take in the final exam),
 // 11.subjectSelectionThree (represent the third selective subject that the student will take in the final exam).
 // 12.knowledge (represent the knowledge value of the student.)
+//
 // **Constant explanation**:
 // courseFitpressureIndex: the pressure of the student will increase by (this index * time) when the course type is the
 // one that the student likes.
@@ -191,7 +192,12 @@ public class Student {
 
     //MODIFIED: this
     //EFFECT: add or reduce pressure of the student by the (amount of time of the activities * corresponding index)
-    //
+    // if the activity is course (courseOrPlay == true) then add pressure.
+    // - course type fit student preference: pressure += (int)(courseFitpressureIndex * actTime);
+    // - course type doesn't fit student preference: pressure += (int)(courseUnFitpressureIndex * actTime);
+    // if the activity is game (courseOrPlay == false) then reduce pressure.
+    // - game type fit student character: pressure -= (int)(playFitPressureIndex * actTime);
+    // - game type doesn't fit student character: pressure -= (int)(playUnFitPressureIndex * actTime);
     public void addPressure(Activities a) {
         Boolean courseOrPlay = a.getcourseOrPlay();
         Boolean  activityType = a.getActivityType();
@@ -442,6 +448,7 @@ public class Student {
         this.time = i;
     }
 
+    //MODIFIED:this
     //EFFECT: set whether the student choose to take science or art exam, true for science false for art.
     public void setScienceOrArtForExam(Boolean b) {
         this.scienceOrArtForExam = b;

@@ -86,7 +86,7 @@ class StudentTest {
         //Student Profile:
         //-Student Name: E+A
         //-Subjects for final exam: Mandarin, Math, English, A, B, C
-        //-Subject Preference: art
+        //-Subject Preference: science
         //-Character: outgoing
         //make sure the console is printing (testStudent3)
         //Student Profile:
@@ -100,6 +100,7 @@ class StudentTest {
         testStudent2.setFineart(true);
         testStudent2.studentProfile();
 
+        testStudent3.setPreference(true);
         testStudent3.studentProfile();
 
         testStudent4.setFineart(true);
@@ -212,12 +213,14 @@ class StudentTest {
         //"I+A goes for an university."
         testStudent1.endChoice(550);
         //"I+A goes for an key university."
+        testStudent1.endChoice(610);
+        //"goes for a world-class universities."
         testStudent1.endChoice(600);
         //"I+A goes for an key university."
         testStudent1.endChoice(630);
-        //"I+A goes for a world-class universities."
+        //"goes for a 'Double First-Class' university."
         testStudent1.endChoice(670);
-        //"I+A goes for a 'Double First-Class' university."
+        //"goes for Tsinghua University."
         testStudent1.endChoice(690);
         //"I+A goes for Tsinghua University."
         testStudent1.endChoice(740);

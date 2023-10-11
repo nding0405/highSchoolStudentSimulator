@@ -2,6 +2,39 @@ package model;
 
 import java.util.ArrayList;
 import java.util.List;
+//Represent Activities the user can add for the student.
+// Fields explanation:
+// 1. name (name of the activity)
+// 2. time (the time that the activity will cost)
+// 3. courseOrPlay (indicate whether this activity is a course or game. True for course while false for game.)
+// 4. activityType (indicate the activity type. If the activity is a course, then true means science course while
+// false means art course. If the activity is a game, then true means outdoor game while false means indoor game.)
+// Constants explanation(noted that all the activity time is zero since these are just samples. The user will create
+// their own activity object using these samples. ex: the user want to add the activity called "Mandarin". Then the
+// methods in GameStarter class will create a new Activities object and sent this object, the String "Mandarin" and
+// the time that the user wants for the "Mandarin" class to Activities Class. Some methods in Activities Class will
+// find the corresponding courseOrPlay and activityType for "Mandarin" and set the fields of the new object to the same
+// as the sample "Mandarin". Then some other method will assign the time that the user wants to the new object.):
+// 1. Mandarin: an activity called Mandarin course (art course)
+// 2. English: an activity called English course (art course)
+// 3. Math: an activity called Math course (science course)
+// 4. Physics: an activity called Physics course (science course)
+// 5. Chemistry: an activity called Chemistry course (science course)
+// 6. Biology: an activity called Biology course (science course)
+// 7. History: an activity called History course (art course)
+// 8. Geology: an activity called Geology course (art course)
+// 9. Politics: an activity called Politics course (art course)
+//
+// 10. Jogging: a game activity called Jogging (outdoor)
+// 11. Hangout: a game activity called Hangout_with_friends (outdoor)
+// 12. Hiking: a game activity called Hiking (outdoor)
+// 13. Drawing:  a game activity called Drawing (indoor)
+// 14. Piano:  a game activity called Piano (indoor)
+// 15. VideoGame:  a game activity called VideoGame (indoor)
+//
+// 16. activityList:  the list of activities that includes all the constant above
+// 17. activityNameList:  the list of activityName that includes all the constant above and in the same order as
+// activityList.
 
 public class Activities {
     private String name;
@@ -30,6 +63,7 @@ public class Activities {
     private static final List<String> activityNameList = setupNameList(new ArrayList<>());
 
 
+    //EFFECTS: create an Activities object with assigned name, time, courseOrPlay type and activityType.
     public Activities(String name, int time, Boolean courseOrPlay, Boolean activityType) {
         this.name = name;
         this.time = time;
@@ -38,6 +72,7 @@ public class Activities {
     }
 
 
+    //EFFECTS: print out the name of all Activities constants.
     public void printOutActivities() {
         for (String name : activityNameList) {
             System.out.println(name);
@@ -52,7 +87,8 @@ public class Activities {
     }
 
 
-    //REQUIRES: the input name must be one of the name in the static name list "activityNameList".
+    // REQUIRES: the input name must be one of the name in the static name list "activityNameList".
+    // MODIFIED: this
     // EFFECT: find the corresponding activities object
     // and assign the input time to the corresponding activities. Assign the fully prepared activities object
     // (which means all fields in activities class are correctly assigned to the object regards to the user input)
@@ -111,25 +147,33 @@ public class Activities {
         }
     }
 
-    //getters
 
+    //getters
+    //EFFECT: return the time for the activity
     public int getTime() {
         return this.time;
     }
 
+    //EFFECT: return the courseOrPlay for the activity
     public Boolean getcourseOrPlay() {
+
         return this.courseOrPlay;
     }
 
+    //EFFECT: return the activityType for the activity
     public Boolean getActivityType() {
+
         return this.activityType;
     }
 
+    //EFFECT: return the name for the activity
     public String getName() {
+
         return this.name;
     }
 
 
+    //EFFECT: used to set up the constant activityNameList
     private static List<String> setupNameList(List<String> list) {
         String name;
         for (Activities a : activityList) {
@@ -139,6 +183,7 @@ public class Activities {
         return list;
     }
 
+    //EFFECT: used to set up the constant activityList
     private static List<Activities> setupActList(List<Activities> list) {
         list.add(Mandarin);
         list.add(English);

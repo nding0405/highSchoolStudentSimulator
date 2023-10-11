@@ -1,5 +1,24 @@
 package model;
 
+// Represent the Knowledge.
+// **Field explanation**:
+// 1. mandarinKnowledge: represent the knowledge for Mandarin class
+// 2. mathKnowledge: represent the knowledge for Math class
+// 3. englishKnowledge: represent the knowledge for English class
+// 4. selectionOneKnowledge: represent the knowledge for selection one subject (will be specified by the user in ui)
+// 5. selectionTwoKnowledge: represent the knowledge for selection two subject (will be specified by the user in ui)
+// 6. selectionThreeKnowledge: represent the knowledge for selection three subject (will be specified by the user in ui)
+//
+// **Constant explanation**:
+// 1. courseFitKnowledgeIndex: the knowledge for the corresponding field will increase by
+// (courseFitKnowledgeIndex * time) when the course type fit the course type (time and fitOrNot information will be sent
+// to this class from elsewhere)
+// 2. courseUnFitKnowledgeIndex: the knowledge for the corresponding field will increase by
+// (courseUnFitKnowledgeIndex * time) when the course type does not fit the course type (time and fitOrNot
+// information will be sent to this class from elsewhere)
+// 3. loseKnowledgeWhenPlayIndex: the knowledge for the corresponding field will decrease by
+// (loseKnowledgeWhenPlayIndex * time)  (time information will be sent to this class from elsewhere)
+// 4. fullKnowledge: minimum knowledge to get the full mark for corresponding subject
 public class Knowledge {
     private static final double courseFitKnowledgeIndex = 1.05;
     private static final double courseUnFitKnowledgeIndex = 0.95;

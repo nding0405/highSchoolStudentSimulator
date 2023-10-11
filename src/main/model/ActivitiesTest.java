@@ -69,13 +69,13 @@ public class ActivitiesTest {
         //Drawing
         //playing_the_piano
         //VideoGame
-
-
     }
 
     @Test//passed finished
     void testActInSelection() {
         assertTrue(a1.actInSelection("a1", "a2", "a3"));
+        assertTrue(a2.actInSelection("a1", "a2", "a3"));
+        assertTrue(a3.actInSelection("a1", "a2", "a3"));
         assertFalse(a1.actInSelection("a", "a2", "a3"));
         assertTrue(a4.actInSelection("a", "a2", "a3"));
         assertTrue(a5.actInSelection("a", "a2", "a3"));

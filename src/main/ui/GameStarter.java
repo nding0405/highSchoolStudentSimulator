@@ -4,7 +4,7 @@ import model.Activities;
 import model.Student;
 
 import java.util.Scanner;
-
+// Represent the starter of the game. This class will go through the all process of the high school student simulator.
 
 public class GameStarter extends Thread {
     private Scanner input;
@@ -63,7 +63,7 @@ public class GameStarter extends Thread {
         Thread.sleep(1000);
         initializeParent();
         Thread.sleep(1000);
-        askOpenminded();
+        backGroundInfo();
         input.nextLine();
         student.studentProfile();
         input.nextLine();
@@ -119,7 +119,9 @@ public class GameStarter extends Thread {
     }
 
 
-    public void askOpenminded() {
+    //EFFECTS: print out background information about the "Nationwide Unified Examination for Admissions to General
+    // Universities and Colleges"
+    public void backGroundInfo() {
         input.nextLine();
         System.out.println(openmindedOne + "(press BACKSPACE to go on.)");
         input.nextLine();
@@ -140,6 +142,7 @@ public class GameStarter extends Thread {
         preferenceSetup();
     }
 
+    //EFFECT: get the subject preference of the student and send it to  openMindQuestions;
     public void preferenceSetup() {
         String prefer;
         if (student.getLoveFineArt()) {
@@ -153,7 +156,8 @@ public class GameStarter extends Thread {
     }
 
 
-    //EFFECT:
+    //EFFECT: ask the user whether they agree their student to select the subjects they prefer. If yes then go to the
+    // corresponding "agree" methods, go to corresponding "disagree" methods if the user disagree.
     public void openMindQuestions(String prefer) {
         System.out.println(studentName + ":" + gender
                 + ", I'm about to enter the third year of high school. "
@@ -174,7 +178,10 @@ public class GameStarter extends Thread {
         }
     }
 
-    //EFFECT:
+    //REQUIRE: the student field in this GameStarter object must prefer to learn art
+    //MODIFIED: this, student
+    //EFFECT: ask whether the user would like their student to learn art. If yes then will call artAgree().
+    // If no then will call artDisagree() to continue asking the user some questions.
     private void artQuestions() {
         String choice;
         System.out.println(studentName + ":" + gender
@@ -199,13 +206,20 @@ public class GameStarter extends Thread {
         }
     }
 
-    //EFFECT:
+    //REQUIRE: the student field in this GameStarter object must prefer to learn art and the user agree their student
+    // to learn art in artQuestions().
+    //MODIFIED: this, student
+    //EFFECT: print out student text and initialize the student pressure and subject selection for the final exam.
     private void artAgree() {
         System.out.println(studentName + ": " + "I love you " + gender + "! (deeply hugged you)");
         student.setSelectionAgree("a", 1);
     }
 
-    //EFFECT:
+    //REQUIRE: the student field in this GameStarter object must prefer to learn art and the user disagree with their
+    // student to learn art in artQuestions().
+    //MODIFIED: this, student
+    //EFFECT: continue asking the user about their student subject selection questions and initialize the student
+    // pressure and subject selection in regard to the user choice.
     private void artDisagree() {
         System.out.println(studentName + ": " + "But I love it " + gender
                 + "! I promise I will do it well in the college entrance exam!");
@@ -232,7 +246,10 @@ public class GameStarter extends Thread {
         }
     }
 
-    //EFFECT:
+    //REQUIRE: the student field in this GameStarter object must prefer to learn science
+    //MODIFIED: this, student
+    //EFFECT: ask why does the user would like their student to learn science. And initialize the student pressure
+    // in regard to the users' choice.
     private void scienceQuestions() {
         String choice;
         System.out.println(studentName + ":" + gender + " I prefer science and I'm more inclined to choose subjects "
@@ -257,7 +274,10 @@ public class GameStarter extends Thread {
         }
     }
 
-    //EFFECT:
+    //REQUIRE: the student field in this GameStarter object must prefer to learn fine art
+    //MODIFIED: this, student
+    //EFFECT: ask whether the user would like their student to learn fine art. If yes then will call fine art student
+    // end and end the game. If no then will call other methods to continue asking the user some questions.
     private void fineArtQuestions() {
         String choice;
         input.nextLine();
@@ -282,6 +302,10 @@ public class GameStarter extends Thread {
         }
     }
 
+    //REQUIRE: the student field in this GameStarter object must prefer to learn fine art and the user must disagree
+    // with their student to learn fine art.
+    //MODIFIED: this, student
+    //EFFECTS: ask the user what subjects would they like to choose for their student of the student likes fine art
     private void fineArtstuParentSelection() {
         String choice;
         System.out.println("You forced your child to quit fine art. Now please choose either art or science for "
@@ -314,7 +338,7 @@ public class GameStarter extends Thread {
         }
     }
 
-    // MODIFIES: student/null
+    // MODIFIES: this, student
     // EFFECTS: let the user add course or view schedule depending on the input.
     public void processOperation(String operation) throws InterruptedException {
         Activities a = new Activities("a",0,true,true);
@@ -408,7 +432,9 @@ public class GameStarter extends Thread {
         }
     }
 
-    //EFFECT:
+    //MODIFIED: this
+    //EFFECT: ask the user whether they would like to play the role of dad or mom of the student. This selection will
+    // affect some print out statements.
     public void initializeParent() {
         System.out.println("Would you like to be the mom or dad of the student?");
         System.out.println("\nSelect from:");
@@ -437,5 +463,80 @@ public class GameStarter extends Thread {
     //
     public void addingTimeInstruction(String activityName) {
         System.out.println("please enter the time you want for this activity" + activityName);
+    }
+
+    //EFFECTS: print out the end when the student's score is less than or equals to 300
+    public void failEnd(String name) {
+        System.out.println(name + " got a really bad mark on the final and no college provides offer!");
+    }
+
+    //EFFECTS: print out the end when the student's score is less than or equals to 400 greater than 300
+    public void normalEnd(String name) {
+        System.out.println(name + " goes for a college.");
+    }
+
+    //EFFECTS: print out the end when the student's score is less than or equals to 530 greater than 400
+    public void uppernormalEnd(String name) {
+        System.out.println(name + " goes for an university.");
+    }
+
+    //EFFECTS: print out the end when the student's score is less than or equals to 600 greater than 530
+    public void keyUniversityEnd(String name) {
+        System.out.println(name + " goes for an key university.");
+    }
+
+    //EFFECTS: print out the end when the student's score is less than or equals to 625 greater than 600
+    public void wrdClassEnd(String name) {
+        System.out.println(name + " goes for a world-class universities.");
+    }
+
+    //EFFECTS: print out the end when the student's score is less than  or equals to 680 greater than 625
+    public void dblFstClassEnd(String name) {
+        System.out.println(name + " goes for a 'Double First-Class' university.");
+    }
+
+    //EFFECTS: print out the end when the student's score is less than or equals to 700 greater than 680
+    public void tsinghuaEnd(String name) {
+        System.out.println(name + " goes for Tsinghua University.");
+    }
+
+    //EFFECTS: print out the end when the student's score is greater than 700
+    public void numOneEnd(String name) {
+        System.out.println(name + " is the Number one scholar and can go for any university he/she wants!");
+    }
+
+    //EFFECTS: print out the end for fine art student.
+    public void endFineArt(String name) {
+        System.out.println(name + " is happy that he/she is able to learn fine art. "
+                + "He/She works hard and goes for a nice art college.");
+    }
+
+    //EFFECT: printing out the profile of the student (includes chrType prefer name and Subjects for final exam)
+    public void showProfile(String name, String subjectSelection1, String subjectSelection2, String subjectSelection3,
+                            String character, String prefer) {
+        System.out.println("Student Profile:" + "\n" + "-Student Name: " + name + "\n"
+                + "-Subjects for final exam: " + "Mandarin, Math, English, "
+                + subjectSelection1 + ", " + subjectSelection2 + ", " + subjectSelection3 + "\n"
+                + "-Subject Preference: " + prefer + "\n"
+                + "-Character: " + character);
+    }
+
+    //EFFECT: print out the name and time for one activity.
+    public void showOneActivity(String actName, int actTime) {
+        System.out.println("Activity Name: " + actName + "Activity Time: " + actTime);
+    }
+
+    //EFFECT: Print out the time bar, pressure bar and knowledge bar(include all three selections)
+    public void printOutBars(int timeNow, int pressureNow, int s1Knowledge, int s2Knowledge, int s3Knowledge,
+                             int mandarin, int math, int english, int totalTimeTograduate, int maxPressure,
+                             String subjectSelectionOne, String subjectSelectionTwo, String subjectSelectionThree) {
+        System.out.println("Time Bar: " + timeNow + "/" + totalTimeTograduate);
+        System.out.println("Pressure Bar: " + pressureNow + "/" + maxPressure);
+        System.out.println("Knowledge Bar: " + "- " + subjectSelectionOne + ":" +  s1Knowledge);
+        System.out.println("               " + "- " + subjectSelectionTwo + ":" +  s2Knowledge);
+        System.out.println("               " + "- " + subjectSelectionThree + ":" +  s3Knowledge);
+        System.out.println("               " + "- " + "Mandarin" + ":" +  mandarin);
+        System.out.println("               " + "- " + "Math" + ":" +  math);
+        System.out.println("               " + "- " + "English" + ":" +  english);
     }
 }

@@ -1,5 +1,7 @@
 package model;
 
+import ui.GameStarter;
+
 import java.util.ArrayList;
 import java.util.List;
 //Represent a student object.
@@ -87,8 +89,10 @@ public class Student {
     }
 
 
-    //EFFECT: printing out the profile of the student (includes chrType prefer name and Subjects for final exam)
+    //EFFECT: assigning values to name, subjectSelection1, subjectSelection2, subjectSelection3, character, prefer,
+    // and pass these values to showProfile() method to print out the profile.
     public void studentProfile() {
+        GameStarter toCall = new GameStarter();
         String name = this.name;
         String subjectSelection1 = subjectSelectionOne;
         String subjectSelection2 = subjectSelectionTwo;
@@ -107,11 +111,7 @@ public class Student {
         } else {
             prefer = "art";
         }
-        System.out.println("Student Profile:" + "\n" + "-Student Name: " + name + "\n"
-                         + "-Subjects for final exam: " + "Mandarin, Math, English, "
-                         + subjectSelection1 + ", " + subjectSelection2 + ", " + subjectSelection3 + "\n"
-                         + "-Subject Preference: " + prefer + "\n"
-                         + "-Character: " + character);
+        toCall.showProfile(name, subjectSelection1, subjectSelection2, subjectSelection3, character, prefer);
     }
 
 
@@ -129,6 +129,7 @@ public class Student {
 
     //EFFECT: printing out all names and times of the activities in the schedule.
     public List<String> showSchedule() {
+        GameStarter toCall = new GameStarter();
         List<String> showSchedule = new ArrayList<>();
         String actName;
         int actTime;
@@ -136,7 +137,7 @@ public class Student {
             actName = a.getName();
             actTime = a.getTime();
             showSchedule.add(actName + " " + actTime);
-            System.out.println("Activity Name: " + actName + "Activity Time: " + actTime);
+            toCall.showOneActivity(actName, actTime);
         }
         return showSchedule;
     }
@@ -157,29 +158,30 @@ public class Student {
     // print out the ends.
     //EFFECT:print out the end according to the score of the student.
     public void endChoice(int score) {
+        GameStarter toCall = new GameStarter();
         if (score <= 300) { //fail
-            System.out.println(name + " got a really bad mark on the final and no college provides offer!");
+            toCall.failEnd(name);
         } else if (score <= 400) { //3ben
-            System.out.println(name + " goes for a college.");
+            toCall.normalEnd(name);
         } else if (score <= 530) { //2ben
-            System.out.println(name + " goes for an university.");
+            toCall.uppernormalEnd(name);
         } else if (score <= 600) { //1ben
-            System.out.println(name + " goes for an key university.");
+            toCall.keyUniversityEnd(name);
         } else if (score <= 625) { //211
-            System.out.println(name + " goes for a world-class universities.");
+            toCall.wrdClassEnd(name);
         } else if (score <= 680) { //985
-            System.out.println(name + " goes for a 'Double First-Class' university.");
+            toCall.dblFstClassEnd(name);
         } else if (score <= 700) { //1st
-            System.out.println(name + " goes for Tsinghua University.");
+            toCall.tsinghuaEnd(name);
         } else {
-            System.out.println(name + " is the Number one scholar and can go for any university he/she wants!");
+            toCall.numOneEnd(name);
         }
     }
 
     // EFFECTS: Printing out the end of the fine art student
     public void endFineArt() {
-        System.out.println(name + " is happy that he/she is able to learn fine art. "
-                + "He/She works hard and goes for a nice art college.");
+        GameStarter toCall = new GameStarter();
+        toCall.endFineArt(name);
     }
 
     // REQUIRES: the time of the activities can not be greater than the remaining time of the student.
@@ -218,8 +220,11 @@ public class Student {
     }
 
 
-    //EFFECT: Print out the time bar, pressure bar and knowledge bar(include all three selections)
+    //EFFECT: Assigning values to timeNow, pressureNow, s1Knowledge, s2Knowledge, s3Knowledge, mandarin, math, english,
+    //  totalTimeTograduate, maxPressure, subjectSelectionOne, subjectSelectionTwo, subjectSelectionThree and pass
+    // them to the printout method in GameStarter (printOutBars).
     public void updateBars() {
+        GameStarter toCall = new GameStarter();
         int pressureNow = pressure;
         int timeNow = time;
         int s1Knowledge = knowledge.getS1Knowledge();
@@ -228,14 +233,8 @@ public class Student {
         int mandarin = knowledge.getMandarinKnowledge();
         int math = knowledge.getMathKnowledge();
         int english = knowledge.getEnglishKnowledge();
-        System.out.println("Time Bar: " + timeNow + "/" + totalTimeTograduate);
-        System.out.println("Pressure Bar: " + pressureNow + "/" + maxPressure);
-        System.out.println("Knowledge Bar: " + "- " + subjectSelectionOne + ":" +  s1Knowledge);
-        System.out.println("               " + "- " + subjectSelectionTwo + ":" +  s2Knowledge);
-        System.out.println("               " + "- " + subjectSelectionThree + ":" +  s3Knowledge);
-        System.out.println("               " + "- " + "Mandarin" + ":" +  mandarin);
-        System.out.println("               " + "- " + "Math" + ":" +  math);
-        System.out.println("               " + "- " + "English" + ":" +  english);
+        toCall.printOutBars(timeNow, pressureNow, s1Knowledge, s2Knowledge, s3Knowledge, mandarin, math, english,
+                totalTimeTograduate, maxPressure, subjectSelectionOne, subjectSelectionTwo, subjectSelectionThree);
     }
 
     //EFFECT: rendering different student images depend on the activity type.

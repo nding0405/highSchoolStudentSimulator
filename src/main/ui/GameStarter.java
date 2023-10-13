@@ -37,8 +37,8 @@ public class GameStarter extends Thread {
     private static final String findArtAnswer2 = "You: Absolutely not! Do you even realize how much will it take to "
             + "study arts? Will you be able to find a job afterwards? There's absolutely no room for negotiation on "
             + "this matter! (in a stern tone)";
-    private static final String be1 = "BADENDING: Your child get depression and tried to kill her/himself.";
-    private static final String be2 = "BADENDING: Your child get depression and can't go for school.";
+    private static final String be1 = "BADENDING: Your child hates you and school, he/she dropped school!";
+    private static final String be2 = "BADENDING: Your child hates school and dropped it.";
 
     // EFFECTS: create a new GameStarter object.
     public GameStarter() {
@@ -97,9 +97,9 @@ public class GameStarter extends Thread {
     //REQUIRES: the pressure of the student is greater or equals to the maximum.
     //EFFECT: printing out the end that the student drops the school
     private void dropSchoolEnd() {
-        System.out.println(studentName + ": Do I have to go for school? Does it make any sense? Anyway... "
-                + "I've done so much and I'm tired, but I still can't make you satisfy. "
-                + "I don't want to go to school anymore");
+        System.out.println(studentName + ": Do I have to go for school? "
+                + "I've done so much and I'm tired, but I still can't make you satisfy! "
+                + "I don't want to go to school anymore!");
         input.nextLine();
         System.out.println("A- It's not the excuse.");
         System.out.println("B- I'm sorry I give you so much pressure");
@@ -538,5 +538,11 @@ public class GameStarter extends Thread {
         System.out.println("               " + "- " + "Mandarin" + ":" +  mandarin);
         System.out.println("               " + "- " + "Math" + ":" +  math);
         System.out.println("               " + "- " + "English" + ":" +  english);
+    }
+
+
+    //EFFECT: print out the mark of courses.
+    public void printoutMark(String courseName, int mark) {
+        System.out.println(courseName + ": " + mark);
     }
 }

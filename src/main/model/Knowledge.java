@@ -1,5 +1,7 @@
 package model;
 
+import ui.GameStarter;
+
 // Represent the Knowledge.
 // **Field explanation**:
 // 1. mandarinKnowledge: represent the knowledge for Mandarin class
@@ -146,12 +148,16 @@ public class Knowledge {
     // when the Mandarinknowledge is less than fullKnowledge. It will be 150 if the knowledge is greater than or equals
     // to fullKnowledge. Return the calculated score.
     public int takeExamForMandarin() {
+        GameStarter toCall = new GameStarter();
         if (mandarinKnowledge >= fullKnowledge) {
-            System.out.println("Mandarin: 150");
+            toCall.printoutMark("Mandarin",150);
             return 150;
+        } else if (mandarinKnowledge <= 0) {
+            toCall.printoutMark("Mandarin",0);
+            return 0;
         } else {
             int score = (int) ((mandarinKnowledge / fullKnowledge) * 150);
-            System.out.println("Mandarin: " + score);
+            toCall.printoutMark("Mandarin", score);
             return score;
         }
     }
@@ -161,12 +167,16 @@ public class Knowledge {
     // when the Mathknowledge is less than fullKnowledge. It will be 150 if the knowledge is greater than or equals
     // to fullKnowledge. Return the calculated score.
     public int takeExamForMath() {
+        GameStarter toCall = new GameStarter();
         if (mathKnowledge >= fullKnowledge) {
-            System.out.println("Math: 150");
+            toCall.printoutMark("Math",150);
             return 150;
+        } else if (mathKnowledge <= 0) {
+            toCall.printoutMark("Math",0);
+            return 0;
         } else {
             int score = (int) ((mathKnowledge / fullKnowledge) * 150);
-            System.out.println("Math: " + score);
+            toCall.printoutMark("Math", score);
             return score;
         }
     }
@@ -176,12 +186,16 @@ public class Knowledge {
     // when the englishknowledge is less than fullKnowledge. It will be 150 if the knowledge is greater than or equals
     // to fullKnowledge. Return the calculated score.
     public int takeExamForEnglish() {
+        GameStarter toCall = new GameStarter();
         if (englishKnowledge >= fullKnowledge) {
-            System.out.println("English: 150");
+            toCall.printoutMark("English", 150);
             return 150;
+        } else if (englishKnowledge <= 0) {
+            toCall.printoutMark("English",0);
+            return 0;
         } else {
             int score = (int) ((englishKnowledge / fullKnowledge) * 150);
-            System.out.println("English: " + score);
+            toCall.printoutMark("English", score);
             return score;
         }
     }
@@ -191,21 +205,30 @@ public class Knowledge {
     // which is (corresponding knowledge / (fullKnowledge * 3)) * 300 when the selectionOneKnowledge is less than
     // fullKnowledge * 3. It will be 300 if the knowledge is greater than or equals to fullKnowledge.
     // Return the calculated score.
+    @SuppressWarnings({"checkstyle:MethodLength", "checkstyle:SuppressWarnings"})
     public int takeExamForCombinedScienceOrArt(Boolean artOrScience) {
+        GameStarter toCall = new GameStarter();
         int totKnowledge = (selectionOneKnowledge + selectionThreeKnowledge + selectionTwoKnowledge);
         if (totKnowledge >= fullKnowledge * 3) {
             if (artOrScience) {
-                System.out.println("Combined Science: 150");
+                toCall.printoutMark("Combined Science", 300);
             } else {
-                System.out.println("Combined Arts: 150");
+                toCall.printoutMark("Combined Art", 300);
             }
             return 300;
+        } else if (totKnowledge <= 0) {
+            if (artOrScience) {
+                toCall.printoutMark("Combined Science", 0);
+            } else {
+                toCall.printoutMark("Combined Art", 0);
+            }
+            return 0;
         } else {
             int score = (int) ((totKnowledge / (3 * fullKnowledge)) * 300);
             if (artOrScience) {
-                System.out.println("Combined Science: " + score);
+                toCall.printoutMark("Combined Science", score);
             } else {
-                System.out.println("Combined Arts: " + score);
+                toCall.printoutMark("Combined Art", score);
             }
             return score;
         }

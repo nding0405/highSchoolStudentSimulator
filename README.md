@@ -29,3 +29,5 @@ the school if the pressure index in total exceed an assigned value.
   index of a course or activity.
 - As a user, I want to be able to observe that the image of student are changed as I add 
   courses or games to the schedule, or as the game comes to the end.
+- As a user, I want to be able to save my all pieces of current student status.
+- As a user, I want to be able to be able to reload my all pieces of current student status.

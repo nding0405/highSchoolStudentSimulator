@@ -1,5 +1,8 @@
 package model;
 
+import org.json.JSONObject;
+import persistence.Writable;
+
 import java.util.ArrayList;
 import java.util.List;
 //Represent Activities the user can add for the student.
@@ -36,7 +39,7 @@ import java.util.List;
 // 17. activityNameList:  the list of activityName that includes all the constant above and in the same order as
 // activityList.
 
-public class Activities {
+public class Activities implements Writable {
     private String name;
     private int time;
     private Boolean courseOrPlay;
@@ -69,6 +72,16 @@ public class Activities {
         this.time = time;
         this.courseOrPlay = courseOrPlay;
         this.activityType = activityType;
+    }
+
+    @Override
+    public JSONObject toJson() {
+        JSONObject json = new JSONObject();
+        json.put("name", name);
+        json.put("time", time);
+        json.put("courseOrPlay", courseOrPlay);
+        json.put("activityType", activityType);
+        return json;
     }
 
 

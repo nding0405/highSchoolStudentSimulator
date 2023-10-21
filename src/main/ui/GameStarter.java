@@ -4,13 +4,22 @@ import model.Activities;
 import model.Student;
 
 import java.util.Scanner;
+import persistence.JsonReader;
+import persistence.JsonWriter;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.util.List;
+
 // Represent the starter of the game. This class will go through the all process of the high school student simulator.
 
 public class GameStarter extends Thread {
+    private static final String JSON_STORE = "./data/student.json";
     private Scanner input;
     private Student student;
     private String gender;
     private String studentName;
+    private JsonWriter jsonWriter;
+    private JsonReader jsonReader;
 
     private static final String openmindedOne =
             "Background: Now, assuming you are a parent from a middle-class Chinese family.";
@@ -42,6 +51,8 @@ public class GameStarter extends Thread {
 
     // EFFECTS: create a new GameStarter object.
     public GameStarter() {
+        jsonWriter = new JsonWriter(JSON_STORE);
+        jsonReader = new JsonReader(JSON_STORE);
     }
 
     @Override
@@ -69,21 +80,26 @@ public class GameStarter extends Thread {
         input.nextLine();
         String operation;
         boolean goOn = true;
-        while (goOn) {
+        boolean notPause = true;
+        while (goOn && notPause) {
             showInstructions();
             operation = input.next();
             detectValidOperation(operation);
-            processOperation(operation);
+            if (!processOperation(operation)) {
+                notPause = false;
+            }
             goOn = !(student.detectEnding());
         }
-        gameEndNotification();
+        gameEndNotification(notPause);
     }
 
     //EFFECTS: printing out the notification for the user that tells the game has ended. Call "student.endChoice()"
     // method to have the end.
-    private void gameEndNotification() {
+    private void gameEndNotification(boolean pauseOrNot) {
         Boolean dropOrExam = student.dropOrExam();
-        if (dropOrExam) {
+        if (!pauseOrNot) {
+            System.out.println("You paused the game!");
+        } else if (dropOrExam) {
             System.out.println("GAME END: The pressure of the student exceeds limit...");
             dropSchoolEnd();
         } else {
@@ -331,7 +347,8 @@ public class GameStarter extends Thread {
     // EFFECT: detect whether the input of the user is "add" or "view".
     // If it is none of them, ask the user to try again until the input is one of "add" and "view".
     public void detectValidOperation(String operation) {
-        while (!(operation.equals("add") || operation.equals("view"))) {
+        while (!(operation.equals("add") || operation.equals("view") || operation.equals("save")
+                || operation.equals("recover") || operation.equals("quit"))) {
             System.out.println("invalid input, please try again!");
             showInstructions();
             operation = input.next();
@@ -340,7 +357,7 @@ public class GameStarter extends Thread {
 
     // MODIFIES: this, student
     // EFFECTS: let the user add course or view schedule depending on the input.
-    public void processOperation(String operation) throws InterruptedException {
+    public Boolean processOperation(String operation) throws InterruptedException {
         Activities a = new Activities("a",0,true,true);
         if (operation.equalsIgnoreCase("add")) {
             showSelection();
@@ -354,8 +371,40 @@ public class GameStarter extends Thread {
             student.addActivity(a);
             System.out.println(activitySelection + " is successfully added");
             student.studentAnime(a);
-        } else {
+        }
+        return processOthers(operation);
+    }
+
+    // MODIFIES: this.
+    // EFFECTS: let the user add course or view schedule depending on the input.
+    private Boolean processOthers(String operation) {
+        if (operation.equalsIgnoreCase("view")) {
             student.showSchedule();
+        } else if (operation.equalsIgnoreCase("save")) {
+            saveStudent();
+        } else if (operation.equalsIgnoreCase("recover")) {
+            loadStudent();
+        }
+        return !operation.equals("quit");
+    }
+
+    private void loadStudent() {
+        try {
+            student = jsonReader.read();
+            System.out.println("Loaded " + student.getName() + " from " + JSON_STORE);
+        } catch (IOException e) {
+            System.out.println("Unable to read from file: " + JSON_STORE);
+        }
+    }
+
+    private void saveStudent() {
+        try {
+            jsonWriter.open();
+            jsonWriter.write(student);
+            jsonWriter.close();
+            System.out.println("Saved " + student.getName() + " to " + JSON_STORE);
+        } catch (FileNotFoundException e) {
+            System.out.println("Unable to write to file: " + JSON_STORE);
         }
     }
 
@@ -398,6 +447,9 @@ public class GameStarter extends Thread {
         System.out.println("\nSelect from:");
         System.out.println("\tadd -> add activities for student");
         System.out.println("\tview -> view schedule");
+        System.out.println("\tsave -> save your game");
+        System.out.println("\trecover -> reload your game");
+        System.out.println("\tquit -> quit your game");
     }
 
     //EFFECTS: Show the user the course menu

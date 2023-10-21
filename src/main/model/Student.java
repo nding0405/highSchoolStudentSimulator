@@ -1,6 +1,9 @@
 package model;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
 import ui.GameStarter;
+import persistence.Writable;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -40,7 +43,7 @@ import java.util.List;
 // parentDisagreepressurePlus: the pressure of the student will incease by this constant if the user disagree with
 // their choice.
 
-public class Student {
+public class Student implements Writable {
     private static final String studying1 = "the student is studying";//should be images showing
     private static final String studying2 = "the student is studying";//a studying student in visualization phase
     private static final String relaxing1 = "the student is relaxing";//should be images showing
@@ -61,7 +64,7 @@ public class Student {
     private final List<Activities> schedule;
     private int time;
     private int pressure;
-    private final Knowledge knowledge;
+    private Knowledge knowledge;
     private Boolean chrType;
     private Boolean preference;
     private Boolean loveFineArt;
@@ -86,6 +89,40 @@ public class Student {
         this.subjectSelectionTwo = "B";
         this.subjectSelectionThree = "C";
         this.scienceOrArtForExam = true;
+    }
+
+    @Override
+    public JSONObject toJson() {
+        JSONObject json = new JSONObject();
+        json.put("name", name);
+        json.put("time", time);
+        json.put("pressure", pressure);
+        json.put("chrType", chrType);
+        json.put("name", name);
+        json.put("preference", preference);
+        json.put("loveFineArt", loveFineArt);
+        json.put("subjectSelectionOne", subjectSelectionOne);
+        json.put("subjectSelectionTwo", subjectSelectionTwo);
+        json.put("subjectSelectionThree", subjectSelectionThree);
+        json.put("scienceOrArtForExam", scienceOrArtForExam);
+        json.put("schedule", scheduleToJson());
+        json.put("knowledge", knowledgeToJson());
+        return json;
+    }
+
+    //EFFECT: write knowledge as a json object and return it.
+    private JSONObject knowledgeToJson() {
+        JSONObject json = knowledge.toJson();
+        return json;
+    }
+
+    // EFFECTS: returns activities in this schedule as a JSON array
+    private JSONArray scheduleToJson() {
+        JSONArray jsonArray = new JSONArray();
+        for (Activities a : schedule) {
+            jsonArray.put(a.toJson());
+        }
+        return jsonArray;
     }
 
 
@@ -451,5 +488,29 @@ public class Student {
     //EFFECT: set whether the student choose to take science or art exam, true for science false for art.
     public void setScienceOrArtForExam(Boolean b) {
         this.scienceOrArtForExam = b;
+    }
+
+    //MODIFIED:this
+    //EFFECT: set the selection 1 for exam.
+    public void setSubjectSelectionOne(String s) {
+        this.subjectSelectionOne = s;
+    }
+
+    //MODIFIED:this
+    //EFFECT: set the selection 1 for exam.
+    public void setSubjectSelectionTwo(String s) {
+        this.subjectSelectionTwo = s;
+    }
+
+    //MODIFIED:this
+    //EFFECT: set the selection 3 for exam.
+    public void setSubjectSelectionThree(String s) {
+        this.subjectSelectionThree = s;
+    }
+
+    //MODIFIED: this
+    //EFFECT: set the knowledge for the student.
+    public void setKnowledge(Knowledge k) {
+        this.knowledge = k;
     }
 }

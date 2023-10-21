@@ -1,5 +1,7 @@
 package model;
 
+import org.json.JSONObject;
+import persistence.Writable;
 import ui.GameStarter;
 
 // Represent the Knowledge.
@@ -21,7 +23,7 @@ import ui.GameStarter;
 // 3. loseKnowledgeWhenPlayIndex: the knowledge for the corresponding field will decrease by
 // (loseKnowledgeWhenPlayIndex * time)  (time information will be sent to this class from elsewhere)
 // 4. fullKnowledge: minimum knowledge to get the full mark for corresponding subject
-public class Knowledge {
+public class Knowledge implements Writable {
     private static final double courseFitKnowledgeIndex = 1.05;
     private static final double courseUnFitKnowledgeIndex = 0.95;
     private static final double loseKnowledgeWhenPlayIndex = 0.15;
@@ -43,6 +45,18 @@ public class Knowledge {
         selectionOneKnowledge = 0;
         selectionTwoKnowledge = 0;
         selectionThreeKnowledge = 0;
+    }
+
+    @Override
+    public JSONObject toJson() {
+        JSONObject json = new JSONObject();
+        json.put("mandarinKnowledge", mandarinKnowledge);
+        json.put("mathKnowledge", mathKnowledge);
+        json.put("englishKnowledge", englishKnowledge);
+        json.put("selectionOneKnowledge", selectionOneKnowledge);
+        json.put("selectionTwoKnowledge", selectionTwoKnowledge);
+        json.put("selectionThreeKnowledge", selectionThreeKnowledge);
+        return json;
     }
 
 

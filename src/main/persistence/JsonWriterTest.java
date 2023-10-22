@@ -36,14 +36,14 @@ public class JsonWriterTest extends JsonTest {
     }
 
     @Test
-    void testWriterEmptyStudent() {
+    void testWriterInitialStudent() {
         try {
             String gender = "mom";
-            JsonWriter writer = new JsonWriter("./data/testWriterEmptyStudent.json");
+            JsonWriter writer = new JsonWriter("./data/testWriterInitialStudent.json");
             writer.open();
             writer.write(testStudent1, gender);
             writer.close();
-            JsonReader reader = new JsonReader("./data/testWriterEmptyStudent.json");
+            JsonReader reader = new JsonReader("./data/testWriterInitialStudent.json");
             testStudent1 = reader.read();
             gender = reader.readGender();
             testFields(gender);

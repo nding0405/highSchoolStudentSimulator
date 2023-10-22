@@ -25,9 +25,9 @@ public class JsonWriter {
     }
 
     // MODIFIES: this
-    // EFFECTS: writes JSON representation of workroom to file
-    public void write(Student stu) {
-        JSONObject json = stu.toJson();
+    // EFFECTS: writes JSON representation of student to file
+    public void write(Student stu, String gender) {
+        JSONObject json = stu.toJson(gender);
         saveToFile(json.toString(TAB));
     }
 
@@ -42,4 +42,5 @@ public class JsonWriter {
     private void saveToFile(String json) {
         writer.print(json);
     }
+
 }

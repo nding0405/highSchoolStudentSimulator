@@ -1,0 +1,27 @@
+{
+    "loveFineArt": false,
+    "gender": "dad",
+    "subjectSelectionTwo": "B",
+    "preference": false,
+    "chrType": false,
+    "pressure": 130,
+    "subjectSelectionOne": "A",
+    "scienceOrArtForExam": true,
+    "schedule": [{
+        "name": "a1",
+        "time": 100,
+        "courseOrPlay": true,
+        "activityType": true
+    }],
+    "subjectSelectionThree": "C",
+    "name": "I+A",
+    "time": 100,
+    "knowledge": {
+        "mathKnowledge": 0,
+        "selectionOneKnowledge": 0,
+        "englishKnowledge": 0,
+        "selectionThreeKnowledge": 0,
+        "mandarinKnowledge": 0,
+        "selectionTwoKnowledge": 0
+    }
+}

@@ -28,6 +28,14 @@ public class JsonReader {
         return parseStudent(jsonObject);
     }
 
+    // EFFECTS: reads gender from file and returns it;
+    // throws IOException if an error occurs reading data from file
+    public String readGender() throws IOException {
+        String jsonData = readFile(source);
+        JSONObject jsonObject = new JSONObject(jsonData);
+        return parseGender(jsonObject);
+    }
+
     // EFFECTS: reads source file as string and returns it
     private String readFile(String source) throws IOException {
         StringBuilder contentBuilder = new StringBuilder();
@@ -38,6 +46,13 @@ public class JsonReader {
 
         return contentBuilder.toString();
     }
+
+    // EFFECTS: parses gender from JSON object and returns it
+    private String parseGender(JSONObject jsonObject) {
+        String gender = jsonObject.getString("gender");
+        return gender;
+    }
+
 
     // EFFECTS: parses Student from JSON object and returns it
     private Student parseStudent(JSONObject jsonObject) {
@@ -104,6 +119,6 @@ public class JsonReader {
         boolean courseOrPlay = jsonObject.getBoolean("courseOrPlay");
         boolean activityType = jsonObject.getBoolean("activityType");
         Activities a = new Activities(name, time, courseOrPlay, activityType);
-        stu.addActivity(a);
+        stu.addSimplySchedule(a);
     }
 }

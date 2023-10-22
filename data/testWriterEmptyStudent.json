@@ -1,0 +1,22 @@
+{
+    "loveFineArt": false,
+    "gender": "mom",
+    "subjectSelectionTwo": "B",
+    "preference": false,
+    "chrType": false,
+    "pressure": 0,
+    "subjectSelectionOne": "A",
+    "scienceOrArtForExam": true,
+    "schedule": [],
+    "subjectSelectionThree": "C",
+    "name": "I+A",
+    "time": 0,
+    "knowledge": {
+        "mathKnowledge": 0,
+        "selectionOneKnowledge": 0,
+        "englishKnowledge": 0,
+        "selectionThreeKnowledge": 0,
+        "mandarinKnowledge": 0,
+        "selectionTwoKnowledge": 0
+    }
+}

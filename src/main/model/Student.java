@@ -43,7 +43,7 @@ import java.util.List;
 // parentDisagreepressurePlus: the pressure of the student will incease by this constant if the user disagree with
 // their choice.
 
-public class Student implements Writable {
+public class Student {
     private static final String studying1 = "the student is studying";//should be images showing
     private static final String studying2 = "the student is studying";//a studying student in visualization phase
     private static final String relaxing1 = "the student is relaxing";//should be images showing
@@ -91,8 +91,9 @@ public class Student implements Writable {
         this.scienceOrArtForExam = true;
     }
 
-    @Override
-    public JSONObject toJson() {
+    //MODIFIED: JSONObject
+    //EFFECT: write all information about the current student and the gender into a json object.
+    public JSONObject toJson(String gender) {
         JSONObject json = new JSONObject();
         json.put("name", name);
         json.put("time", time);
@@ -107,15 +108,18 @@ public class Student implements Writable {
         json.put("scienceOrArtForExam", scienceOrArtForExam);
         json.put("schedule", scheduleToJson());
         json.put("knowledge", knowledgeToJson());
+        json.put("gender", gender);
         return json;
     }
 
+    //MODIFIED: JSONObject
     //EFFECT: write knowledge as a json object and return it.
     private JSONObject knowledgeToJson() {
         JSONObject json = knowledge.toJson();
         return json;
     }
 
+    //MODIFIED: JSONObject
     // EFFECTS: returns activities in this schedule as a JSON array
     private JSONArray scheduleToJson() {
         JSONArray jsonArray = new JSONArray();
@@ -161,6 +165,14 @@ public class Student implements Writable {
         knowledge.addKnowledge(a, subjectSelectionOne, subjectSelectionTwo, subjectSelectionThree, preference);
         addPressure(a);
         updateBars();
+    }
+
+    //REQUIRES: Activities must be one of the name in the menu
+    //MODIFIES: this
+    //EFFECT: Add activity "a" to the schedule of the student, DO NOTHING ELSE about the other fields of
+    // student.
+    public void addSimplySchedule(Activities a) {
+        schedule.add(a);
     }
 
 

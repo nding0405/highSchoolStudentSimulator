@@ -1,0 +1,27 @@
+{
+    "loveFineArt": false,
+    "gender": "mom",
+    "subjectSelectionTwo": "biology",
+    "preference": true,
+    "chrType": true,
+    "pressure": -150,
+    "subjectSelectionOne": "physics",
+    "scienceOrArtForExam": true,
+    "schedule": [{
+        "name": "Hangout_with_friends",
+        "time": 100,
+        "courseOrPlay": false,
+        "activityType": true
+    }],
+    "subjectSelectionThree": "chemistry",
+    "name": "AAA",
+    "time": 100,
+    "knowledge": {
+        "mathKnowledge": -15,
+        "selectionOneKnowledge": -15,
+        "englishKnowledge": -15,
+        "selectionThreeKnowledge": -15,
+        "mandarinKnowledge": -15,
+        "selectionTwoKnowledge": -15
+    }
+}

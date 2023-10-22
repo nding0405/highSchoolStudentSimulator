@@ -8,7 +8,6 @@ import persistence.JsonReader;
 import persistence.JsonWriter;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.util.List;
 
 // Represent the starter of the game. This class will go through the all process of the high school student simulator.
 
@@ -51,6 +50,7 @@ public class GameStarter extends Thread {
 
     // EFFECTS: create a new GameStarter object.
     public GameStarter() {
+        input = new Scanner(System.in);
         jsonWriter = new JsonWriter(JSON_STORE);
         jsonReader = new JsonReader(JSON_STORE);
     }
@@ -58,16 +58,34 @@ public class GameStarter extends Thread {
     @Override
     public void run() {
         try {
-            runThegame();
+            runTheGame();
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }
     }
 
+    // MODIFIES: this, Activities, student
+    // EFFECTS: ask the user whether to start a new game or reload the old one
+    public void runTheGame() throws InterruptedException {
+        System.out.println("\t" + "n <- start a new game");
+        System.out.println("\t" + "l <- load the old game");
+        String newOrReload;
+        newOrReload = input.next();
+        while (!(newOrReload.equals("n") || newOrReload.equals("l"))) {
+            System.out.println("invalid input! Try again!");
+            newOrReload = input.next();
+        }
+        if (newOrReload.equals("n")) {
+            initializationForNewUser();
+        } else {
+            loadStudent();
+        }
+    }
 
-    // MODIFIES: this, Activities
-    // EFFECTS: going through the whole general process of the game.
-    public void runThegame() throws InterruptedException {
+
+    // MODIFIES: this, Activities, student
+    // EFFECTS: set up student information for new users.
+    public void initializationForNewUser() throws InterruptedException {
         introduction();
         Thread.sleep(1000);
         initializeStudent();
@@ -75,7 +93,13 @@ public class GameStarter extends Thread {
         initializeParent();
         Thread.sleep(1000);
         backGroundInfo();
-        input.nextLine();
+        runNewGame();
+    }
+
+    // MODIFIES: this, Activities, student
+    // EFFECTS: going through the whole general process of the game. The game will pause if the user chooses to quit,
+    // the game will end if detected the game should come to an end. Otherwise, the game will go on.
+    public void runNewGame() throws InterruptedException {
         student.studentProfile();
         input.nextLine();
         String operation;
@@ -92,6 +116,7 @@ public class GameStarter extends Thread {
         }
         gameEndNotification(notPause);
     }
+
 
     //EFFECTS: printing out the notification for the user that tells the game has ended. Call "student.endChoice()"
     // method to have the end.
@@ -348,7 +373,7 @@ public class GameStarter extends Thread {
     // If it is none of them, ask the user to try again until the input is one of "add" and "view".
     public void detectValidOperation(String operation) {
         while (!(operation.equals("add") || operation.equals("view") || operation.equals("save")
-                || operation.equals("recover") || operation.equals("quit"))) {
+                || operation.equals("check") || operation.equals("recover") || operation.equals("quit"))) {
             System.out.println("invalid input, please try again!");
             showInstructions();
             operation = input.next();
@@ -377,30 +402,35 @@ public class GameStarter extends Thread {
 
     // MODIFIES: this.
     // EFFECTS: let the user add course or view schedule depending on the input.
-    private Boolean processOthers(String operation) {
+    private Boolean processOthers(String operation) throws InterruptedException {
         if (operation.equalsIgnoreCase("view")) {
             student.showSchedule();
         } else if (operation.equalsIgnoreCase("save")) {
             saveStudent();
         } else if (operation.equalsIgnoreCase("recover")) {
             loadStudent();
+        } else {
+            student.studentProfile();
         }
         return !operation.equals("quit");
     }
 
-    private void loadStudent() {
+    private void loadStudent() throws InterruptedException {
         try {
             student = jsonReader.read();
+            gender = jsonReader.readGender();
             System.out.println("Loaded " + student.getName() + " from " + JSON_STORE);
         } catch (IOException e) {
             System.out.println("Unable to read from file: " + JSON_STORE);
         }
+        student.updateBars();
+        runNewGame();
     }
 
     private void saveStudent() {
         try {
             jsonWriter.open();
-            jsonWriter.write(student);
+            jsonWriter.write(student, gender);
             jsonWriter.close();
             System.out.println("Saved " + student.getName() + " to " + JSON_STORE);
         } catch (FileNotFoundException e) {

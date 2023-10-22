@@ -11,7 +11,7 @@ import model.Knowledge;
 import model.Student;
 import org.json.*;
 
-// Represents a reader that reads workroom from JSON data stored in file
+// Represents a reader that reads student(object) and gender(primitive String) from JSON data stored in file
 public class JsonReader {
     private String source;
 

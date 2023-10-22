@@ -49,6 +49,7 @@ public class Background  extends Thread {
         }
     }
 
+    //EFFECT: construct a list containing all time period in a day.
     private static List<String> encapAlltime(List<String> list) {
         list.add(earlyMorning);
         list.add(lateMorning);

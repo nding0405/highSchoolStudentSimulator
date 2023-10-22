@@ -47,6 +47,8 @@ public class Knowledge implements Writable {
         selectionThreeKnowledge = 0;
     }
 
+    //MODIFIED: JSONObject
+    //EFFECTS: write all fields to a json object and return it.
     @Override
     public JSONObject toJson() {
         JSONObject json = new JSONObject();

@@ -74,6 +74,8 @@ public class Activities implements Writable {
         this.activityType = activityType;
     }
 
+    //MODIFIED: JSONObject
+    //EFFECTS: write all fields to a json object and return it.
     @Override
     public JSONObject toJson() {
         JSONObject json = new JSONObject();

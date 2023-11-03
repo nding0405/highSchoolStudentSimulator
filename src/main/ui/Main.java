@@ -6,6 +6,7 @@ public class Main {
         myGame.start();
 //        Background myBackground = new Background();
 //        myBackground.start();
+//        new SelectGameTypeWindow();
     }
 }
 

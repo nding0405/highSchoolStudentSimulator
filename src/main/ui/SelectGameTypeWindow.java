@@ -7,8 +7,6 @@ public class SelectGameTypeWindow extends GameStarter {
     public static final String FONT_TYPE = "Courier New";
     public static final int TITLE_FONT_SIZE = 20;
     public static final int BUTTON_FONT_SIZE = 16;
-    public static final String BACKGROUND_IMG_PATH = "data/resources/night1.PNG";
-    public static final String ICON_IMG_PATH = "data/resources/miku.png";
     JFrame myFrame;
     JButton newGame;
     JButton oldGame;
@@ -61,24 +59,24 @@ public class SelectGameTypeWindow extends GameStarter {
 
     public void setupNewGameButton() {
         newGame = new JButton("Start a new game...");
-        newGame.setFont(new Font("Courier New",Font.PLAIN, BUTTON_FONT_SIZE));
+        newGame.setFont(new Font(FONT_TYPE,Font.PLAIN, BUTTON_FONT_SIZE));
         newGame.setBounds(250, 450, 300, 30); // Example positioning
     }
 
     public void setupOldGameButton() {
         oldGame = new JButton("Load old game...");
-        oldGame.setFont(new Font("Courier New",Font.PLAIN,16));
+        oldGame.setFont(new Font(FONT_TYPE,Font.PLAIN,16));
         oldGame.setBounds(250, 500, 300, 30); // Example positioning
     }
 
     public JLabel constructBackground() {
-        JLabel background = new JLabel(new ImageIcon(getClass().getResource(BACKGROUND_IMG_PATH)));
+        JLabel background = new JLabel(new ImageIcon("./data/resource/night1.PNG"));
         background.setBounds(0, 0, myFrame.getWidth(), myFrame.getHeight());
         return background;
     }
 
     public JLabel constructIcon() {
-        ImageIcon myIcon = new ImageIcon(getClass().getResource(ICON_IMG_PATH));
+        ImageIcon myIcon = new ImageIcon("./data/resource/miku.png");
         Image myImage = myIcon.getImage();
         myImage = myImage.getScaledInstance(200,230,Image.SCALE_SMOOTH);
         myIcon = new ImageIcon(myImage);

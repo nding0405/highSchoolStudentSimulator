@@ -4,17 +4,17 @@ import model.Student;
 
 import javax.swing.*;
 import java.awt.*;
-import java.util.concurrent.ExecutionException;
 
 public class InitializeStudentWindow {
-    public static final ImageIcon dialogueBoxLeft = new ImageIcon("./data/resource/dialogueBoxLeft.png");
-    public static final ImageIcon dialogueBoxRight = new ImageIcon("./data/resource/dialogueBoxRight.png");
-    public static final ImageIcon coveredFace = new ImageIcon("./data/resource/studentDialogue2.png");
-    public static final ImageIcon uncoveredFace = new ImageIcon("./data/resource/studentDialogue1.png");
+    public static final ImageIcon DIALOGUE_BOX_LEFT = new ImageIcon("./data/resource/dialogueBoxLeft.png");
+    public static final ImageIcon DIALOGUE_BOX_RIGHT = new ImageIcon("./data/resource/dialogueBoxRight.png");
+    public static final ImageIcon COVERED_FACE = new ImageIcon("./data/resource/studentFlowerFace.png");
+    public static final ImageIcon PLAIN_FACE = new ImageIcon("./data/resource/studentPlainFace.png");
+    public static final ImageIcon CRY_FACE = new ImageIcon("./data/resource/studentCryFace.png");
+    public static final ImageIcon SMILE_FACE = new ImageIcon("./data/resource/studentSmileFace.png");
+    public static final ImageIcon POPUP_ICON = new ImageIcon("./data/resource/popupIcon.png");
     public static final String FONT_TYPE = "Courier New";//font type of text
     public static final int TEXT_FONT_SIZE = 20;//size of title
-    public static final int BUTTON_FONT_SIZE = 16;//size of button text
-    private static final int SECONDS_TO_READ = 5000;
     private static String STUDENT_NAME;
     private JFrame myFrame;
     private Student myStudent;
@@ -73,13 +73,13 @@ public class InitializeStudentWindow {
         dialogueContainer.setBackground(Color.BLACK);
 
         studentImageLabel = new JLabel();
-        studentImageLabel.setIcon(coveredFace);
+        studentImageLabel.setIcon(COVERED_FACE);
         studentImageLabel.setOpaque(false);
         studentImageLabel.setBackground(Color.BLACK);
         studentImageLabel.setBounds(0, 55, 300, 330);
 
         dialogueImageLabel = new JLabel();
-        dialogueImageLabel.setIcon(dialogueBoxLeft);
+        dialogueImageLabel.setIcon(DIALOGUE_BOX_LEFT);
         dialogueImageLabel.setOpaque(false);
         dialogueImageLabel.setBackground(Color.BLACK);
         dialogueImageLabel.setBounds(0, 350, 800, 250);
@@ -106,7 +106,7 @@ public class InitializeStudentWindow {
                     "Select your preference",
                     JOptionPane.YES_NO_CANCEL_OPTION,
                     JOptionPane.INFORMATION_MESSAGE,
-                    null,
+                    POPUP_ICON,
                     selections,
                     0);
             if (option == 0) {
@@ -119,10 +119,16 @@ public class InitializeStudentWindow {
 
     private void studentNamePopUp() {
         while (STUDENT_NAME == null || STUDENT_NAME.isEmpty()) {
-            STUDENT_NAME = JOptionPane.showInputDialog("Please give your child a name");
+            STUDENT_NAME = (String) JOptionPane.showInputDialog(
+                    null,
+                    "Please give your child a name",
+                    "Input",
+                    JOptionPane.PLAIN_MESSAGE,
+                    POPUP_ICON,
+                    null,
+                    "");
         }
     }
-
     private void setupFrame() {
         myFrame = new JFrame();
         myFrame.getContentPane().setBackground(Color.BLACK);
@@ -146,28 +152,28 @@ public class InitializeStudentWindow {
         }
     }
 
-    private void parentTalk(String text) throws InterruptedException {
-        dialogueImageLabel.setIcon(dialogueBoxRight);
-        dialogueTextLabel.setText("<html>" + ("You: " + text).replace("\n", "<br>") + "</html>");
-        simulateDelay(1);
-    }
-
-    private void studentTalk(String text) throws InterruptedException {
-        dialogueImageLabel.setIcon(dialogueBoxLeft);
-        dialogueTextLabel.setText("<html>" + (STUDENT_NAME + ": " + text).replace("\n",
-                        "<br>") + "</html>");
-        simulateDelay(1);
-    }
-
-    private void scienceStudentInitialize() {
-        System.out.println("science");
+    private void scienceStudentInitialize() throws InterruptedException {
+        studentTalk(gender + " I prefer science and I'm more inclined to choose subjects "
+                + "like physics chemistry and biology.");
+        int i = parentQuestionPopUp("Science?","How would you answer?",
+                    "Of course! I agree because I love you.",
+                    "Yes, I agree because it's gonna be easier to find a job and we need money.");
+        if (i == 1) {
+            switchFace("cry");
+            studentTalk("Why do you always give me so much pressure!"
+                    + "(sad and angry, run back to his/her room)");
+            myStudent.setSelectionAgree("s", 2);
+        } else {
+            studentTalk("I'm so happy and I love you...(smile and hugged you)");
+            myStudent.setSelectionAgree("s", 1);
+        }
     }
 
     @SuppressWarnings({"checkstyle:MethodLength", "checkstyle:SuppressWarnings"})
     private void artStudentInitialize() throws InterruptedException {
         studentTalk(gender + " I prefer arts and I'm more inclined to choose subjects like politics and history.");
         int i = parentQuestionPopUp("Arts?","How would you answer?",
-                "Of course! I supports any choice you make!","Well, we need to talk about it.");
+                    "Of course! I supports any choice you make!","Well, we need to talk about it.");
         if (i == 1) {
             parentTalk("But dear, it's challenging to find a job for art students. "
                     + "What 's gonna happen if you have trouble finding jobs in the future?");
@@ -177,20 +183,23 @@ public class InitializeStudentWindow {
                     "(sigh, reluctantly agree.)", "Strongly disagree.");
             if (answer == 0) {
                 parentTalk("Well ok (sigh)... But you have to promise you will work hard and get a high mark.");
+                switchFace("plain");
                 studentTalk("I promise " + gender + "!");
                 myStudent.setSelectionAgree("a", 2);
             } else {
-                parentTalk("You: Have you ever thought about me if you choose arts?" + "\n"
-                        + "Do you know how difficult it is to find a job in arts?" + "No one will feed you if you lose your"
-                        + "job!" + "\n" + "You must choose science!");
+                parentTalk("You: Have you ever thought about me if you choose arts?"
+                        + "Do you know how difficult it is to find a job in arts?"
+                        + "No one will feed you if you lose your job! You must choose science!");
                 studentTalk("(lowering head in silence)");
+                switchFace("plain");
                 myStudent.setSelectionDisAgree("a");
             }
         } else {
             parentTalk("As parents, we want you to be happy, so we're giving you freedom to choose. "
-                    + "\n"
                     + "However, you need to consider your choices carefully and take responsibility for them.");
-
+            switchFace("smile");
+            studentTalk("I love you " + gender + "! (deeply hugged you)");
+            myStudent.setSelectionAgree("a", 1);
         }
     }
 
@@ -201,10 +210,12 @@ public class InitializeStudentWindow {
                 "No way!");
         if (i == 0) {
             parentTalk("Of course!");
+            switchFace("smile");
             studentTalk("Thank you so much and I love you " + gender + "!");
             myStudent.setSelectionAgree("f", 1);
         } else {
             parentTalk("No way!");
+            switchFace("plain");
             studentTalk("Sorry " + gender + "I won't mention it again...");
             parentTalk("You forced your child to quit fine art. Now please choose either art or science for "
                     + STUDENT_NAME);
@@ -219,22 +230,49 @@ public class InitializeStudentWindow {
     }
 
     //a1 0, a2 1
-    private int parentQuestionPopUp(String title,String question, String a1, String a2) {
+    private int parentQuestionPopUp(String title, String question, String a1, String a2) {
         String[] selections = {a1, a2};
-        Integer answerIndex = 10;
-        while (answerIndex == 10) {
+        int answerIndex = JOptionPane.CLOSED_OPTION;
+        while (answerIndex == JOptionPane.CLOSED_OPTION) {
             answerIndex = JOptionPane.showOptionDialog(
                     dialogueTextLabel,
                     question,
                     title,
                     JOptionPane.YES_NO_OPTION,
                     JOptionPane.INFORMATION_MESSAGE,
-                    null,
+                    POPUP_ICON,
                     selections,
                     0);
         }
         return answerIndex;
     }
+
+    private void parentTalk(String text) throws InterruptedException {
+        dialogueImageLabel.setIcon(DIALOGUE_BOX_RIGHT);
+        dialogueTextLabel.setText("<html><div style='text-align: center;'>"
+                + ("You: " + text).replace("\n", "<br>") + "</div></html>");
+        simulateDelay(3);
+    }
+
+    private void studentTalk(String text) throws InterruptedException {
+        dialogueImageLabel.setIcon(DIALOGUE_BOX_LEFT);
+        dialogueTextLabel.setText("<html><div style='text-align: center;'>"
+                + (STUDENT_NAME + ": " + text).replace("\n", "<br>") + "</div></html>");
+        simulateDelay(3);
+    }
+
+    private void switchFace(String s) {
+        if (s.equals("smile")) {
+            studentImageLabel.setIcon(SMILE_FACE);
+        } else if (s.equals("cry")) {
+            studentImageLabel.setIcon(CRY_FACE);
+        } else if (s.equals("cover")) {
+            studentImageLabel.setIcon(COVERED_FACE);
+        } else if (s.equals("plain")) {
+            studentImageLabel.setIcon(PLAIN_FACE);
+        }
+    }
+
 
     public static void main(String[] args) throws InterruptedException {
         new InitializeStudentWindow();

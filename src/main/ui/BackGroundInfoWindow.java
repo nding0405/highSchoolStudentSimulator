@@ -8,14 +8,14 @@ import java.awt.*;
 public class BackGroundInfoWindow {
     private static final String BACKGROUND_INFO_ONE =
             "Background: Now, assuming you are a parent from "
-                    + "\n" + "a middle-class Chinese family.";
+                    + "a middle-class Chinese family.";
     private static final String BACKGROUND_INFO_TWO =
             "Every students need to take a final exam at the end of their third year of high school."
-                    + "\n" + "The university they can enter is purely depend on the score of that one-chance exam.";
-    private static final String BACKGROUND_INFO_THREE = "The subjects of the final exam are: 'Mandarin' 'Math' "
-            + "'English'"
-            + "AND either 'Combined Science(includes Physics Biology and Chemistry)'"
-            + "or 'Combined Arts(includes Geology History and Politics)'";
+                    + "The university they can enter is purely depend on the score of that one-chance exam.";
+    private static final String BACKGROUND_INFO_THREE = "The subjects of the final exam are: Mandarin Math "
+            + "English"
+            + " and either Combined Science(includes Physics Biology and Chemistry)"
+            + "or Combined Arts(includes Geology History and Politics)";
     private static final String BACKGROUND_INFO_FOUR = "The choice for art and science will influence the major they can "
             + "apply for their university." + "Art student cannot choose science major and vice versa.";
     private static final String BACKGROUND_INFO_FIVE = "However, in China, there are relatively less job opportunities for "
@@ -81,9 +81,10 @@ public class BackGroundInfoWindow {
         myFrame.add(backgroundInfo);
         myFrame.setVisible(true);
         for (int i = 0; i < backgroundTexts.length; i++) {
-            backgroundInfo.setText("<html>" + backgroundTexts[i].replace("\n", "<br>") + "</html>");
+            backgroundInfo.setText("<html><div style='text-align: center;'>"
+                    + backgroundTexts[i].replace("\n", "<br>") + "</div></html>");
             myFrame.setVisible(true);
-            Thread.sleep(100);
+            Thread.sleep(2000);
         }
     }
 

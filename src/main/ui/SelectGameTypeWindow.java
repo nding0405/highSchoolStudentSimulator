@@ -153,7 +153,11 @@ public class SelectGameTypeWindow extends GameStarter implements ActionListener 
     public void actionPerformed(ActionEvent e) {
         if (e.getSource().equals(newGame)) {
             myFrame.dispose();
-            new NewGameStartWindow();
+            try {
+                new BackGroundInfoWindow();
+            } catch (InterruptedException ex) {
+                throw new RuntimeException(ex);
+            }
         } else {
             myFrame.dispose();
             new OldGameLoadWindow();

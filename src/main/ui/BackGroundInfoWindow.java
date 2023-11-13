@@ -39,14 +39,31 @@ public class BackGroundInfoWindow {
 
     BackGroundInfoWindow() throws InterruptedException {
         setUpFrame();
-        setupBackgroundInfo();
-        myFrame.dispose();
-        new InitializeStudentWindow();
+        SwingWorker<Void, Void> worker = new SwingWorker<Void, Void>() {
+            @Override
+            protected Void doInBackground() throws Exception {
+                setupBackgroundInfo();
+                return null;
+            }
+
+            @Override
+            protected void done() {
+                myFrame.dispose();
+                try {
+                    new InitializeStudentWindow();
+                } catch (InterruptedException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+        };
+
+        worker.execute();
     }
 
     private void setUpFrame() {
         myFrame = new JFrame();
         myFrame.getContentPane().setBackground(Color.BLACK);
+        myFrame.getContentPane().setForeground(Color.BLACK);
         myFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         myFrame.setSize(800,600);
         myFrame.setResizable(false);
@@ -65,7 +82,8 @@ public class BackGroundInfoWindow {
         myFrame.setVisible(true);
         for (int i = 0; i < backgroundTexts.length; i++) {
             backgroundInfo.setText("<html>" + backgroundTexts[i].replace("\n", "<br>") + "</html>");
-            Thread.sleep(5000);
+            myFrame.setVisible(true);
+            Thread.sleep(100);
         }
     }
 

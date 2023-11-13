@@ -83,7 +83,7 @@ public class Student {
         this.pressure = 0;
         this.knowledge = new Knowledge();
         this.chrType = Math.random() < 0.5;
-        this.preference = Math.random() < 0.5;
+        this.preference = Math.random() < 0.001;
         this.loveFineArt = Math.random() < 0.05;
         this.subjectSelectionOne = "A";
         this.subjectSelectionTwo = "B";

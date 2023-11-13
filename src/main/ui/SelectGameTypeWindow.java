@@ -160,7 +160,11 @@ public class SelectGameTypeWindow extends GameStarter implements ActionListener 
             }
         } else {
             myFrame.dispose();
-            new OldGameLoadWindow();
+            try {
+                new OldGameLoadWindow();
+            } catch (InterruptedException ex) {
+                throw new RuntimeException(ex);
+            }
         }
     }
 }

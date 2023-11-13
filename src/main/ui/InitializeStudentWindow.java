@@ -129,6 +129,7 @@ public class InitializeStudentWindow {
                     "");
         }
     }
+
     private void setupFrame() {
         myFrame = new JFrame();
         myFrame.getContentPane().setBackground(Color.BLACK);

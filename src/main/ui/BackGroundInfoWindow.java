@@ -16,11 +16,14 @@ public class BackGroundInfoWindow {
             + "English"
             + " and either Combined Science(includes Physics Biology and Chemistry)"
             + "or Combined Arts(includes Geology History and Politics)";
-    private static final String BACKGROUND_INFO_FOUR = "The choice for art and science will influence the major they can "
+    private static final String BACKGROUND_INFO_FOUR =
+            "The choice for art and science will influence the major they can "
             + "apply for their university." + "Art student cannot choose science major and vice versa.";
-    private static final String BACKGROUND_INFO_FIVE = "However, in China, there are relatively less job opportunities for "
+    private static final String BACKGROUND_INFO_FIVE =
+            "However, in China, there are relatively less job opportunities for "
             + "students in art than student in science.";
-    private static final String BACKGROUND_INFO_SIX = "Please answer the following questions as they will be crucial for "
+    private static final String BACKGROUND_INFO_SIX =
+            "Please answer the following questions as they will be crucial for "
             + "your child's subject selection.";
     private static final String BACKGROUND_INFO_SEVEN = "";
     private String[] backgroundTexts = {

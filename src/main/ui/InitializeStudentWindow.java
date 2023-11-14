@@ -44,7 +44,8 @@ public class InitializeStudentWindow {
 
             @Override
             protected void done() {
-
+                myFrame.dispose();
+                new MainGamingWindow(myStudent, gender);
             }
         };
         worker.execute();

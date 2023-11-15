@@ -134,7 +134,9 @@ public class Student {
 
     //EFFECT: assigning values to name, subjectSelection1, subjectSelection2, subjectSelection3, character, prefer,
     // and pass these values to showProfile() method to print out the profile.
-    public void studentProfile() {
+    @SuppressWarnings({"checkstyle:MethodLength", "checkstyle:SuppressWarnings"})
+    public List<String> studentProfile() {
+        List<String> profile = new ArrayList<>();
         GameStarter toCall = new GameStarter();
         String name = this.name;
         String subjectSelection1 = subjectSelectionOne;
@@ -144,17 +146,26 @@ public class Student {
         String prefer;
         if (chrType) {
             character = "outgoing";
+            profile.add("Character: outgoing");
         } else {
             character = "introverted";
+            profile.add("Character: introverted");
         }
         if (loveFineArt) {
             prefer = "fine art";
+            profile.add("Subject Preference: fine art");
         } else if (preference) {
             prefer = "science";
+            profile.add("Subject Preference: science");
         } else {
             prefer = "art";
+            profile.add("Subject Preference: art");
         }
-        toCall.showProfile(name, subjectSelection1, subjectSelection2, subjectSelection3, character, prefer);
+        profile.add("Subject Selection1: " + subjectSelection1);
+        profile.add("Subject Selection2: " + subjectSelection2);
+        profile.add("Subject Selection3: " + subjectSelection3);
+//        toCall.showProfile(name, subjectSelection1, subjectSelection2, subjectSelection3, character, prefer);
+        return profile;
     }
 
 

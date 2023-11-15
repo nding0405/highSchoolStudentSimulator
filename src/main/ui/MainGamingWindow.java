@@ -471,6 +471,17 @@ public class MainGamingWindow {
         viewProfileButton.setOpaque(false);
         viewProfileButton.setContentAreaFilled(false);
         viewProfileButton.setBorderPainted(false);
+        profileButtonActionListener();
+    }
+
+    private void profileButtonActionListener() {
+        viewProfileButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                System.out.println("profile");
+                new ShowProfileWindow(myStudent);
+            }
+        });
     }
 
     //REQUIRES:

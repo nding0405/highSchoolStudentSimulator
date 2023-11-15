@@ -166,6 +166,7 @@ public class InitializeStudentWindow {
                     + "(sad and angry, run back to his/her room)");
             myStudent.setSelectionAgree("s", 2);
         } else {
+            switchFace("smile");
             studentTalk("I'm so happy and I love you...(smile and hugged you)");
             myStudent.setSelectionAgree("s", 1);
         }
@@ -192,8 +193,8 @@ public class InitializeStudentWindow {
                 parentTalk("You: Have you ever thought about me if you choose arts?"
                         + "Do you know how difficult it is to find a job in arts?"
                         + "No one will feed you if you lose your job! You must choose science!");
-                studentTalk("(lowering head in silence)");
                 switchFace("plain");
+                studentTalk("(lowering head in silence)");
                 myStudent.setSelectionDisAgree("a");
             }
         } else {

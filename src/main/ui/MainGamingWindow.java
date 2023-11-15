@@ -1,29 +1,57 @@
 package ui;
 
+import model.Activities;
+import model.Exceptions.PressureExceedException;
+import model.Exceptions.TimeUpException;
 import model.Student;
+import persistence.JsonReader;
+import persistence.JsonWriter;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
 
 public class MainGamingWindow {
+    private static final String JSON_STORE = "./data/student.json";
+
+    private static final String[] ACTIVITIES = {"Mandarin", "English", "Math", "Physics", "Chemistry",
+            "Biology", "History", "Geology", "Politics", "Jogging", "Hangout with friends", "Hiking", "Drawing",
+            "Playing the piano", "VideoGame"};
+
     public static final String FONT_TYPE = "Courier New";//font type of text
     public static final Integer TEXT_FONT_SIZE = 15;
+
     public static final String NIGHT1 = "./data/resource/night1.PNG";
     public static final String NIGHT2 = "./data/resource/night2.PNG";
     public static final String NIGHT3 = "./data/resource/night3.PNG";
+
+    private static String STU1 = "initial";
+    private static String STU2 = "initial";
+
     public static final String REG_STU1 = "./data/resource/regularStudent1.PNG";
     public static final String REG_STU2 = "./data/resource/regularStudent2.PNG";
-    public static final String DESK1 = "./data/resource/desk1.png";
-    public static final String DESK2 = "./data/resource/desk2.png";
+
+    public static final String STUDY_STU1 = "./data/resource/studyStudent1.PNG";
+    public static final String STUDY_STU2 = "./data/resource/studyStudent2.PNG";
+
+    public static final String RELAX_STU1 = "./data/resource/relaxStudent1.PNG";
+    public static final String RELAX_STU2 = "./data/resource/relaxStudent2.PNG";
+
+    public static final String DESK = "./data/resource/desk1.png";
+
     public static final ImageIcon BAR_IMAGE = new ImageIcon("./data/resource/BarImage.png");
     public static final ImageIcon ADD_BUTTON_IMAGE = new ImageIcon("./data/resource/AddButton.png");
     public static final ImageIcon SAVE_BUTTON_IMAGE = new ImageIcon("./data/resource/SaveButton.png");
     public static final ImageIcon PROFILE_BUTTON_IMAGE = new ImageIcon("./data/resource/ProfileButton.png");
     public static final ImageIcon SCHEDULE_BUTTON_IMAGE = new ImageIcon("./data/resource/ScheduleButton.png");
+
     private static final java.util.List<String> encapsulateOneDay = encapAlltime(new ArrayList<>());
-    private static final java.util.List<String> encapsulateRegStu = encapRegStu(new ArrayList<>());
 
     private JFrame myFrame;
 
@@ -45,8 +73,16 @@ public class MainGamingWindow {
     private JButton viewScheduleButton;
     private JButton viewProfileButton;
 
+    private JComboBox<String> activitiesBox;
+    private JTextField typeInTimeBox;
+
+    private String selectedActivity;
+
     private Student myStudent;
     private String gender;
+
+    private JsonWriter jsonWriter;
+    private JsonReader jsonReader;
 
     //REQUIRES: this constructor will only be called once the student is initialized.
     //MODIFIED: this, Student, Knowledge
@@ -64,16 +100,31 @@ public class MainGamingWindow {
     MainGamingWindow(Student myStudent, String gender) {
         this.myStudent = myStudent;
         this.gender = gender;
+        initializeJson();
         setupAll();
+        changeStuImage("regular");
         startBackgroundTask();
         startRegularStudentTask();
+    }
+
+    private void changeStuImage(String type) {
+        if (type.equals("regular")) {
+            STU1 = REG_STU1;
+            STU2 = REG_STU2;
+        } else if (type.equals("study")) {
+            STU1 = STUDY_STU1;
+            STU2 = STUDY_STU2;
+        } else {
+            STU1 = RELAX_STU1;
+            STU2 = RELAX_STU2;
+        }
     }
 
     //REQUIRES:
     //MODIFIED:
     //EFFECTS:
     private void updateBars() {
-
+        setTextForBars();
     }
 
     //REQUIRES:
@@ -126,8 +177,15 @@ public class MainGamingWindow {
         SwingWorker<Void, Void> backgroundWorker = new SwingWorker<>() {
             @Override
             protected Void doInBackground() throws Exception {
+                ImageIcon image1;
+                ImageIcon image2;
                 while (true) {
-                    oneStudentCycle();
+                    image1 = new ImageIcon(STU1);
+                    image2 = new ImageIcon(STU2);
+                    studentImage.setIcon(image1);
+                    Thread.sleep(500);
+                    studentImage.setIcon(image2);
+                    Thread.sleep(500);
                 }
             }
 
@@ -140,14 +198,6 @@ public class MainGamingWindow {
         backgroundWorker.execute();
     }
 
-    private void oneStudentCycle() throws InterruptedException {
-        ImageIcon image;
-        for (String s : encapsulateRegStu) {
-            image = new ImageIcon(s);
-            studentImage.setIcon(image);
-            Thread.sleep(500);
-        }
-    }
 
     private void oneDayCycle() throws InterruptedException {
         ImageIcon image;
@@ -162,12 +212,12 @@ public class MainGamingWindow {
     //MODIFIED:
     //EFFECTS:
     private void setupAll() {
-        setupFrame();
-        JLayeredPane bars = setupBars();
-        JPanel buttons = setupButtons();
-        JLabel background = setupBackGround();
-        JLabel studentImg = setUpStudentImg();
-        JLabel deskImage = setUpDeskImg();
+        setupFrame();// setup frame look
+        JLayeredPane bars = setupBars();//setup bars look
+        JPanel buttons = setupButtons();//setup buttons look, buttons action listeners
+        JLabel deskImage = setUpDeskImg();//setup desk image
+        JLabel background = setupBackGround();//start a doInBG thread
+        JLabel studentImg = setUpStudentImg();//start a doInBG thread
 
         JLayeredPane generalPane = new JLayeredPane();
         generalPane.setBounds(0,0,800,600);
@@ -185,7 +235,7 @@ public class MainGamingWindow {
     private JLabel setUpDeskImg() {
         deskImage = new JLabel();
         deskImage.setBounds(200,200,400,300);
-        deskImage.setIcon(new ImageIcon(DESK1));
+        deskImage.setIcon(new ImageIcon(DESK));
         return deskImage;
     }
 
@@ -207,8 +257,11 @@ public class MainGamingWindow {
     }
 
     //REQUIRES:
-    //MODIFIED:
-    //EFFECTS:
+    //MODIFIED: this
+    //EFFECTS: setup all 4 bars
+    //         1. Horizontally laid at the top
+    //         2. Set the background of each button
+    //         3. Call helper methods to set action listeners
     private JPanel setupButtons() {
         setupSaveButton();
         setupAddButton();
@@ -217,10 +270,12 @@ public class MainGamingWindow {
 
         JPanel container = new JPanel();
         container.setLayout(null);
-        container.setBounds(200, 0, 600, 50);
+        container.setBounds(200, 0, 600, 100);
         container.setOpaque(false);
         container.add(saveButton);
         container.add(addButton);
+        container.add(activitiesBox);
+        container.add(typeInTimeBox);
         container.add(viewProfileButton);
         container.add(viewScheduleButton);
 
@@ -234,6 +289,16 @@ public class MainGamingWindow {
         saveButton.setOpaque(false);
         saveButton.setContentAreaFilled(false);
         saveButton.setBorderPainted(false);
+        saveButtonActionListener();
+    }
+
+    private void saveButtonActionListener() {
+        saveButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                saveStudent();
+            }
+        });
     }
 
     private void setupAddButton() {
@@ -243,6 +308,140 @@ public class MainGamingWindow {
         addButton.setOpaque(false);
         addButton.setContentAreaFilled(false);
         addButton.setBorderPainted(false);
+        setUpAddButtonBox();//dropdown list
+        setUpTimeTextBox();//type in time
+        addButtonActionListener();
+        addActivitiesBoxActionListener();
+        addTextAreaActionListener();
+    }
+
+    private void setUpTimeTextBox() {
+        typeInTimeBox = new JTextField();
+        typeInTimeBox.setBounds(150, 50, 150, 50);
+        typeInTimeBox.setVisible(false);
+    }
+
+    private void setUpAddButtonBox() {
+        activitiesBox = new JComboBox<>(ACTIVITIES);
+        activitiesBox.setBounds(150, 50, 150, 50);
+        activitiesBox.setVisible(false);
+    }
+
+    private void addButtonActionListener() {
+        addButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                activitiesBox.setVisible(!activitiesBox.isVisible());
+            }
+        });
+    }
+
+    private void addActivitiesBoxActionListener() {
+        activitiesBox.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                addButton.setEnabled(false);//prohibit the add button
+                activitiesBox.setVisible(false);//wipe out the dropdown list
+                typeInTimeBox.setVisible(true);//show the text area
+                String selectedOption = (String) activitiesBox.getSelectedItem();
+                selectedActivity = selectedOption;
+            }
+        });
+    }
+
+    @SuppressWarnings({"checkstyle:MethodLength", "checkstyle:SuppressWarnings"})
+    private void addTextAreaActionListener() {
+        typeInTimeBox.addKeyListener(new KeyListener() {
+                @Override
+                public void keyTyped(KeyEvent e) {
+                    //do nothing
+                }
+
+                @Override
+                public void keyPressed(KeyEvent e) {
+                    if (e.getKeyCode() == KeyEvent.VK_ENTER) {
+                        try {
+                            String userInput = typeInTimeBox.getText().trim();
+                            int intValue = Integer.parseInt(userInput);
+                            if (myStudent.validTime(intValue)) {
+                                doEveryThingAfterValidTime(intValue);
+                            } else {
+                                JOptionPane.showMessageDialog(null,
+                                        "Your time cannot exceed " + myStudent.getRemainingTime(),
+                                        "INVALID INPUT", JOptionPane.PLAIN_MESSAGE);
+                            }
+                        } catch (NumberFormatException exception) {
+                            JOptionPane.showMessageDialog(null,
+                                    "Your input is not an integer ",
+                                    "INVALID INPUT", JOptionPane.PLAIN_MESSAGE);
+                        } finally {
+                            typeInTimeBox.setText("");
+                            typeInTimeBox.setVisible(false);
+                            addButton.setEnabled(true);
+                        }
+                    }
+                }
+
+                @Override
+                public void keyReleased(KeyEvent e) {
+                    //do nothing
+                }
+            });
+    }
+
+    private void doEveryThingAfterValidTime(int time) {
+        Activities a = new Activities("a",1,false,false);
+        a.findActivity(selectedActivity, time);
+        myStudent.addActivity(a);
+        JOptionPane.showMessageDialog(null,
+                "Successfully added " + selectedActivity + " for " + time
+                        + " hrs",
+                "ACTIVITY ADDED", JOptionPane.PLAIN_MESSAGE);
+        updateBars();
+        studentAmine(a.getcourseOrPlay());
+        detectEnding();
+    }
+
+    private void detectEnding() {
+        try {
+            myStudent.detectEnding();
+        } catch (PressureExceedException e) {
+            JOptionPane.showMessageDialog(null,
+                    "Game end, because the pressure exceed the limit.",
+                    "GAME END", JOptionPane.PLAIN_MESSAGE);
+        } catch (TimeUpException e) {
+            JOptionPane.showMessageDialog(null,
+                    "Game end, because the time exceed the limit.",
+                    "GAME END", JOptionPane.PLAIN_MESSAGE);
+        }
+    }
+
+
+    @SuppressWarnings({"checkstyle:MethodLength", "checkstyle:SuppressWarnings"})
+    private void studentAmine(Boolean type) {
+        SwingWorker<Void, Void> backgroundWorker = new SwingWorker<>() {
+            @Override
+            protected Void doInBackground() throws Exception {
+                if (type) {
+                    STU1 = STUDY_STU1;
+                    STU2 = STUDY_STU2;
+                } else {
+                    STU1 = RELAX_STU1;
+                    STU2 = RELAX_STU2;
+                }
+                Thread.sleep(3000);
+                STU1 = REG_STU1;
+                STU2 = REG_STU2;
+                return null;
+            }
+
+            @Override
+            protected void done() {
+                // Handle completion if needed
+            }
+        };
+
+        backgroundWorker.execute();
     }
 
     private void setupScheduleButton() {
@@ -252,6 +451,17 @@ public class MainGamingWindow {
         viewScheduleButton.setOpaque(false);
         viewScheduleButton.setContentAreaFilled(false);
         viewScheduleButton.setBorderPainted(false);
+        scheduleButtonActionListener();
+    }
+
+    private void scheduleButtonActionListener() {
+        viewScheduleButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                List<String> schedule = myStudent.showSchedule();
+                new ShowScheduleWindow(schedule);
+            }
+        });
     }
 
     private void setupProfileButton() {
@@ -363,6 +573,22 @@ public class MainGamingWindow {
         myFrame.setVisible(true);
     }
 
+    private void initializeJson() {
+        jsonWriter = new JsonWriter(JSON_STORE);
+        jsonReader = new JsonReader(JSON_STORE);
+    }
+
+    private void saveStudent() {
+        try {
+            jsonWriter.open();
+            jsonWriter.write(myStudent, gender);
+            jsonWriter.close();
+            System.out.println("Saved " + myStudent.getName() + " to " + JSON_STORE);
+        } catch (FileNotFoundException e) {
+            System.out.println("Unable to write to file: " + JSON_STORE);
+        }
+    }
+
     private static java.util.List<String> encapAlltime(List<String> list) {
         list.add(NIGHT1);
         list.add(NIGHT2);
@@ -370,11 +596,6 @@ public class MainGamingWindow {
         return list;
     }
 
-    private static java.util.List<String> encapRegStu(List<String> list) {
-        list.add(REG_STU1);
-        list.add(REG_STU2);
-        return list;
-    }
 
     public static void main(String[] args) {
         Student s = new Student("testStudent");

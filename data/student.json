@@ -1,35 +1,22 @@
 {
     "loveFineArt": false,
-    "gender": "mom",
-    "subjectSelectionTwo": "biology",
-    "preference": true,
-    "chrType": false,
-    "pressure": -40,
-    "subjectSelectionOne": "physics",
+    "gender": "dad",
+    "subjectSelectionTwo": "B",
+    "preference": false,
+    "chrType": true,
+    "pressure": 0,
+    "subjectSelectionOne": "A",
     "scienceOrArtForExam": true,
-    "schedule": [
-        {
-            "name": "Physics",
-            "time": 100,
-            "courseOrPlay": true,
-            "activityType": true
-        },
-        {
-            "name": "Hiking",
-            "time": 100,
-            "courseOrPlay": false,
-            "activityType": true
-        }
-    ],
-    "subjectSelectionThree": "chemistry",
-    "name": "aaa",
-    "time": 200,
+    "schedule": [],
+    "subjectSelectionThree": "C",
+    "name": "testStudent",
+    "time": 0,
     "knowledge": {
-        "mathKnowledge": -15,
-        "selectionOneKnowledge": 90,
-        "englishKnowledge": -15,
-        "selectionThreeKnowledge": -15,
-        "mandarinKnowledge": -15,
-        "selectionTwoKnowledge": -15
+        "mathKnowledge": 0,
+        "selectionOneKnowledge": 0,
+        "englishKnowledge": 0,
+        "selectionThreeKnowledge": 0,
+        "mandarinKnowledge": 0,
+        "selectionTwoKnowledge": 0
     }
 }

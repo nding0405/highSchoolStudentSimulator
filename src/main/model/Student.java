@@ -1,5 +1,7 @@
 package model;
 
+import model.Exceptions.PressureExceedException;
+import model.Exceptions.TimeUpException;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import ui.GameStarter;
@@ -194,13 +196,17 @@ public class Student {
 
     // EFFECT: check if the game end. Return false, if does not end, true if end. The game will end if the pressure
     // exceeds or equals to the maximum. Or the total time equals to the maximum.
-    public Boolean detectEnding() {
+    public void detectEnding() throws PressureExceedException, TimeUpException {
         if (maxPressure <= pressure) {
-//            System.out.println("exceed pressure limit");
-            return true;
-        } else {
-            return (totalTimeTograduate <= time);
+            throw new PressureExceedException("pressure exceed limit");
+        } else if (totalTimeTograduate <= time) {
+            throw new TimeUpException("time exceed limit");
         }
+//        if (maxPressure <= pressure) {
+//            return true;
+//        } else {
+//            return (totalTimeTograduate <= time);
+//        }
     }
 
     //REQUIRES: the time of the student must equals to the maximum, so that this method will be called to

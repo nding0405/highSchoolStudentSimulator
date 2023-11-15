@@ -1,5 +1,7 @@
 package model;
 
+import model.Exceptions.PressureExceedException;
+import model.Exceptions.TimeUpException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -191,13 +193,34 @@ class StudentTest {
     void testdetectEnding() {
         testStudent1.addActivity(a1);
         testStudent1.addActivity(a3);
-        assertTrue(testStudent1.detectEnding());
+        try {
+            testStudent1.detectEnding();
+            fail();
+        } catch (PressureExceedException p) {
+            fail();
+        } catch (TimeUpException t) {
+            //pass
+        }
 
         testStudent2.addActivity(a5);
-        assertTrue(testStudent2.detectEnding());
+        try {
+            testStudent2.detectEnding();
+            fail();
+        } catch (PressureExceedException p) {
+            //pass
+        } catch (TimeUpException t) {
+            fail();
+        }
 
         testStudent3.addActivity(a1);
-        assertFalse(testStudent3.detectEnding());
+        try {
+            testStudent3.detectEnding();
+            //pass
+        } catch (PressureExceedException p) {
+            fail();
+        } catch (TimeUpException t) {
+            fail();
+        }
     }
 
     @Test

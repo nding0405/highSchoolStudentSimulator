@@ -1,6 +1,8 @@
 package ui;
 
 import model.Activities;
+import model.Exceptions.PressureExceedException;
+import model.Exceptions.TimeUpException;
 import model.Student;
 
 import java.util.Scanner;
@@ -112,7 +114,14 @@ public class GameStarter extends Thread {
             if (!processOperation(operation)) {
                 notPause = false;
             }
-            goOn = !(student.detectEnding());
+            try {
+                student.detectEnding();
+                goOn = true;
+            } catch (PressureExceedException p) {
+                goOn = false;
+            } catch (TimeUpException t) {
+                goOn = false;
+            }
         }
         gameEndNotification(notPause);
     }

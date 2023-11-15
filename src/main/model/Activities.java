@@ -56,10 +56,10 @@ public class Activities implements Writable {
     private static final Activities Politics = new Activities("Politics", 0, true, false);
 
     private static final Activities Jogging = new Activities("Jogging", 0, false, true);
-    private static final Activities Hangout = new Activities("Hangout_with_friends", 0, false, true);
+    private static final Activities Hangout = new Activities("Hangout with friends", 0, false, true);
     private static final Activities Hiking = new Activities("Hiking", 0, false, true);
     private static final Activities Drawing = new Activities("Drawing", 0, false, false);
-    private static final Activities Piano =  new Activities("playing_the_piano", 0, false, false);
+    private static final Activities Piano =  new Activities("Playing the piano", 0, false, false);
     private static final Activities VideoGame = new Activities("VideoGame", 0, false, false);
 
     private static final List<Activities> activityList = setupActList(new ArrayList<>());

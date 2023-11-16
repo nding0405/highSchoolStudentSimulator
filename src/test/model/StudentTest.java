@@ -225,28 +225,28 @@ class StudentTest {
 
     @Test
     void testEndChoice() {
-        testStudent1.endChoice(300);
+        assertEquals(0,testStudent1.endChoice(300));
         //make sure it's printing out:
         // "I+A got a really bad mark on the final and no college provides offer!"
-        testStudent1.endChoice(400);
+        assertEquals(1,testStudent1.endChoice(400));
         //"I+A goes for a college."
-        testStudent1.endChoice(450);
+        assertEquals(2,testStudent1.endChoice(450));
         //"I+A goes for an university."
-        testStudent1.endChoice(500);
+        assertEquals(2,testStudent1.endChoice(500));
         //"I+A goes for an university."
-        testStudent1.endChoice(550);
+        assertEquals(3,testStudent1.endChoice(550));
         //"I+A goes for an key university."
-        testStudent1.endChoice(610);
+        assertEquals(4,testStudent1.endChoice(610));
         //"goes for a world-class universities."
-        testStudent1.endChoice(600);
+        assertEquals(3,testStudent1.endChoice(600));
         //"I+A goes for an key university."
-        testStudent1.endChoice(630);
+        assertEquals(5,testStudent1.endChoice(630));
         //"goes for a 'Double First-Class' university."
-        testStudent1.endChoice(670);
+        assertEquals(5,testStudent1.endChoice(670));
         //"goes for Tsinghua University."
-        testStudent1.endChoice(690);
+        assertEquals(6,testStudent1.endChoice(690));
         //"I+A goes for Tsinghua University."
-        testStudent1.endChoice(740);
+        assertEquals(7,testStudent1.endChoice(740));
         //"I+A is the Number one scholar and can go for any university he/she wants!"
     }
 

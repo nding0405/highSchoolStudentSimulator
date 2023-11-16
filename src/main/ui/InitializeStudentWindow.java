@@ -15,14 +15,14 @@ public class InitializeStudentWindow {
     public static final ImageIcon POPUP_ICON = new ImageIcon("./data/resource/popupIcon.png");
     public static final String FONT_TYPE = "Courier New";//font type of text
     public static final int TEXT_FONT_SIZE = 20;//size of title
-    private static String STUDENT_NAME;
-    private JFrame myFrame;
-    private Student myStudent;
-    private String gender;
-    private JLayeredPane dialogueContainer;
-    private JLabel dialogueImageLabel;
-    private JLabel dialogueTextLabel;
-    private JLabel studentImageLabel;
+    protected static String STUDENT_NAME;
+    protected JFrame myFrame;
+    protected Student myStudent;
+    protected String gender;
+    protected JLayeredPane dialogueContainer;
+    protected JLabel dialogueImageLabel;
+    protected JLabel dialogueTextLabel;
+    protected JLabel studentImageLabel;
 
     @SuppressWarnings({"checkstyle:MethodLength", "checkstyle:SuppressWarnings"})
     InitializeStudentWindow() throws InterruptedException {

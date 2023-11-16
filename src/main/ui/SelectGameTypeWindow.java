@@ -1,9 +1,14 @@
 package ui;
 
+import model.Student;
+import org.json.JSONObject;
+import persistence.JsonReader;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
 //build the select game type window:
 //------------------------------------
 //|             TITLE                |
@@ -20,6 +25,8 @@ public class SelectGameTypeWindow extends GameStarter implements ActionListener 
     public static final String FONT_TYPE = "Courier New";//font type of text
     public static final int TITLE_FONT_SIZE = 20;//size of title
     public static final int BUTTON_FONT_SIZE = 16;//size of button text
+    private static final String JSON_STORE = "./data/student.json";
+    JsonReader jsonReader;
     JFrame myFrame;
     JButton newGame;
     JButton oldGame;
@@ -28,6 +35,7 @@ public class SelectGameTypeWindow extends GameStarter implements ActionListener 
     //EFFECTS: call all component method and construct the window with all component (button centerPanel TitleLabel
     // background label)
     SelectGameTypeWindow() {
+        jsonReader = new JsonReader(JSON_STORE);
         setupGeneralFrame();
         JLabel background = constructBackground();
         JLabel title = constructTitleLabel();
@@ -145,6 +153,19 @@ public class SelectGameTypeWindow extends GameStarter implements ActionListener 
         return mangaImage;
     }
 
+    private void loadStudent() {
+        Student student;
+        String gender;
+        try {
+            student = jsonReader.read();
+            gender = jsonReader.readGender();
+            new MainGamingWindow(student,gender);
+            System.out.println("Loaded " + student.getName() + " from " + JSON_STORE);
+        } catch (IOException e) {
+            System.out.println("Unable to read from file: " + JSON_STORE);
+        }
+    }
+
     public static void main(String[] args) {
         new SelectGameTypeWindow();
     }
@@ -160,11 +181,7 @@ public class SelectGameTypeWindow extends GameStarter implements ActionListener 
             }
         } else {
             myFrame.dispose();
-            try {
-                new OldGameLoadWindow();
-            } catch (InterruptedException ex) {
-                throw new RuntimeException(ex);
-            }
+            loadStudent();
         }
     }
 }

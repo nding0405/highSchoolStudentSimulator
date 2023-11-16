@@ -409,10 +409,14 @@ public class MainGamingWindow {
             JOptionPane.showMessageDialog(null,
                     "Game end, because the pressure exceed the limit.",
                     "GAME END", JOptionPane.PLAIN_MESSAGE);
+            myFrame.dispose();
+            new PressureExceedEnd(myStudent, gender);
         } catch (TimeUpException e) {
             JOptionPane.showMessageDialog(null,
                     "Game end, because the time exceed the limit.",
                     "GAME END", JOptionPane.PLAIN_MESSAGE);
+            myFrame.dispose();
+            new TimeExceedEnd(myStudent, gender);
         }
     }
 
@@ -459,7 +463,11 @@ public class MainGamingWindow {
             @Override
             public void actionPerformed(ActionEvent e) {
                 List<String> schedule = myStudent.showSchedule();
-                new ShowScheduleWindow(schedule);
+                List<String> edited = new ArrayList<>();
+                for (String s : schedule) {
+                    edited.add(s + " hrs");
+                }
+                new ShowScheduleWindow(edited);
             }
         });
     }

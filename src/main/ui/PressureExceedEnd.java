@@ -18,9 +18,9 @@ public class PressureExceedEnd {
     public static final int HE_INDEX = 7;
     public static final int BE_INDEX = 8;
     public static final int DELAY = 5;
-    public static final String END7 = "End7: Your child ended up in the hospital due to overwhelming stress and couldn't "
-            + "participate in the college entrance examination. At this moment, you have deeply reflected, hoping "
-            + "that with your belated care, your child can recover soon.";
+    public static final String END7 = "End7: Your child ended up in the hospital due to overwhelming stress "
+            + "and couldn't participate in the college entrance examination. At this moment, you have deeply "
+            + "reflected, hoping  that with your belated care, your child can recover soon.";
     public static final String END8_FST_PART = "Your child tried to kill him/herself and "
             + "you sent your child to hospital.";
     private static final String END8_SCD_PART = "End8: What's that pink stuff...?";
@@ -188,7 +188,7 @@ public class PressureExceedEnd {
         Thread.sleep(seconds * 1000);
     }
 
-    public static void main(String[] args) {
-        new PressureExceedEnd(new Student("test"), "mom");
-    }
+//    public static void main(String[] args) {
+//        new PressureExceedEnd(new Student("test"), "mom");
+//    }
 }

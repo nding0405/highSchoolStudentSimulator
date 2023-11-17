@@ -166,9 +166,9 @@ public class SelectGameTypeWindow extends GameStarter implements ActionListener 
         }
     }
 
-    public static void main(String[] args) {
-        new SelectGameTypeWindow();
-    }
+//    public static void main(String[] args) {
+//        new SelectGameTypeWindow();
+//    }
 
     @Override
     public void actionPerformed(ActionEvent e) {

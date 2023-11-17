@@ -91,7 +91,7 @@ public class BackGroundInfoWindow {
         }
     }
 
-    public static void main(String[] args) throws InterruptedException {
-        new BackGroundInfoWindow();
-    }
+//    public static void main(String[] args) throws InterruptedException {
+//        new BackGroundInfoWindow();
+//    }
 }

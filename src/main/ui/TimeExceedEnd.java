@@ -93,7 +93,7 @@ public class TimeExceedEnd {
         int mandarinScore = myStudent.getKnowledge().takeExamForMandarin();
         int mathScore = myStudent.getKnowledge().takeExamForMath();
         int englishScore = myStudent.getKnowledge().takeExamForEnglish();
-        int combinedScore = myStudent.getKnowledge().takeExam(myStudent.getPreference());
+        int combinedScore = myStudent.getKnowledge().takeExamForCombinedScienceOrArt(myStudent.getPreference());
         List<String> scores = new ArrayList<>();
         scores.add("Mandarin: " + mandarinScore);
         scores.add("Math: " + mathScore);
@@ -267,7 +267,7 @@ public class TimeExceedEnd {
         Thread.sleep(seconds * 1000);
     }
 
-    public static void main(String[] args) {
-        new TimeExceedEnd(new Student("test"), "mom");
-    }
+//    public static void main(String[] args) {
+//        new TimeExceedEnd(new Student("test"), "mom");
+//    }
 }

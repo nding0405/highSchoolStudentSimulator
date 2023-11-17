@@ -25,11 +25,24 @@ public class MainGamingWindow {
             "Playing the piano", "VideoGame"};
 
     public static final String FONT_TYPE = "Courier New";//font type of text
-    public static final Integer TEXT_FONT_SIZE = 15;
+    public static final Integer TEXT_FONT_SIZE = 13;
 
-    public static final String NIGHT1 = "./data/resource/night1.PNG";
-    public static final String NIGHT2 = "./data/resource/night2.PNG";
-    public static final String NIGHT3 = "./data/resource/night3.PNG";
+    public static final String BG1 = "./data/resource/bg1.png";
+    public static final String BG2 = "./data/resource/bg2.png";
+    public static final String BG3 = "./data/resource/bg3.png";
+    public static final String BG4 = "./data/resource/bg4.png";
+    public static final String BG5 = "./data/resource/bg5.png";
+    public static final String BG6 = "./data/resource/bg6.png";
+    public static final String BG7 = "./data/resource/bg7.png";
+    public static final String BG8 = "./data/resource/bg8.png";
+    public static final String BG9 = "./data/resource/bg9.png";
+    public static final String BG10 = "./data/resource/bg10.png";
+    public static final String BG11 = "./data/resource/bg11.png";
+    public static final String BG12 = "./data/resource/bg12.png";
+    public static final String BG13 = "./data/resource/bg13.png";
+    public static final String BG14 = "./data/resource/bg14.png";
+
+
 
     private static String STU1 = "initial";
     private static String STU2 = "initial";
@@ -204,7 +217,7 @@ public class MainGamingWindow {
         for (String s : encapsulateOneDay) {
             image = new ImageIcon(s);
             backgroundImage.setIcon(image);
-            Thread.sleep(3000);
+            Thread.sleep(5000);
         }
     }
 
@@ -252,7 +265,7 @@ public class MainGamingWindow {
     private JLabel setupBackGround() {
         backgroundImage = new JLabel();
         backgroundImage.setBounds(0,0,800,600);
-        backgroundImage.setIcon(new ImageIcon(NIGHT1));
+        backgroundImage.setIcon(new ImageIcon(BG1));
         return backgroundImage;
     }
 
@@ -609,15 +622,26 @@ public class MainGamingWindow {
     }
 
     private static java.util.List<String> encapAlltime(List<String> list) {
-        list.add(NIGHT1);
-        list.add(NIGHT2);
-        list.add(NIGHT3);
+        list.add(BG1);
+        list.add(BG2);
+        list.add(BG3);
+        list.add(BG4);
+        list.add(BG5);
+        list.add(BG6);
+        list.add(BG7);
+        list.add(BG8);
+        list.add(BG9);
+        list.add(BG10);
+        list.add(BG11);
+        list.add(BG12);
+        list.add(BG13);
+        list.add(BG14);
         return list;
     }
 
 
-    public static void main(String[] args) {
-        Student s = new Student("testStudent");
-        new MainGamingWindow(s, "dad");
-    }
+//    public static void main(String[] args) {
+//        Student s = new Student("testStudent");
+//        new MainGamingWindow(s, "dad");
+//    }
 }

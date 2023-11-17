@@ -216,6 +216,7 @@ public class InitializeStudentWindow {
             switchFace("smile");
             studentTalk("Thank you so much and I love you " + gender + "!");
             myStudent.setSelectionAgree("f", 1);
+            new FineArtEnd(myStudent,gender);
         } else {
             parentTalk("No way!");
             switchFace("plain");
@@ -276,8 +277,7 @@ public class InitializeStudentWindow {
         }
     }
 
-
-    public static void main(String[] args) throws InterruptedException {
-        new InitializeStudentWindow();
-    }
+//    public static void main(String[] args) throws InterruptedException {
+//        new InitializeStudentWindow();
+//    }
 }

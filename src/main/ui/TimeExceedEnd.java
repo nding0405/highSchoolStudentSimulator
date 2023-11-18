@@ -151,7 +151,7 @@ public class TimeExceedEnd {
                     typeInBox.setVisible(false);
                     try {
                         parentTalk(userInput);
-                        studentTalk(" “ " + userInput + " “ " + "..." + "Ok " + gender + " I got it.");
+                        studentTalk("' " + userInput + " ' " + "..." + "Ok " + gender + " I got it.");
                     } catch (InterruptedException ex) {
                         throw new RuntimeException(ex);
                     }

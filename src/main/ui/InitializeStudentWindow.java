@@ -206,7 +206,7 @@ public class InitializeStudentWindow {
         }
     }
 
-    @SuppressWarnings({"checkstyle:MethodLength", "checkstyle:SuppressWarnings"})
+//    @SuppressWarnings({"checkstyle:MethodLength", "checkstyle:SuppressWarnings"})
     private void fineArtStudentInitialize() throws InterruptedException {
         studentTalk(gender + " I really really love drawing and I want to go for an art colleges...");
         int i = parentQuestionPopUp("choose your answer","How would you answer?","Of course!",

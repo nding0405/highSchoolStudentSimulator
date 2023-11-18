@@ -1,7 +1,5 @@
 package ui;
 
-import model.Student;
-
 import javax.swing.*;
 import java.awt.*;
 

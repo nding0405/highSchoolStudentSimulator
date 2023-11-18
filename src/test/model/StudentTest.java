@@ -1,7 +1,7 @@
 package model;
 
-import model.Exceptions.PressureExceedException;
-import model.Exceptions.TimeUpException;
+import exceptions.PressureExceedException;
+import exceptions.TimeUpException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

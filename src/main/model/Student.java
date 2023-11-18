@@ -1,11 +1,10 @@
 package model;
 
-import model.Exceptions.PressureExceedException;
-import model.Exceptions.TimeUpException;
+import exceptions.PressureExceedException;
+import exceptions.TimeUpException;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import ui.GameStarter;
-import persistence.Writable;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -213,11 +212,6 @@ public class Student {
         } else if (totalTimeTograduate <= time) {
             throw new TimeUpException("time exceed limit");
         }
-//        if (maxPressure <= pressure) {
-//            return true;
-//        } else {
-//            return (totalTimeTograduate <= time);
-//        }
     }
 
     //REQUIRES: the time of the student must equals to the maximum, so that this method will be called to

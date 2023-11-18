@@ -9,6 +9,7 @@ import java.awt.event.KeyListener;
 import java.util.ArrayList;
 import java.util.List;
 
+// represent the window that shows the time exceed limit end.
 public class TimeExceedEnd {
     public static final String EXAM = "./data/resource/takeExam.png";
     public static final String GRADUATE = "./data/resource/graduate.png";
@@ -136,7 +137,7 @@ public class TimeExceedEnd {
         typeInBox.setVisible(false);
     }
 
-    @SuppressWarnings({"checkstyle:MethodLength", "checkstyle:SuppressWarnings"})
+//    @SuppressWarnings({"checkstyle:MethodLength", "checkstyle:SuppressWarnings"})
     private void addTextAreaActionListener() {
         typeInBox.addKeyListener(new KeyListener() {
             @Override
@@ -176,7 +177,7 @@ public class TimeExceedEnd {
         showEnding(ending);
     }
 
-    @SuppressWarnings({"checkstyle:MethodLength", "checkstyle:SuppressWarnings"})
+//    @SuppressWarnings({"checkstyle:MethodLength", "checkstyle:SuppressWarnings"})
     private void showEnding(int ending) {
         if (ending == 0) {
             background.setIcon(new ImageIcon(FACTORY));

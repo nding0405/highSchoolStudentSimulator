@@ -1,8 +1,8 @@
 package ui;
 
+import exceptions.TimeUpException;
 import model.Activities;
-import model.Exceptions.PressureExceedException;
-import model.Exceptions.TimeUpException;
+import exceptions.PressureExceedException;
 import model.Student;
 
 import java.util.Scanner;

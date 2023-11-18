@@ -1,4 +1,4 @@
-package model.Exceptions;
+package exceptions;
 
 public class PressureExceedException extends Exception {
     public PressureExceedException(String msg) {

@@ -1,8 +1,8 @@
 package ui;
 
+import exceptions.TimeUpException;
 import model.Activities;
-import model.Exceptions.PressureExceedException;
-import model.Exceptions.TimeUpException;
+import exceptions.PressureExceedException;
 import model.Student;
 import persistence.JsonWriter;
 
@@ -417,7 +417,7 @@ public class MainGamingWindow {
     //            if user input is and integer AND myStudent.validTime(intValue) == true
     //               doEveryThingAfterValidTime(intValue)
     //               else: show message to tell the user their input is invalid and show the valid range
-    @SuppressWarnings({"checkstyle:MethodLength", "checkstyle:SuppressWarnings"})
+//    @SuppressWarnings({"checkstyle:MethodLength", "checkstyle:SuppressWarnings"})
     private void addTextAreaActionListener() {
         typeInTimeBox.addKeyListener(new KeyListener() {
                 @Override
@@ -509,7 +509,7 @@ public class MainGamingWindow {
     //         change the constant STU1 to RELAX_STU1, STU2 to RELAX_STU2
     //         (since the student anime thread is repeatedly changing studentImage with STU1 and STU2 every 0.5 second.
     //         While this method change the content of STU1 and STU2 for 3 seconds. The anime will change for 6 ticks.)
-    @SuppressWarnings({"checkstyle:MethodLength", "checkstyle:SuppressWarnings"})
+//    @SuppressWarnings({"checkstyle:MethodLength", "checkstyle:SuppressWarnings"})
     private void studentAmine(Boolean type) {
         SwingWorker<Void, Void> backgroundWorker = new SwingWorker<>() {
             @Override
@@ -604,7 +604,7 @@ public class MainGamingWindow {
     //        setFontForBars();
     //        Then add all bars to a panel->add panel(MODAL_LAYER)and bar image (DEFAULT_LAYER) to a layer panel and
     //        return it.
-    @SuppressWarnings({"checkstyle:MethodLength", "checkstyle:SuppressWarnings"})
+//    @SuppressWarnings({"checkstyle:MethodLength", "checkstyle:SuppressWarnings"})
     private JLayeredPane setupBars() {
         createNewBars();
         setTextForBars();

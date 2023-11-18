@@ -417,11 +417,15 @@ class StudentTest {
         testStudent1.setTime(0);
         assertTrue(testStudent1.validTime(1000));//case when no activities are added
         testStudent1.setTime(300);
-        assertTrue( testStudent1.validTime(700));//case when the time is exactly the same as remaining time.
+        assertTrue(testStudent1.validTime(700));//case when the time is exactly the same as remaining time.
         testStudent1.setTime(300);
-        assertTrue( testStudent1.validTime(500));//case when the time is less than the remaining time.
+        assertTrue(testStudent1.validTime(500));//case when the time is less than the remaining time.
         testStudent1.setTime(300);
-        assertFalse( testStudent1.validTime(800));//case when the time greater than the remaining time.
+        assertFalse(testStudent1.validTime(800));//case when the time greater than the remaining time.
+        assertFalse(testStudent1.validTime(-1));
+        assertTrue(testStudent1.validTime(5));
+        testStudent1.setTime(999);
+        assertFalse(testStudent1.validTime(3));
     }
 }
 

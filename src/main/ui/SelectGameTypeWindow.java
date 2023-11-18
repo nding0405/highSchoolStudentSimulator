@@ -1,7 +1,6 @@
 package ui;
 
 import model.Student;
-import org.json.JSONObject;
 import persistence.JsonReader;
 
 import javax.swing.*;
@@ -21,15 +20,17 @@ import java.io.IOException;
 //|                                  |
 //------------------------------------
 
-public class SelectGameTypeWindow extends GameStarter implements ActionListener {
+public class SelectGameTypeWindow implements ActionListener {
     public static final String FONT_TYPE = "Courier New";//font type of text
     public static final int TITLE_FONT_SIZE = 20;//size of title
     public static final int BUTTON_FONT_SIZE = 16;//size of button text
-    private static final String JSON_STORE = "./data/student.json";
-    JsonReader jsonReader;
-    JFrame myFrame;
-    JButton newGame;
-    JButton oldGame;
+    private static final String JSON_STORE = "./data/student.json";//path to the persistence storage.
+    JsonReader jsonReader;//to call the read method
+    JFrame myFrame;//represent the window
+    JButton newGame;//represent the new game button
+    JButton oldGame;//represent the old game button
+    Student student;//represent student
+    String gender;//can only be "dad" or "mom"
 
     //MODIFIED: this
     //EFFECTS: call all component method and construct the window with all component (button centerPanel TitleLabel
@@ -153,13 +154,11 @@ public class SelectGameTypeWindow extends GameStarter implements ActionListener 
         return mangaImage;
     }
 
+    //EFFECTS: load the old game from json file. Assign the read value (student and gender) to the field.
     private void loadStudent() {
-        Student student;
-        String gender;
         try {
             student = jsonReader.read();
             gender = jsonReader.readGender();
-            new MainGamingWindow(student,gender);
             System.out.println("Loaded " + student.getName() + " from " + JSON_STORE);
         } catch (IOException e) {
             System.out.println("Unable to read from file: " + JSON_STORE);
@@ -170,6 +169,10 @@ public class SelectGameTypeWindow extends GameStarter implements ActionListener 
 //        new SelectGameTypeWindow();
 //    }
 
+    //MODIFIED: this
+    //EFFECTS: when the newGame button is invoked, close this window, start the BackGroundInfoWindow();
+    //         when the oldGame button is invoked, close this window, call loadStudent(). Then call \
+    //         MainGamingWindow(student,gender);
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource().equals(newGame)) {
@@ -182,6 +185,7 @@ public class SelectGameTypeWindow extends GameStarter implements ActionListener 
         } else {
             myFrame.dispose();
             loadStudent();
+            new MainGamingWindow(student,gender);
         }
     }
 }

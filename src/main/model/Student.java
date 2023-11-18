@@ -410,7 +410,10 @@ public class Student {
     //REQUIRES: time must be greater or equals to 0.
     //EFFECT: detect whether the time is less than or equals to the remaining time. If yes return true, vice versa.
     public boolean validTime(int time) {
-        return time <= (totalTimeTograduate - this.time);
+        if (time >= 5 && time <= (totalTimeTograduate - this.time)) {
+            return true;
+        }
+        return false;
     }
 
 

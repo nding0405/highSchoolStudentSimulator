@@ -5,7 +5,9 @@ import model.Student;
 import javax.swing.*;
 import java.awt.*;
 
+// Represent a window that shows the user all of the background information;
 public class BackGroundInfoWindow {
+    // Texts that contains background information.
     private static final String BACKGROUND_INFO_ONE =
             "Background: Now, assuming you are a parent from "
                     + "a middle-class Chinese family.";
@@ -26,6 +28,8 @@ public class BackGroundInfoWindow {
             "Please answer the following questions as they will be crucial for "
             + "your child's subject selection.";
     private static final String BACKGROUND_INFO_SEVEN = "";
+
+    // array that contains all  background information.
     private String[] backgroundTexts = {
             BACKGROUND_INFO_ONE,
             BACKGROUND_INFO_TWO,
@@ -35,11 +39,14 @@ public class BackGroundInfoWindow {
             BACKGROUND_INFO_SIX,
             BACKGROUND_INFO_SEVEN
     };
+
+    // font type and size for background information
     private static final String FONT_TYPE = "Courier New";
     private static final int INFO_FONT_SIZE = 20;
-    private JFrame myFrame;
-    private JLabel backgroundInfo;
+    private JFrame myFrame;//represent the window
+    private JLabel backgroundInfo;//represent the text label to present background information
 
+    // start a new window
     BackGroundInfoWindow() throws InterruptedException {
         setUpFrame();
         SwingWorker<Void, Void> worker = new SwingWorker<Void, Void>() {
@@ -63,6 +70,8 @@ public class BackGroundInfoWindow {
         worker.execute();
     }
 
+    //MODIFIED:this
+    //EFFECTS: build a 800x600 frame with black background.
     private void setUpFrame() {
         myFrame = new JFrame();
         myFrame.getContentPane().setBackground(Color.BLACK);
@@ -73,6 +82,12 @@ public class BackGroundInfoWindow {
         myFrame.setVisible(true);
     }
 
+    //MODIFIED:this
+    //EFFECTS: create a JLabel and assign it to backgroundInfo
+    //         1. Font: new Font(FONT_TYPE, Font.PLAIN, INFO_FONT_SIZE)
+    //         2. Foreground: Color.WHITE
+    //         3. setHorizontalAlignment: CENTER
+    //         4. display all background information consecutively every 2 seconds.
     private void setupBackgroundInfo() throws InterruptedException {
         backgroundInfo = new JLabel("");
         backgroundInfo.setFont(new Font(FONT_TYPE, Font.PLAIN, INFO_FONT_SIZE));

@@ -5,7 +5,9 @@ import model.Student;
 import javax.swing.*;
 import java.awt.*;
 
+// represent the end for student with pressure greater or equals to MAX_PRESSURE
 public class PressureExceedEnd {
+    //represent image icons that will be used in th window
     public static final ImageIcon POPUP_ICON = new ImageIcon("./data/resource/popupIcon.png");
     public static final ImageIcon DIALOGUE_BOX_LEFT = new ImageIcon("./data/resource/dialogueBoxLeft.png");
     public static final ImageIcon DIALOGUE_BOX_RIGHT = new ImageIcon("./data/resource/dialogueBoxRight.png");
@@ -15,25 +17,29 @@ public class PressureExceedEnd {
     public static final ImageIcon ILL_SMILE_STU = new ImageIcon("./data/resource/illStudentSmile.png");
     public static final String FONT_TYPE = "Courier New";//font type of text
     public static final int TEXT_FONT_SIZE = 20;//size of title
-    public static final int HE_INDEX = 7;
-    public static final int BE_INDEX = 8;
-    public static final int DELAY = 5;
+    public static final int HE_INDEX = 7;//index of the end (ex. END7)
+    public static final int BE_INDEX = 8;//index of the end (ex. END8)
+    public static final int DELAY = 5;//delay time
+    //represent text that will be shown to the user (endings)
     public static final String END7 = "End7: Your child ended up in the hospital due to overwhelming stress "
             + "and couldn't participate in the college entrance examination. At this moment, you have deeply "
             + "reflected, hoping  that with your belated care, your child can recover soon.";
+    //first part of END8
     public static final String END8_FST_PART = "Your child tried to kill him/herself and "
             + "you sent your child to hospital.";
+    //second part of END8
     private static final String END8_SCD_PART = "End8: What's that pink stuff...?";
 
-    private JFrame myFrame;
-    private String gender;
-    private JLabel background;
-    private Student myStudent;
-    private JLayeredPane dialogueContainer;
-    private JLabel dialogueImageLabel;
-    private JLabel dialogueTextLabel;
-    private JLabel studentImageLabel;
+    private JFrame myFrame;//represent the window
+    private String gender;//represent the gender of the user
+    private JLabel background;//represent the background label
+    private Student myStudent;//represent the student
+    private JLayeredPane dialogueContainer;//represent a layer pane to contain dialogue image and text
+    private JLabel dialogueImageLabel;//dialogue image
+    private JLabel dialogueTextLabel;//dialogue text
+    private JLabel studentImageLabel;//student image
 
+    //construct a new PressureExceedEnd window
     public PressureExceedEnd(Student myStudent, String gender) {
         this.myStudent = myStudent;
         this.gender = gender;
@@ -56,6 +62,9 @@ public class PressureExceedEnd {
         worker.execute();
     }
 
+    //EFFECTS: ask the user whether they support the student:
+    //         yes: show end 7
+    //         no: show end 8
     private void startConversation() throws InterruptedException {
         studentTalk("I think I'm so tired and I feel like I'm ill...");
         int answer = parentQuestionPopUp(" ","How would you reply?",
@@ -72,6 +81,11 @@ public class PressureExceedEnd {
 
     }
 
+    //MODIFIED: this
+    //EFFECTS: if endIndex==HE_INDEX
+    //            show end7
+    //         if endIndex==BE_INDEX
+    //            show end8
     private void showEnding(int endIndex) throws InterruptedException {
         if (endIndex == HE_INDEX) {
             switchFace(ILL_PLAIN_STU);
@@ -90,10 +104,14 @@ public class PressureExceedEnd {
         }
     }
 
+    //MODIFIED:this
+    //EFFECTS: change the icon of the student to the parameter.
     private void switchFace(ImageIcon face) {
         studentImageLabel.setIcon(face);
     }
 
+    //EFFECTS: create a yes no popup window with title question answer1 answer2 and return the user selection index
+    // (if the user click on cancel, keep poping up the same window until user makes a choice)
     private int parentQuestionPopUp(String title, String question, String a1, String a2) {
         String[] selections = {a1, a2};
         int answerIndex = JOptionPane.CLOSED_OPTION;
@@ -111,11 +129,15 @@ public class PressureExceedEnd {
         return answerIndex;
     }
 
+    //MODIFIED: this
+    //EFFECTS: build a new background label with bounds: (0,0,800,600)
     private void setupBackground() {
         background = new JLabel();
         background.setBounds(0,0,800,600);
     }
 
+    //MODIFIED: this
+    //EFFECTS: wrap all component to a layer pane and add the pane to the frame
     private void wrapUpComponents() {
         JLayeredPane lp = new JLayeredPane();
         lp.setBounds(0,0,800,600);
@@ -125,7 +147,8 @@ public class PressureExceedEnd {
         myFrame.setVisible(true);
     }
 
-
+    //MODIFIED: this
+    //EFFECTS: build a new background label with bounds: (0,0,800,600)
     private void setUpFrame() {
         myFrame = new JFrame();
         myFrame.getContentPane().setBackground(Color.BLACK);
@@ -135,6 +158,13 @@ public class PressureExceedEnd {
         myFrame.setVisible(true);
     }
 
+    //MODIFIED:this
+    //EFFECTS: setup dialogue box:
+    //         1. dialogueContainer with bounds:(0, 0, 800, 600)
+    //         2. studentImageLabel with bounds:(0, 55, 300, 330) and icon SMILE_FACE
+    //         3. dialogueImageLabel with bounds:(0, 350, 800, 250)
+    //         4. dialogueTextLabel with bounds:(0, 55, 300, 330) and icon SMILE_FACE
+    //         5. add all component to dialogueContainer.
     private void setupDialogueBox() {
         dialogueContainer = new JLayeredPane();
         dialogueContainer.setBounds(0, 0, 800, 600);
@@ -164,6 +194,10 @@ public class PressureExceedEnd {
         dialogueContainer.add(dialogueTextLabel, JLayeredPane.MODAL_LAYER);
     }
 
+    //MODIFIED: this
+    //EFFECTS: 1. change the dialogueImageLabel to left
+    //         2. set text to talking content (parameter)
+    //         3. wait for DELAY seconds
     private void parentTalk(String text) throws InterruptedException {
         dialogueImageLabel.setIcon(DIALOGUE_BOX_RIGHT);
         dialogueTextLabel.setText("<html><div style='text-align: center;'>"
@@ -171,6 +205,10 @@ public class PressureExceedEnd {
         simulateDelay(DELAY);
     }
 
+    //MODIFIED: this
+    //EFFECTS: 1. change the dialogueImageLabel to right
+    //         2. set text to talking content (parameter)
+    //         3. wait for DELAY seconds
     private void studentTalk(String text) throws InterruptedException {
         dialogueImageLabel.setIcon(DIALOGUE_BOX_LEFT);
         dialogueTextLabel.setText("<html><div style='text-align: center;'>"
@@ -178,12 +216,17 @@ public class PressureExceedEnd {
         simulateDelay(DELAY);
     }
 
+    //MODIFIED: this
+    //EFFECTS:
+    //         1. set text to talking content (parameter)
+    //         2. wait for DELAY seconds
     private void narrationTalk(String text) throws InterruptedException {
         dialogueTextLabel.setText("<html><div style='text-align: center;'>"
                 + text.replace("\n", "<br>") + "</div></html>");
         simulateDelay(DELAY);
     }
 
+    //EFFECTS: pause the thread for seconds.
     private void simulateDelay(int seconds) throws InterruptedException {
         Thread.sleep(seconds * 1000);
     }

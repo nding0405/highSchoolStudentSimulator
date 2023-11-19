@@ -11,6 +11,7 @@ import java.util.List;
 
 // represent the window that shows the time exceed limit end.
 public class TimeExceedEnd {
+    //represent image icons paths that will be used in th window
     public static final String EXAM = "./data/resource/takeExam.png";
     public static final String GRADUATE = "./data/resource/graduate.png";
     public static final String FACTORY = "./data/resource/factory.png";
@@ -21,6 +22,7 @@ public class TimeExceedEnd {
     public static final ImageIcon PLAIN_FACE = new ImageIcon("./data/resource/studentPlainFace.png");
     public static final String FONT_TYPE = "Courier New";//font type of text
     public static final int TEXT_FONT_SIZE = 20;//size of title
+    //represent text that will be shown to the user (endings)
     private static String END1 = "Your child got a job at an electronics factory. "
             + "Your lofty aspirations were shattered, but over time, you became accustomed to this mundane life, "
             + "and it seemed not too bad after all.";
@@ -40,17 +42,18 @@ public class TimeExceedEnd {
             + "University and Peking University. With such a brilliant brain, one might assume their future life will"
             + " be considerably easier than others. However, each environment comes with its own pressures, "
             + "and perhaps their life is not as smooth sailing as others might imagine.";
-    private JFrame myFrame;
-    private Student myStudent;
-    private String gender;
-    private JLabel background;
-    private JLayeredPane dialogueContainer;
-    private JLabel dialogueImageLabel;
-    private JLabel dialogueTextLabel;
-    private JLabel studentImageLabel;
-    private JTextField typeInBox;
-    private Integer totalScore;
+    private JFrame myFrame;//represent the window
+    private Student myStudent;//represent the student
+    private String gender;//represent the gender of the user
+    private JLabel background;//represent the background label
+    private JLayeredPane dialogueContainer;//represent a layer pane to contain dialogue image and text
+    private JLabel dialogueImageLabel;//dialogue image
+    private JLabel dialogueTextLabel;//dialogue text
+    private JLabel studentImageLabel;//student image
+    private JTextField typeInBox;//a text field
+    private Integer totalScore;//total score of the student
 
+    //construct a new TimeExceedEnd window
     public TimeExceedEnd(Student myStudent, String gender) {
         this.myStudent = myStudent;
         this.gender = gender;
@@ -74,6 +77,8 @@ public class TimeExceedEnd {
         worker.execute();
     }
 
+    //MODIFIED: this
+    //EFFECTS: wrap all component to a layer pane and add the pane to the frame
     private void wrapUpComponents() {
         JLayeredPane lp = new JLayeredPane();
         lp.setBounds(0,0,800,600);
@@ -84,12 +89,16 @@ public class TimeExceedEnd {
         myFrame.setVisible(true);
     }
 
+    //MODIFIED: this
+    //EFFECTS: build a new background label with bounds: (0,0,800,600)
     private void setupBackground() {
         background = new JLabel();
         background.setBounds(0,0,800,600);
         background.setIcon(new ImageIcon(GRADUATE));
     }
 
+    //MODIFIED: this
+    //EFFECTS: take exam for the student and get scores for all subjects, wrap them as a list of string and return it.
     private List<String> getExamScore() {
         int mandarinScore = myStudent.getKnowledge().takeExamForMandarin();
         int mathScore = myStudent.getKnowledge().takeExamForMath();
@@ -111,11 +120,15 @@ public class TimeExceedEnd {
         return scores;
     }
 
+    //MODIFIED: this
+    //EFFECTS: ask the user to type in what they want to say to the student.
     private void startConversation() throws InterruptedException {
         studentTalk("Tomorrow is the day to take college entrance exam.");
         parentTypeIn();
     }
 
+    //MODIFIED: this
+    //EFFECTS: change the background image based on the parameter
     private void changeBackground(String type) {
         if (type.equals("graduate")) {
             background.setIcon(new ImageIcon(GRADUATE));
@@ -124,12 +137,18 @@ public class TimeExceedEnd {
         }
     }
 
+    //MODIFIED:this
+    //EFFECTS: typeInBox.setText: instructions
+    //         typeInBox.setVisible(true)
+    //         set text to instruct the user in the typeInBox
     private void parentTypeIn() {
         typeInBox.setText("(type in what you want to say to " + myStudent.getName() + ")");
         typeInBox.setVisible(true);
         dialogueTextLabel.setText("You: ");
     }
 
+    //MODIFIED:this
+    //EFFECTS: create a new JTextField() with bounds:(380, 450, 200, 50), add actionListener for the textBox
     private void setUpTextBox() {
         typeInBox = new JTextField();
         typeInBox.setBounds(380, 450, 200, 50);
@@ -137,7 +156,8 @@ public class TimeExceedEnd {
         typeInBox.setVisible(false);
     }
 
-//    @SuppressWarnings({"checkstyle:MethodLength", "checkstyle:SuppressWarnings"})
+    //MODIFIED: this
+    //EFFECTS: once enter is pressed, call doAfterEnterPressed()
     private void addTextAreaActionListener() {
         typeInBox.addKeyListener(new KeyListener() {
             @Override
@@ -148,18 +168,7 @@ public class TimeExceedEnd {
             @Override
             public void keyPressed(KeyEvent e) {
                 if (e.getKeyCode() == KeyEvent.VK_ENTER) {
-                    String userInput = typeInBox.getText().trim();
-                    typeInBox.setVisible(false);
-                    try {
-                        parentTalk(userInput);
-                        studentTalk("' " + userInput + " ' " + "..." + "Ok " + gender + " I got it.");
-                    } catch (InterruptedException ex) {
-                        throw new RuntimeException(ex);
-                    }
-                    changeBackground("exam");
-                    List<String> scores = getExamScore();
-                    new ShowExamWindow(scores);
-                    popUpFinalScore();
+                    doAfterEnterPressed();
                 }
             }
 
@@ -170,6 +179,24 @@ public class TimeExceedEnd {
         });
     }
 
+    //MODIFIED: this
+    //EFFECTS: record user input and make the student repeat user input
+    private void doAfterEnterPressed() {
+        String userInput = typeInBox.getText().trim();
+        typeInBox.setVisible(false);
+        try {
+            parentTalk(userInput);
+            studentTalk("' " + userInput + " ' " + "..." + "Ok " + gender + " I got it.");
+        } catch (InterruptedException ex) {
+            throw new RuntimeException(ex);
+        }
+        changeBackground("exam");
+        List<String> scores = getExamScore();
+        new ShowExamWindow(scores);
+        popUpFinalScore();
+    }
+
+    //create a popup window to show the total score of the student on final exam
     private void popUpFinalScore() {
         JOptionPane.showMessageDialog(null, myStudent.getName() + " got "
                         + totalScore + " for final exam.", "FINIAL SCORE", JOptionPane.PLAIN_MESSAGE);
@@ -177,41 +204,91 @@ public class TimeExceedEnd {
         showEnding(ending);
     }
 
-//    @SuppressWarnings({"checkstyle:MethodLength", "checkstyle:SuppressWarnings"})
+    //EFFECTS: show ending based on the ending index
     private void showEnding(int ending) {
         if (ending == 0) {
-            background.setIcon(new ImageIcon(FACTORY));
-            studentImageLabel.setVisible(false);
-            dialogueTextLabel.setText("<html><div style='text-align: center;'>"
-                    + END1.replace("\n", "<br>") + "</div></html>");
+            endOne();
         } else if (ending == 1) {
-            background.setIcon(new ImageIcon(NOT_FAMOUS));
-            studentImageLabel.setVisible(false);
-            dialogueTextLabel.setText("<html><div style='text-align: center;'>"
-                    + END2.replace("\n", "<br>") + "</div></html>");
+            endTwo();
         } else if (ending == 2) {
-            background.setIcon(new ImageIcon(NOT_FAMOUS));
-            studentImageLabel.setVisible(false);
-            dialogueTextLabel.setText("<html><div style='text-align: center;'>"
-                    + END3.replace("\n", "<br>") + "</div></html>");
+            endThree();
         } else if (ending == 3) {
-            background.setIcon(new ImageIcon(NOT_FAMOUS));
-            studentImageLabel.setVisible(false);
-            dialogueTextLabel.setText("<html><div style='text-align: center;'>"
-                    + END4.replace("\n", "<br>") + "</div></html>");
+            endFour();
         } else if (ending == 4 || ending == 5) {
-            background.setIcon(new ImageIcon(NOT_FAMOUS));
-            studentImageLabel.setVisible(false);
-            dialogueTextLabel.setText("<html><div style='text-align: center;'>"
-                    + END5.replace("\n", "<br>") + "</div></html>");
+            endFive();
         } else if (ending == 6 || ending == 7) {
-            background.setIcon(new ImageIcon(FAMOUS));
-            studentImageLabel.setVisible(false);
-            dialogueTextLabel.setText("<html><div style='text-align: center;'>"
-                    + END6.replace("\n", "<br>") + "</div></html>");
+            endSix();
         }
     }
 
+    //MODIFIED: this
+    //EFFECTS: change the background image to FACTORY
+    //         visualize the student image
+    //         show END1 text
+    private void endOne() {
+        background.setIcon(new ImageIcon(FACTORY));
+        studentImageLabel.setVisible(false);
+        dialogueTextLabel.setText("<html><div style='text-align: center;'>"
+                + END1.replace("\n", "<br>") + "</div></html>");
+    }
+
+    //MODIFIED: this
+    //EFFECTS: change the background image to NOT_FAMOUS
+    //         visualize the student image
+    //         show END2 text
+    private void endTwo() {
+        background.setIcon(new ImageIcon(NOT_FAMOUS));
+        studentImageLabel.setVisible(false);
+        dialogueTextLabel.setText("<html><div style='text-align: center;'>"
+                + END2.replace("\n", "<br>") + "</div></html>");
+    }
+
+    //MODIFIED: this
+    //EFFECTS: change the background image to NOT_FAMOUS
+    //         visualize the student image
+    //         show END3 text
+    private void endThree() {
+        background.setIcon(new ImageIcon(NOT_FAMOUS));
+        studentImageLabel.setVisible(false);
+        dialogueTextLabel.setText("<html><div style='text-align: center;'>"
+                + END3.replace("\n", "<br>") + "</div></html>");
+    }
+
+    //MODIFIED: this
+    //EFFECTS: change the background image to NOT_FAMOUS
+    //         visualize the student image
+    //         show END4 text
+    private void endFour() {
+        background.setIcon(new ImageIcon(NOT_FAMOUS));
+        studentImageLabel.setVisible(false);
+        dialogueTextLabel.setText("<html><div style='text-align: center;'>"
+                + END4.replace("\n", "<br>") + "</div></html>");
+    }
+
+    //MODIFIED: this
+    //EFFECTS: change the background image to NOT_FAMOUS
+    //         visualize the student image
+    //         show END5 text
+    private void endFive() {
+        background.setIcon(new ImageIcon(NOT_FAMOUS));
+        studentImageLabel.setVisible(false);
+        dialogueTextLabel.setText("<html><div style='text-align: center;'>"
+                + END5.replace("\n", "<br>") + "</div></html>");
+    }
+
+    //MODIFIED: this
+    //EFFECTS: change the background image to FAMOUS
+    //         visualize the student image
+    //         show END6 text
+    private void endSix() {
+        background.setIcon(new ImageIcon(FAMOUS));
+        studentImageLabel.setVisible(false);
+        dialogueTextLabel.setText("<html><div style='text-align: center;'>"
+                + END6.replace("\n", "<br>") + "</div></html>");
+    }
+
+    //MODIFIED: this
+    //EFFECTS: build a new background label with bounds: (0,0,800,600)
     private void setUpFrame() {
         myFrame = new JFrame();
         myFrame.getContentPane().setBackground(Color.BLACK);
@@ -221,6 +298,13 @@ public class TimeExceedEnd {
         myFrame.setVisible(true);
     }
 
+    //MODIFIED:this
+    //EFFECTS: setup dialogue box:
+    //         1. dialogueContainer with bounds:(0, 0, 800, 600)
+    //         2. studentImageLabel with bounds:(0, 55, 300, 330) and icon SMILE_FACE
+    //         3. dialogueImageLabel with bounds:(0, 350, 800, 250)
+    //         4. dialogueTextLabel with bounds:(0, 55, 300, 330) and icon SMILE_FACE
+    //         5. add all component to dialogueContainer.
     private void setupDialogueBox() {
         dialogueContainer = new JLayeredPane();
         dialogueContainer.setBounds(0, 0, 800, 600);
@@ -250,6 +334,10 @@ public class TimeExceedEnd {
         dialogueContainer.add(dialogueTextLabel, JLayeredPane.MODAL_LAYER);
     }
 
+    //MODIFIED: this
+    //EFFECTS: 1. change the dialogueImageLabel to left
+    //         2. set text to talking content (parameter)
+    //         3. wait for DELAY seconds
     private void parentTalk(String text) throws InterruptedException {
         dialogueImageLabel.setIcon(DIALOGUE_BOX_RIGHT);
         dialogueTextLabel.setText("<html><div style='text-align: center;'>"
@@ -257,6 +345,10 @@ public class TimeExceedEnd {
         simulateDelay(3);
     }
 
+    //MODIFIED: this
+    //EFFECTS: 1. change the dialogueImageLabel to right
+    //         2. set text to talking content (parameter)
+    //         3. wait for DELAY seconds
     private void studentTalk(String text) throws InterruptedException {
         dialogueImageLabel.setIcon(DIALOGUE_BOX_LEFT);
         dialogueTextLabel.setText("<html><div style='text-align: center;'>"
@@ -264,6 +356,7 @@ public class TimeExceedEnd {
         simulateDelay(3);
     }
 
+    //EFFECTS: pause the thread for seconds.
     private void simulateDelay(int seconds) throws InterruptedException {
         Thread.sleep(seconds * 1000);
     }

@@ -6,16 +6,21 @@ import javax.swing.*;
 import java.awt.*;
 import java.util.List;
 
+//represent a window that can show the profile of the student
 public class ShowProfileWindow {
     public static final String FONT_TYPE = "Courier New";//font type of text
-    public static final Integer TEXT_FONT_SIZE = 15;
+    public static final Integer TEXT_FONT_SIZE = 15;//font size of text
+    //image of student
     public static final ImageIcon PROFILE_IMG = new ImageIcon("./data/resource/StudentProfile.png");
 
-    private JFrame myFrame;
-    private JLabel studentImage;
-    private JLabel infoText;
-    private Student student;
+    private JFrame myFrame;//window
+    private JLabel studentImage;//student image
+    private JLabel infoText;//text label
+    private Student student;// represent a student
 
+    //EFFECTS: construct a new show profile window with
+    //        1.window size: 400*500
+    //        2.window component: a layer pane with student image on DEFAULT_LAYER and infoText on PALETTE_LAYER.
     public ShowProfileWindow(Student s) {
         student = s;
         setUpFrame();
@@ -29,6 +34,11 @@ public class ShowProfileWindow {
         myFrame.setVisible(true);
     }
 
+    //MODIFIED: this
+    //EFFECTS: create a new label with:
+    //         1.setBounds(0, 0, 200, 500)
+    //         2.setText(html text. toString());
+    //         3.setOpaque: false
     private void setUpInfoText() {
         infoText = new JLabel();
         infoText.setBounds(0, 0, 200, 500);
@@ -47,12 +57,16 @@ public class ShowProfileWindow {
     }
 
 
+    //MODIFIED: this
+    //EFFECTS: set the student image label with bounds(0,0,400,500), icon:PROFILE_IMG
     private void setUpStudentImage() {
         studentImage = new JLabel();
         studentImage.setBounds(0,0,400,500);
         studentImage.setIcon(PROFILE_IMG);
     }
 
+    //MODIFIED: this
+    //EFFECTS: frame size (400, 500), setResizable(false), background color: black
     private void setUpFrame() {
         myFrame = new JFrame("Profile");
         myFrame.setSize(400, 500);

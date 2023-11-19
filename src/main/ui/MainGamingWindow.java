@@ -412,12 +412,6 @@ public class MainGamingWindow {
     //MODIFIED: this
     //EFFECTS: link action listener to typeInTimeBox:
     //         1. detect the input once the user presses ENTER.
-    //         2. if Integer.parseInt(userInput) throw exception
-    //               catch: NumberFormatException show message to tell the user their input is not an int
-    //            if user input is and integer AND myStudent.validTime(intValue) == true
-    //               doEveryThingAfterValidTime(intValue)
-    //               else: show message to tell the user their input is invalid and show the valid range
-//    @SuppressWarnings({"checkstyle:MethodLength", "checkstyle:SuppressWarnings"})
     private void addTextAreaActionListener() {
         typeInTimeBox.addKeyListener(new KeyListener() {
                 @Override
@@ -428,26 +422,7 @@ public class MainGamingWindow {
                 @Override
                 public void keyPressed(KeyEvent e) {
                     if (e.getKeyCode() == KeyEvent.VK_ENTER) {
-                        try {
-                            String userInput = typeInTimeBox.getText().trim();
-                            int intValue = Integer.parseInt(userInput);
-                            if (myStudent.validTime(intValue)) {
-                                doEveryThingAfterValidTime(intValue);
-                            } else {
-                                JOptionPane.showMessageDialog(null,
-                                        "Your time cannot less than 5 and cannot exceed "
-                                                + myStudent.getRemainingTime(),
-                                        "INVALID INPUT", JOptionPane.PLAIN_MESSAGE);
-                            }
-                        } catch (NumberFormatException exception) {
-                            JOptionPane.showMessageDialog(null,
-                                    "Your input is not an integer ",
-                                    "INVALID INPUT", JOptionPane.PLAIN_MESSAGE);
-                        } finally {
-                            typeInTimeBox.setText("");
-                            typeInTimeBox.setVisible(false);
-                            addButton.setEnabled(true);
-                        }
+                        checkTextBoxInput();
                     }
                 }
 
@@ -456,6 +431,39 @@ public class MainGamingWindow {
                     //do nothing
                 }
             });
+    }
+
+    // EFFECTS:   if Integer.parseInt(userInput) throw exception
+    //               catch: NumberFormatException show message to tell the user their input is not an int
+    //            if user input is and integer AND myStudent.validTime(intValue) == true
+    //               doEveryThingAfterValidTime(intValue)
+    //               else: show message to tell the user their input is invalid and show the valid range
+    private void checkTextBoxInput() {
+        try {
+            String userInput = typeInTimeBox.getText().trim();
+            int intValue = Integer.parseInt(userInput);
+            detectValidTime(intValue);
+        } catch (NumberFormatException exception) {
+            JOptionPane.showMessageDialog(null,
+                    "Your input is not an integer ",
+                    "INVALID INPUT", JOptionPane.PLAIN_MESSAGE);
+        } finally {
+            typeInTimeBox.setText("");
+            typeInTimeBox.setVisible(false);
+            addButton.setEnabled(true);
+        }
+    }
+
+    //EFFECTS: check if the time is a valid time, show popup if it is not
+    private void detectValidTime(int intValue) {
+        if (myStudent.validTime(intValue)) {
+            doEveryThingAfterValidTime(intValue);
+        } else {
+            JOptionPane.showMessageDialog(null,
+                    "Your time cannot less than 5 and cannot exceed "
+                            + myStudent.getRemainingTime(),
+                    "INVALID INPUT", JOptionPane.PLAIN_MESSAGE);
+        }
     }
 
     //REQUIRES: time should be a valid time (tested by myStudent.validTime(time))
@@ -509,7 +517,6 @@ public class MainGamingWindow {
     //         change the constant STU1 to RELAX_STU1, STU2 to RELAX_STU2
     //         (since the student anime thread is repeatedly changing studentImage with STU1 and STU2 every 0.5 second.
     //         While this method change the content of STU1 and STU2 for 3 seconds. The anime will change for 6 ticks.)
-//    @SuppressWarnings({"checkstyle:MethodLength", "checkstyle:SuppressWarnings"})
     private void studentAmine(Boolean type) {
         SwingWorker<Void, Void> backgroundWorker = new SwingWorker<>() {
             @Override
@@ -604,7 +611,6 @@ public class MainGamingWindow {
     //        setFontForBars();
     //        Then add all bars to a panel->add panel(MODAL_LAYER)and bar image (DEFAULT_LAYER) to a layer panel and
     //        return it.
-//    @SuppressWarnings({"checkstyle:MethodLength", "checkstyle:SuppressWarnings"})
     private JLayeredPane setupBars() {
         createNewBars();
         setTextForBars();
@@ -622,8 +628,7 @@ public class MainGamingWindow {
         barPanel.add(s1KnowledgeBar);
         barPanel.add(s2KnowledgeBar);
         barPanel.add(s3KnowledgeBar);
-        JLabel barImage = new JLabel();
-        barImage.setIcon(BAR_IMAGE);
+        JLabel barImage = new JLabel(BAR_IMAGE);
         barImage.setBounds(0,0,200,200);
         JLayeredPane lp = new JLayeredPane();
         lp.setBounds(0,0,200,200);

@@ -217,32 +217,23 @@ public class Student {
     //REQUIRES: the time of the student must equals to the maximum, so that this method will be called to
     // print out the ends.
     //EFFECT:print out the end according to the score of the student.
-    @SuppressWarnings({"checkstyle:MethodLength", "checkstyle:SuppressWarnings"})
     public int endChoice(int score) {
         GameStarter toCall = new GameStarter();
         if (score <= 300) { //fail
-            toCall.failEnd(name);
             return 0;
         } else if (score <= 400) { //3ben
-            toCall.normalEnd(name);
             return 1;
         } else if (score <= 530) { //2ben
-            toCall.uppernormalEnd(name);
             return 2;
         } else if (score <= 600) { //1ben
-            toCall.keyUniversityEnd(name);
             return 3;
         } else if (score <= 625) { //211
-            toCall.wrdClassEnd(name);
             return 4;
         } else if (score <= 680) { //985
-            toCall.dblFstClassEnd(name);
             return 5;
         } else if (score <= 700) { //1st
-            toCall.tsinghuaEnd(name);
             return 6;
         } else {
-            toCall.numOneEnd(name);
             return 7;
         }
     }

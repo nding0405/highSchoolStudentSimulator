@@ -221,31 +221,14 @@ public class Knowledge implements Writable {
     // which is (corresponding knowledge / (fullKnowledge * 3)) * 300 when the selectionOneKnowledge is less than
     // fullKnowledge * 3. It will be 300 if the knowledge is greater than or equals to fullKnowledge.
     // Return the calculated score.
-    @SuppressWarnings({"checkstyle:MethodLength", "checkstyle:SuppressWarnings"})
     public int takeExamForCombinedScienceOrArt(Boolean artOrScience) {
-        GameStarter toCall = new GameStarter();
         int totKnowledge = (selectionOneKnowledge + selectionThreeKnowledge + selectionTwoKnowledge);
         if (totKnowledge >= fullKnowledge * 3) {
-            if (artOrScience) {
-                toCall.printoutMark("Combined Science", 300);
-            } else {
-                toCall.printoutMark("Combined Art", 300);
-            }
             return 300;
         } else if (totKnowledge <= 0) {
-            if (artOrScience) {
-                toCall.printoutMark("Combined Science", 0);
-            } else {
-                toCall.printoutMark("Combined Art", 0);
-            }
             return 0;
         } else {
             int score = (int) ((totKnowledge / (3 * fullKnowledge)) * 300);
-            if (artOrScience) {
-                toCall.printoutMark("Combined Science", score);
-            } else {
-                toCall.printoutMark("Combined Art", score);
-            }
             return score;
         }
     }

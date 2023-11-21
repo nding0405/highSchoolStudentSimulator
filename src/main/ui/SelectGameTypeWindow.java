@@ -40,10 +40,9 @@ public class SelectGameTypeWindow implements ActionListener {
         setupGeneralFrame();
         JLabel background = constructBackground();
         JLabel title = constructTitleLabel();
-        JLabel mangaImage = constructIcon();
         setupNewGameButton();
         setupOldGameButton();
-        JPanel centerPanel = constructCenterPanel(title, mangaImage);
+        JPanel centerPanel = constructCenterPanel(title);
 
         JLayeredPane lp = new JLayeredPane();
         lp.setLayout(null);
@@ -55,13 +54,12 @@ public class SelectGameTypeWindow implements ActionListener {
     }
 
     //EFFECTS: build the center panel(used to contain title label and a manga image label)
-    private JPanel constructCenterPanel(JLabel title, JLabel mangaImage) {
+    private JPanel constructCenterPanel(JLabel title) {
         JPanel centerPanel = new JPanel();
         centerPanel.setLayout(null); // Using absolute positioning
         centerPanel.setBounds(0, 0, myFrame.getWidth(), myFrame.getHeight());
         centerPanel.setOpaque(false);
         centerPanel.add(title);
-        centerPanel.add(mangaImage);
         centerPanel.add(newGame);
         centerPanel.add(oldGame);
         return centerPanel;
@@ -91,7 +89,7 @@ public class SelectGameTypeWindow implements ActionListener {
         JLabel title = new JLabel("Welcome to High School Student Simulator");
         title.setFont(new Font(FONT_TYPE,Font.BOLD, TITLE_FONT_SIZE));
         title.setBounds(180,0,500,50);
-        title.setForeground(Color.black);
+        title.setForeground(Color.white);
         return title;
     }
 
@@ -131,28 +129,11 @@ public class SelectGameTypeWindow implements ActionListener {
     //         3. label position: 0,0
     //         4. label icon: "./data/resource/night1.PNG"
     public JLabel constructBackground() {
-        JLabel background = new JLabel(new ImageIcon("./data/resource/night1.PNG"));
+        JLabel background = new JLabel(new ImageIcon("./data/resource/beginBackground.png"));
         background.setBounds(0, 0, myFrame.getWidth(), myFrame.getHeight());
         return background;
     }
 
-    //EFFECTS: build the icon label and return it
-    //         1. label text://
-    //         2. label size: 200*220
-    //         3. label position: 300,200
-    //         4. label icon: "./data/resource/miku.png"
-    //         5. label image size: 200*220
-    public JLabel constructIcon() {
-        ImageIcon myIcon = new ImageIcon("./data/resource/miku.png");
-        Image myImage = myIcon.getImage();
-        myImage = myImage.getScaledInstance(200,220,Image.SCALE_SMOOTH);
-        myIcon = new ImageIcon(myImage);
-        JLabel mangaImage = new JLabel();
-        mangaImage.setIcon(myIcon);
-        mangaImage.setBounds(300, 200, 200, 220);
-        mangaImage.setOpaque(false);
-        return mangaImage;
-    }
 
     //EFFECTS: load the old game from json file. Assign the read value (student and gender) to the field.
     private void loadStudent() {

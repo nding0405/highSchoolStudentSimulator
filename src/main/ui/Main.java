@@ -1,6 +1,6 @@
 package ui;
 
-//Start the game
+//Start a new gaming window
 public class Main {
     public static void main(String[] args) {
 //        GameStarter myGame = new GameStarter();

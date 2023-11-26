@@ -1,9 +1,10 @@
-package persistence;
+package tests;
 
 import model.Activities;
 import model.Student;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import persistence.JsonReader;
 
 import java.io.IOException;
 import java.util.ArrayList;

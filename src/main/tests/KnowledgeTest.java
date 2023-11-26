@@ -1,5 +1,7 @@
-package model;
+package tests;
 
+import model.Activities;
+import model.Knowledge;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

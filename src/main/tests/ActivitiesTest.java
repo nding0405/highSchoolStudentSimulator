@@ -1,5 +1,6 @@
-package model;
+package tests;
 
+import model.Activities;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;

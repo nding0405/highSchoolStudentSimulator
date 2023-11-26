@@ -1,8 +1,8 @@
 package ui;
 
-import exceptions.TimeUpException;
+import model.exceptions.TimeUpException;
 import model.Activities;
-import exceptions.PressureExceedException;
+import model.exceptions.PressureExceedException;
 import model.Student;
 import persistence.JsonWriter;
 

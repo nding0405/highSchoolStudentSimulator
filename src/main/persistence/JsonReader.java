@@ -6,9 +6,7 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.stream.Stream;
 
-import model.Activities;
-import model.Knowledge;
-import model.Student;
+import model.*;
 import org.json.*;
 
 // Represents a reader that reads student(object) and gender(primitive String) from JSON data stored in file
@@ -25,6 +23,7 @@ public class JsonReader {
     public Student read() throws IOException {
         String jsonData = readFile(source);
         JSONObject jsonObject = new JSONObject(jsonData);
+        EventLog.getInstance().logEvent(new Event("Load Json data"));
         return parseStudent(jsonObject);
     }
 

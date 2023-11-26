@@ -1,7 +1,7 @@
 package model;
 
-import exceptions.PressureExceedException;
-import exceptions.TimeUpException;
+import model.exceptions.PressureExceedException;
+import model.exceptions.TimeUpException;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import ui.GameStarter;
@@ -90,6 +90,7 @@ public class Student {
         this.subjectSelectionTwo = "B";
         this.subjectSelectionThree = "C";
         this.scienceOrArtForExam = true;
+        EventLog.getInstance().logEvent(new Event("Create a student named " + name));
     }
 
     //MODIFIED: JSONObject
@@ -164,6 +165,7 @@ public class Student {
         profile.add("Subject Selection2: " + subjectSelection2);
         profile.add("Subject Selection3: " + subjectSelection3);
 //        toCall.showProfile(name, subjectSelection1, subjectSelection2, subjectSelection3, character, prefer);
+        EventLog.getInstance().logEvent(new Event("Show profile"));
         return profile;
     }
 
@@ -177,6 +179,7 @@ public class Student {
         knowledge.addKnowledge(a, subjectSelectionOne, subjectSelectionTwo, subjectSelectionThree, preference);
         addPressure(a);
         updateBars();
+        EventLog.getInstance().logEvent(new Event("Add " + a.getName() + " for " + a.getTime() + " hrs"));
     }
 
     //REQUIRES: Activities must be one of the name in the menu
@@ -200,6 +203,7 @@ public class Student {
             showSchedule.add(actName + " " + actTime);
             toCall.showOneActivity(actName, actTime);
         }
+        EventLog.getInstance().logEvent(new Event("View schedule"));
         return showSchedule;
     }
 

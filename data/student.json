@@ -4,7 +4,7 @@
     "subjectSelectionTwo": "geology",
     "preference": false,
     "chrType": false,
-    "pressure": 192,
+    "pressure": 217,
     "subjectSelectionOne": "history",
     "scienceOrArtForExam": false,
     "schedule": [
@@ -31,14 +31,20 @@
             "time": 77,
             "courseOrPlay": true,
             "activityType": true
+        },
+        {
+            "name": "History",
+            "time": 50,
+            "courseOrPlay": true,
+            "activityType": false
         }
     ],
     "subjectSelectionThree": "politics",
     "name": "893749237",
-    "time": 187,
+    "time": 237,
     "knowledge": {
         "mathKnowledge": 103,
-        "selectionOneKnowledge": 0,
+        "selectionOneKnowledge": 52,
         "englishKnowledge": 0,
         "selectionThreeKnowledge": 0,
         "mandarinKnowledge": 0,

@@ -33,3 +33,10 @@ the school if the pressure index in total exceed an assigned value.
 - to save.
 - As a user, I want to be able to be able to reload my all pieces of current student status I choose
 - to reload.
+
+## Phase 4: Task 2
+Program is shutting down. Printing all events:\
+Sun Nov 26 15:05:04 PST 2023 Load Json data\
+Sun Nov 26 15:05:04 PST 2023 Create a student named 893749237\
+Sun Nov 26 15:05:13 PST 2023 Add History for 50 hrs\
+Sun Nov 26 15:05:19 PST 2023 Saved to Json

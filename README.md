@@ -40,3 +40,24 @@ Sun Nov 26 15:05:04 PST 2023 Load Json data\
 Sun Nov 26 15:05:04 PST 2023 Create a student named 893749237\
 Sun Nov 26 15:05:13 PST 2023 Add History for 50 hrs\
 Sun Nov 26 15:05:19 PST 2023 Saved to Json
+
+## Phase 4: Task 3
+1. Create an abstract class in ui called BuildWindow which has fields of type of:\
+   protected Student student;\
+   protected JFrame myFrame;\
+   protected String gender;\
+   protected JLayeredPane dialogueContainer;\
+   protected JLabel dialogueImageLabel;\
+   protected JLabel dialogueTextLabel;\
+   protected JLabel studentImageLabel;\
+And methods that setup all the layouts. Then, let InitializeStudentWindow, 
+PressureExceedEnd, FineArtEnd, TimeExceedEnd extend BuildWindow class. And call
+the methods in BuildWindow in constructor to build the general window. **It can avoid 
+a lot of duplication by doing so.**
+2. Apply observer pattern to MainGamingWindow. Create two new class: one is 
+updating the bars, the other is making the student image changing. Let
+these two new classes extends Observer while MainGamingWindow extends Subject.
+Call addObserver(Observer o) in the constructor of MainGamingWindow to add the 
+new classes as observers. When the user adds an activity, call notify() in MainGamingWindow.
+**By applying the observer pattern, it will be easier to add more behaviour related to addActivities().
+And also, it will promote single responsibility of the program.**

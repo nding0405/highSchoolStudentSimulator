@@ -2,7 +2,6 @@ package model;
 
 import org.json.JSONObject;
 import persistence.Writable;
-import ui.GameStarter;
 
 // Represent the Knowledge.
 // **Field explanation**:
@@ -164,16 +163,12 @@ public class Knowledge implements Writable {
     // when the Mandarinknowledge is less than fullKnowledge. It will be 150 if the knowledge is greater than or equals
     // to fullKnowledge. Return the calculated score.
     public int takeExamForMandarin() {
-        GameStarter toCall = new GameStarter();
         if (mandarinKnowledge >= fullKnowledge) {
-            toCall.printoutMark("Mandarin",150);
             return 150;
         } else if (mandarinKnowledge <= 0) {
-            toCall.printoutMark("Mandarin",0);
             return 0;
         } else {
             int score = (int) ((mandarinKnowledge / fullKnowledge) * 150);
-            toCall.printoutMark("Mandarin", score);
             return score;
         }
     }
@@ -183,16 +178,12 @@ public class Knowledge implements Writable {
     // when the Mathknowledge is less than fullKnowledge. It will be 150 if the knowledge is greater than or equals
     // to fullKnowledge. Return the calculated score.
     public int takeExamForMath() {
-        GameStarter toCall = new GameStarter();
         if (mathKnowledge >= fullKnowledge) {
-            toCall.printoutMark("Math",150);
             return 150;
         } else if (mathKnowledge <= 0) {
-            toCall.printoutMark("Math",0);
             return 0;
         } else {
             int score = (int) ((mathKnowledge / fullKnowledge) * 150);
-            toCall.printoutMark("Math", score);
             return score;
         }
     }
@@ -202,16 +193,12 @@ public class Knowledge implements Writable {
     // when the englishknowledge is less than fullKnowledge. It will be 150 if the knowledge is greater than or equals
     // to fullKnowledge. Return the calculated score.
     public int takeExamForEnglish() {
-        GameStarter toCall = new GameStarter();
         if (englishKnowledge >= fullKnowledge) {
-            toCall.printoutMark("English", 150);
             return 150;
         } else if (englishKnowledge <= 0) {
-            toCall.printoutMark("English",0);
             return 0;
         } else {
             int score = (int) ((englishKnowledge / fullKnowledge) * 150);
-            toCall.printoutMark("English", score);
             return score;
         }
     }

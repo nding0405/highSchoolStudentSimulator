@@ -1,50 +1,24 @@
 {
     "loveFineArt": false,
-    "gender": "dad",
+    "gender": "mom",
     "subjectSelectionTwo": "geology",
     "preference": false,
     "chrType": false,
-    "pressure": 217,
+    "pressure": 80,
     "subjectSelectionOne": "history",
     "scienceOrArtForExam": false,
-    "schedule": [
-        {
-            "name": "Math",
-            "time": 3,
-            "courseOrPlay": true,
-            "activityType": true
-        },
-        {
-            "name": "Math",
-            "time": 7,
-            "courseOrPlay": true,
-            "activityType": true
-        },
-        {
-            "name": "Math",
-            "time": 100,
-            "courseOrPlay": true,
-            "activityType": true
-        },
-        {
-            "name": "Physics",
-            "time": 77,
-            "courseOrPlay": true,
-            "activityType": true
-        },
-        {
-            "name": "History",
-            "time": 50,
-            "courseOrPlay": true,
-            "activityType": false
-        }
-    ],
+    "schedule": [{
+        "name": "Math",
+        "time": 100,
+        "courseOrPlay": true,
+        "activityType": true
+    }],
     "subjectSelectionThree": "politics",
-    "name": "893749237",
-    "time": 237,
+    "name": "test",
+    "time": 100,
     "knowledge": {
-        "mathKnowledge": 103,
-        "selectionOneKnowledge": 52,
+        "mathKnowledge": 95,
+        "selectionOneKnowledge": 0,
         "englishKnowledge": 0,
         "selectionThreeKnowledge": 0,
         "mandarinKnowledge": 0,

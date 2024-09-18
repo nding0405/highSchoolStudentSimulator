@@ -4,7 +4,6 @@ import model.exceptions.PressureExceedException;
 import model.exceptions.TimeUpException;
 import org.json.JSONArray;
 import org.json.JSONObject;
-import ui.GameStarter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -137,7 +136,6 @@ public class Student {
     @SuppressWarnings({"checkstyle:MethodLength", "checkstyle:SuppressWarnings"})
     public List<String> studentProfile() {
         List<String> profile = new ArrayList<>();
-        GameStarter toCall = new GameStarter();
         String name = this.name;
         String subjectSelection1 = subjectSelectionOne;
         String subjectSelection2 = subjectSelectionTwo;
@@ -164,7 +162,6 @@ public class Student {
         profile.add("Subject Selection1: " + subjectSelection1);
         profile.add("Subject Selection2: " + subjectSelection2);
         profile.add("Subject Selection3: " + subjectSelection3);
-//        toCall.showProfile(name, subjectSelection1, subjectSelection2, subjectSelection3, character, prefer);
         EventLog.getInstance().logEvent(new Event("Show profile"));
         return profile;
     }
@@ -193,7 +190,6 @@ public class Student {
 
     //EFFECT: printing out all names and times of the activities in the schedule.
     public List<String> showSchedule() {
-        GameStarter toCall = new GameStarter();
         List<String> showSchedule = new ArrayList<>();
         String actName;
         int actTime;
@@ -201,7 +197,6 @@ public class Student {
             actName = a.getName();
             actTime = a.getTime();
             showSchedule.add(actName + " " + actTime);
-            toCall.showOneActivity(actName, actTime);
         }
         EventLog.getInstance().logEvent(new Event("View schedule"));
         return showSchedule;
@@ -222,7 +217,6 @@ public class Student {
     // print out the ends.
     //EFFECT:print out the end according to the score of the student.
     public int endChoice(int score) {
-        GameStarter toCall = new GameStarter();
         if (score <= 300) { //fail
             return 0;
         } else if (score <= 400) { //3ben
@@ -242,11 +236,6 @@ public class Student {
         }
     }
 
-    // EFFECTS: Printing out the end of the fine art student
-    public void endFineArt() {
-        GameStarter toCall = new GameStarter();
-        toCall.endFineArt(name);
-    }
 
     // REQUIRES: the time of the activities can not be greater than the remaining time of the student.
     // MODIFIED: this
@@ -288,7 +277,6 @@ public class Student {
     //  totalTimeTograduate, maxPressure, subjectSelectionOne, subjectSelectionTwo, subjectSelectionThree and pass
     // them to the printout method in GameStarter (printOutBars).
     public void updateBars() {
-        GameStarter toCall = new GameStarter();
         int pressureNow = pressure;
         int timeNow = time;
         int s1Knowledge = knowledge.getS1Knowledge();
@@ -297,8 +285,6 @@ public class Student {
         int mandarin = knowledge.getMandarinKnowledge();
         int math = knowledge.getMathKnowledge();
         int english = knowledge.getEnglishKnowledge();
-        toCall.printOutBars(timeNow, pressureNow, s1Knowledge, s2Knowledge, s3Knowledge, mandarin, math, english,
-                totalTimeTograduate, maxPressure, subjectSelectionOne, subjectSelectionTwo, subjectSelectionThree);
     }
 
     //EFFECT: rendering different student images depend on the activity type.
@@ -353,8 +339,6 @@ public class Student {
             } else {
                 pressure += parentAgreepressurePlus;
             }
-        } else {
-            endFineArt();
         }
     }
 

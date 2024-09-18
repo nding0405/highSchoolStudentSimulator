@@ -252,13 +252,6 @@ class StudentTest {
         //"I+A is the Number one scholar and can go for any university he/she wants!"
     }
 
-    @Test
-    void testEndFineArt() {
-        testStudent1.endFineArt();
-        //make sure it's printing out:
-        // "I+A is happy that he/she is able to learn fine art. He/She works hard and goes for a nice art college."
-    }
-
     void wrapUp(Student s,Activities a, int eptTime, int eptPressure) {
         s.addActivity(a);
         assertEquals(s.getTime(),eptTime);
